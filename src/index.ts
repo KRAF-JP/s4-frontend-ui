@@ -65,6 +65,7 @@ export {
 export { DefaultTemplate } from './components/template'
 
 // components/utils
+export { default as Auth } from './components/utils/auth'
 export { default as GlobalHead } from './components/utils/global-head'
 export { default as GlobalStyle } from './components/utils/global-style'
 export {

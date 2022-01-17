@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "yarn build:lib && yarn build:esm",
+    "build": "rm -rf lib esm && yarn build:lib && yarn build:esm",
     "prepublishOnly": "yarn build",
     "build:storybook": "build-storybook",
     "lint": "next lint",
