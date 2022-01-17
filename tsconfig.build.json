@@ -9,12 +9,5 @@
     "verbose": false,
     "resolveFullPaths": true
   },
-  "exclude": [
-    "node_modules",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.stories.tsx",
-    "src/components/organisms/**.*",
-    "src/components/template/*"
-  ]
+  "exclude": ["node_modules", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.stories.tsx"]
 }
