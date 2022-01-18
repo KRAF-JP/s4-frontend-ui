@@ -7,7 +7,7 @@ ENV HOME=/root \
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache make gcc g++ python coreutils git vim bash openssh
+    apk add --no-cache make gcc g++ python coreutils git vim bash openssh tree
 
 COPY .bashrc /root/
 WORKDIR /root
@@ -15,4 +15,4 @@ RUN git clone https://github.com/seebi/dircolors-solarized
 
 WORKDIR /var/www
 
-EXPOSE 3000
+EXPOSE 3001
