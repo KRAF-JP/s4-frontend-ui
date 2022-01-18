@@ -12,6 +12,7 @@ const SettingsTab: React.FC<Props> = (props) => {
       <TabItem name={'メンバー一覧'} link={'/settings/members'} />
       <TabItem name={'メンバー利用制限'} link={'/settings/restrictions'} />
       {/*<TabItem name={'チケット管理'} link={'/settings/tickets'} />*/}
+      <TabItem name={'ユーザーログ'} link={'/settings/user-logs'} />
     </StyledTab>
   )
 }

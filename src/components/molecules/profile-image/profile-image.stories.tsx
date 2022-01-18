@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Color from '../../../const/color'
 import ProfileImage from '../profile-image'
-import GlobalStyle from '../../utils//global-style'
+import GlobalStyle from '../../utils/global-style'
 import styled from 'styled-components'
 
 storiesOf('Components/Molecules/ProfileImage', module).add(

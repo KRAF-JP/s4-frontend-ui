@@ -2,6 +2,7 @@ import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { Card } from '../card/'
 import GlobalStyle from '../../utils/global-style'
+import PageHeader from '../..//molecules/page-header'
 
 export default {
   component: Card,

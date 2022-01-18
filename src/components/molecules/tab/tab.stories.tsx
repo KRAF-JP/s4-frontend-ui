@@ -1,7 +1,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { Tab, TabItem } from '../tab'
-import GlobalStyle from '../../utils//global-style'
+import GlobalStyle from '../../utils/global-style'
 
 export default {
   component: TabItem,
