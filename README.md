@@ -116,7 +116,7 @@
 - globalStateReducer
 
 ## SSHキー生成及び公開鍵の登録
-   プライベートリポジトリをNPMライブラリに追加する必要があるためSSHの設定が必要です。
+プライベートリポジトリをNPMライブラリに追加する必要があるためSSHの設定が必要です。
 ```
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
