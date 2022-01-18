@@ -142,8 +142,8 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 {
   "script" : {
     "postinstall": "yarn build:ui",
-    "upgrade:ui": "yarn upgrade s4-frontend-ui"
-    "build:ui": "cd node_modules/s4-frontend-ui && yarn build",
+    "upgrade:ui": "yarn upgrade s4-frontend-ui && yarn build:ui",
+    "build:ui": "cd node_modules/s4-frontend-ui && yarn build"
   }
 }
 ```
