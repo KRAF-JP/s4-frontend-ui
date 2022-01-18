@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Color from '../../../const/color'
 
 type Props = {
-  label: string
+  label?: string
   className?: string
   children?: React.ReactNode
   marginBottom?: number
@@ -12,7 +12,7 @@ type Props = {
 const FormField: React.FC<Props> = (props) => {
   return (
     <Wrap className={props.className} marginBottom={props.marginBottom}>
-      <Label>{props.label}</Label>
+      {props.label && <Label>{props.label}</Label>}
       <ChildrenWrap>{props.children}</ChildrenWrap>
     </Wrap>
   )

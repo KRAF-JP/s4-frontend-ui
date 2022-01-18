@@ -9,6 +9,7 @@ type Props = {
     label: string
     buttonType: 'primary' | 'secondary' | 'danger' | string
     disabled?: boolean
+    form?: string
   }
   isShow?: boolean
   setIsShow?: any
@@ -32,6 +33,7 @@ const Modal: React.FC<Props> = (props) => {
           />
           {props.submit && (
             <Button
+              form={props.submit.form}
               label={props.submit.label}
               buttonType={props.submit.buttonType}
               disabled={props.submit.disabled}

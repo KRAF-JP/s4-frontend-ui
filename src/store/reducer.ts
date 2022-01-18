@@ -45,6 +45,11 @@ export const globalStateReducer = (dataState, action) => {
         ...dataState,
         notification: { is_newly: action.payload },
       }
+    case 'update_user_profile_image':
+      return {
+        ...dataState,
+        user: { ...dataState.user, profile_image: action.payload },
+      }
     default:
       return dataState
   }

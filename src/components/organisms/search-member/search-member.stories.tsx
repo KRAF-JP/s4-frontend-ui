@@ -20,9 +20,7 @@ storiesOf('Components/Organisms/SearchMember', module).add(
   )
 )
 
-const Wrap = styled.div`
-  background-color: ;
-`
+const Wrap = styled.div``
 const FieldGroup = styled.div`
   margin-bottom: 32px;
 `

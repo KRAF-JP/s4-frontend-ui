@@ -113,7 +113,7 @@ const NotificationSettingDate: React.FC<Props> = (props) => {
           <form onSubmit={handleSubmit}>
             <FormWrap>
               <FormField label={'曜日'}>
-                <SearchCheckboxGroup>
+                <StyledSearchCheckboxGroup>
                   <Field name={'notification_week_1'} type={'checkbox'}>
                     {({ input, meta }) => (
                       <SearchCheckbox
@@ -205,7 +205,7 @@ const NotificationSettingDate: React.FC<Props> = (props) => {
                       </SearchCheckbox>
                     )}
                   </Field>
-                </SearchCheckboxGroup>
+                </StyledSearchCheckboxGroup>
               </FormField>
 
               <Field name={'notification_time'} type={'text'}>
@@ -249,6 +249,11 @@ const FormWrap = styled.div`
 
   > div {
     margin-right: 32px;
+  }
+`
+const StyledSearchCheckboxGroup = styled(SearchCheckboxGroup)`
+  > * {
+    margin-right: 8px;
   }
 `
 

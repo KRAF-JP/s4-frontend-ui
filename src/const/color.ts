@@ -40,6 +40,7 @@ export default {
     TOGGLE: '#BCC5D3',
     ALLOW: '#F4F9FC',
     DENY: '#FFF5F5',
+    INACTIVE: '#F0F0F0',
     GRAY_HOVER: '#7D8E9B',
   },
   ICON: {

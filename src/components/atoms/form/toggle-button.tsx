@@ -9,11 +9,12 @@ type Props = {
   value?: string
   name?: string
   isInvalid?: boolean
+  handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
 
 const ToggleButton: React.FC<Props> = (props) => {
   return (
-    <StyledToggleButton>
+    <StyledToggleButton onClick={props.handleClick}>
       <Marker checked={props.checked}>
         <On checked={props.checked}>ON</On>
         <Off checked={props.checked}>OFF</Off>

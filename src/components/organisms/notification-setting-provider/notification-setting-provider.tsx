@@ -197,18 +197,21 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
                 <Field name={'email'} type={'text'}>
                   {({ input, meta }) => (
                     <FormField label={'通知用メールアドレス'}>
-                      <SeparateWrap isShow={isShowEmail}>
-                        {input.value && (
-                          <>
-                            {state.organization
-                              .notification_email_verified_at ? (
-                              <Icon.StatusDone />
-                            ) : (
-                              <Icon.StatusBacklog />
-                            )}
-                          </>
-                        )}
-                      </SeparateWrap>
+                      {isShowEmail && (
+                        <SeparateWrap isShow={isShowEmail}>
+                          {input.value && (
+                            <>
+                              {state.organization
+                                .notification_email_verified_at ? (
+                                <Icon.StatusDone />
+                              ) : (
+                                <Icon.StatusBacklog />
+                              )}
+                            </>
+                          )}
+                        </SeparateWrap>
+                      )}
+
                       <FormFieldMask
                         value={input.value}
                         isShow={isShowEmail}

@@ -5,12 +5,20 @@ import { InputText } from '../../atoms/form'
 import { SearchCheckbox } from '../../atoms/search-checkbox'
 import { Button } from '../../atoms/button'
 import FormField from '../../molecules/form-field'
-type Props = {}
+
+type Props = {
+  className?: string
+  data?: []
+  setData?: any
+  searchRef?: any
+  handleClick?(e: React.MouseEvent<HTMLElement>): void
+}
 
 const SearchMember: React.FC<Props> = (props) => {
   return (
-    <Wrap>
+    <Wrap ref={props.searchRef}>
       <SearchToggle
+        handleClick={props.handleClick}
         form={
           <FormWrap>
             <InputWrap>
@@ -43,6 +51,7 @@ const SearchMember: React.FC<Props> = (props) => {
 }
 
 const Wrap = styled.div`
+  margin-top: -60px;
   display: block;
   width: 100%;
 `
@@ -58,6 +67,7 @@ const InputWrap = styled.div`
   display: block;
   margin-right: 32px;
   width: auto;
+
   &:last-child {
     margin-top: 10px;
   }

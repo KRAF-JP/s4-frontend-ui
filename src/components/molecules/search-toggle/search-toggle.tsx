@@ -5,6 +5,7 @@ import { SearchCheckbox } from '../../atoms/search-checkbox'
 import { Icon } from '../../atoms/icon'
 
 type Props = {
+  height?: number
   form: React.ReactNode
   handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
@@ -34,7 +35,9 @@ const SearchToggle: React.FC<Props> = (props) => {
           絞り込み検索
         </SearchCheckbox>
       </ButtonWrap>
-      <SearchForm isShow={isShow}>{props.form}</SearchForm>
+      <SearchForm isShow={isShow} height={props.height}>
+        {props.form}
+      </SearchForm>
     </Wrap>
   )
 }
@@ -47,10 +50,10 @@ const Wrap = styled.div`
   text-align: right;
 `
 const ButtonWrap = styled.div``
-const SearchForm = styled.div<{ isShow: boolean }>`
+const SearchForm = styled.div<{ isShow: boolean; height?: number }>`
   display: block;
   width: 100%;
-  height: ${({ isShow }) => (isShow ? '300px' : '0')};
+  height: ${({ isShow, height }) => (isShow ? `${height}px` : '0')};
   padding: ${({ isShow }) => (isShow ? '16px' : '0')} 24px
     ${({ isShow }) => (isShow ? '24px' : '0')};
   margin-top: ${({ isShow }) => (isShow ? '16px' : '0')};

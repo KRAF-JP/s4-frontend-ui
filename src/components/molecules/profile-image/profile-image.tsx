@@ -1,22 +1,75 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
-import Image from 'next/image'
 import Color from '../../../const/color'
 import { Icon } from '../../atoms/icon'
+import Modal from '../../organisms/modal/modal'
+import { FileUpload } from '../../organisms/settings'
+import GlobalContext from '../../../store/context'
+import { apiClient } from '../../../hooks/api-client'
 
 type Props = {
   src: string
   handleClick?(e: React.MouseEvent<HTMLElement>): void
+  handleClickDelete?(e: React.MouseEvent<HTMLElement>): void
 }
 
 const ProfileImage: React.FC<Props> = (props) => {
   const [isHover, setIsHover] = useState(false)
+  const [isShowModal, setIsShowModal] = useState<boolean>(false)
+  const [isShowSelect, setIsSelect] = useState<boolean>(false)
+  const [imageFile, setImageFile] = useState<string>('')
+  const [uploadFile, setUploadFile] = useState()
+  const { dispatch } = useContext(GlobalContext)
+
+  const handleFileUploadCancel = () => {
+    setImageFile('')
+    setIsShowModal(false)
+  }
+
+  const handleFileDelete = () => {
+    apiClient
+      .delete('/user/profile_image')
+      .then((res) => {
+        setIsShowModal(false)
+        dispatch({
+          type: 'update_user_profile_image',
+          payload: imageFile,
+        })
+      })
+      .catch((err) => {
+        // #TODO sentry
+      })
+  }
+
+  const handleFileUploadSubmit = () => {
+    const data = new FormData()
+    data.append('profile_image', uploadFile)
+    apiClient
+      .post('/user/profile_image', data, {
+        headers: { 'content-type': 'multipart/form-data' },
+      })
+      .then((response) => {
+        setIsShowModal(false)
+        dispatch({
+          type: 'update_user_profile_image',
+          payload: response.data,
+        })
+      })
+      .catch((err) => {
+        // #TODO sentry
+      })
+  }
 
   return (
-    <ProfileImageWrap onClick={props.handleClick}>
-      <ImageWrap>
+    <ProfileImageWrap>
+      <ImageWrap
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+        onClick={() => {
+          setIsSelect(true)
+        }}
+      >
         {props.src ? (
-          // <Image src={props.src} width={160} height={160} />
           <img src={`data:image/png;base64,${props.src}`} alt="" />
         ) : (
           <>No Image</>
@@ -28,6 +81,41 @@ const ProfileImage: React.FC<Props> = (props) => {
           </HoverImage>
         )}
       </ImageWrap>
+      <Options isShow={isShowSelect}>
+        <OptionItem
+          onClick={() => {
+            setIsSelect(false)
+            setIsShowModal(true)
+          }}
+        >
+          写真を変更
+        </OptionItem>
+        <OptionItem
+          onClick={() => {
+            setIsSelect(false)
+            handleFileDelete()
+          }}
+        >
+          削除
+        </OptionItem>
+      </Options>
+      <Modal
+        title={''}
+        isShow={isShowModal}
+        submit={{
+          label: '保存',
+          buttonType: 'primary',
+          disabled: false,
+        }}
+        handleClickCancel={handleFileUploadCancel}
+        handleClickSubmit={handleFileUploadSubmit}
+      >
+        <FileUpload
+          image={imageFile}
+          setImage={setImageFile}
+          uploadFile={setUploadFile}
+        />
+      </Modal>
     </ProfileImageWrap>
   )
 }
@@ -68,6 +156,41 @@ const HoverImage = styled.div<{ isHover?: boolean }>`
   background: rgba(0, 0, 0, 0.3);
   opacity: ${({ isHover }) => (isHover ? 1 : 0)};
   transition: opacity 0.2s ease-out;
+`
+const Options = styled.div<{ isShow: boolean }>`
+  display: ${({ isShow }) => (isShow ? 'flex' : 'none')};
+  flex-direction: column;
+  position: absolute;
+  top: 80%;
+  left: 35%;
+  width: 160px;
+  max-height: 200px;
+  padding: 8px;
+  border-radius: 8px;
+  background: ${Color.COMPONENT.SURFACE};
+  box-shadow: ${Color.ELEVATION.L};
+  scroll-behavior: smooth;
+  z-index: 10;
+`
+const OptionItem = styled.div`
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  background: Color.COMPONENT.WHITE_HOVER : Color.COMPONENT.SURFACE};
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1.4;
+
+  &:last-child {
+    margin: 0;
+  }
+
+  &:hover {
+    background: ${Color.COMPONENT.WHITE_HOVER};
+  }
 `
 
 export default ProfileImage

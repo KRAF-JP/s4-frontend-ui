@@ -120,3 +120,4 @@ export type Action =
   | { type: 'update_organization'; payload: any }
   | { type: 'update_user_org_name'; payload: any }
   | { type: 'update_notification_newly'; payload: any }
+  | { type: 'update_user_profile_image'; payload: any }

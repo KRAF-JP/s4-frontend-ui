@@ -10,6 +10,7 @@ type Props = {
   disabled?: boolean
   beforeIcon?: React.ReactNode
   afterIcon?: React.ReactNode
+  form?: string
   handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
 

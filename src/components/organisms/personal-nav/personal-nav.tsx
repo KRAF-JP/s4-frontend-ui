@@ -14,6 +14,9 @@ import GlobalContext from '../../../store/context'
 import FormFieldMask from '../../molecules/form-field-mask'
 import Skeleton from 'react-loading-skeleton'
 import { useNotification } from '../../../hooks/pages/use-notification'
+import { useUser } from '../../../hooks/use-user'
+import { Form, Field } from 'react-final-form'
+import { composeValidators, required } from '../../utils/varidator'
 
 type Props = {}
 
@@ -26,6 +29,7 @@ const PersonalNav: React.FC<Props> = (props) => {
   const documentClickHandler = useRef(null)
   const { notifications } = useNotification()
   const { state } = useContext(GlobalContext)
+  const { setPutTrigger, setTarget } = useUser()
 
   const handleShowHistory = () => {
     setIsAlert(true)
@@ -45,6 +49,17 @@ const PersonalNav: React.FC<Props> = (props) => {
 
   const removeDocumentClickHandler = () => {
     document.removeEventListener('click', documentClickHandler.current)
+  }
+
+  const handleSubmit = async (formValues: any) => {
+    const { firstname, lastname } = formValues
+    const target = { firstname: firstname, lastname: lastname }
+    setIsPersonalSetting(false)
+
+    if (target) {
+      setTarget(target)
+      setPutTrigger(true)
+    }
   }
 
   useEffect(() => {
@@ -101,23 +116,68 @@ const PersonalNav: React.FC<Props> = (props) => {
             <ProfileImageBox>
               <ProfileImage src={state.user.profile_image} />
             </ProfileImageBox>
-            <FieldLabel isShow={isShow}>姓名</FieldLabel>
-            <StyledFormFieldMask
-              value={state.user.name}
-              isShow={isShow}
-              handleClick={handleIsShowName}
-            >
-              <FormFlex>
-                <FormField label={'性'}>
-                  <InputText size={'M'} defaultValue={state.user.lastname} />
-                </FormField>
-                <FormField label={'名'}>
-                  <InputText size={'M'} defaultValue={state.user.firstname} />
-                </FormField>
-                <Button label={'保存'} buttonType={'primary'} small disabled />
-              </FormFlex>
-            </StyledFormFieldMask>
+            <Form
+              onSubmit={handleSubmit}
+              initialValues={{
+                firstname: state.user.firstname,
+                lastname: state.user.lastname,
+              }}
+              validate={(values: any) => {
+                const errors: any = {}
 
+                errors.lastname = composeValidators(
+                  required('姓を入力してください')
+                )(values.lastname)
+
+                errors.firstname = composeValidators(
+                  required('名を入力してください')
+                )(values.firstname)
+
+                return errors
+              }}
+              render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <FieldLabel isShow={isShow}>姓名</FieldLabel>
+                  <StyledFormFieldMask
+                    value={state.user.name}
+                    isShow={isShow}
+                    handleClick={handleIsShowName}
+                  >
+                    <FormFlex>
+                      <FormField label={'姓'}>
+                        <Field name={'lastname'} type={'text'}>
+                          {({ input, meta }) => (
+                            <InputText
+                              {...(input as any)}
+                              size={'M'}
+                              defaultValue={state.user.lastname}
+                              invalidMessage={
+                                meta.error && meta.touched && meta.error
+                              }
+                            />
+                          )}
+                        </Field>
+                      </FormField>
+                      <FormField label={'名'}>
+                        <Field name={'firstname'} type={'text'}>
+                          {({ input, meta }) => (
+                            <InputText
+                              {...(input as any)}
+                              size={'M'}
+                              defaultValue={state.user.firstname}
+                              invalidMessage={
+                                meta.error && meta.touched && meta.error
+                              }
+                            />
+                          )}
+                        </Field>
+                      </FormField>
+                      <Button label={'保存'} buttonType={'primary'} small />
+                    </FormFlex>
+                  </StyledFormFieldMask>
+                </form>
+              )}
+            />
             <FormField label={'メールアドレス'} marginBottom={24}>
               {state.user.email}
             </FormField>

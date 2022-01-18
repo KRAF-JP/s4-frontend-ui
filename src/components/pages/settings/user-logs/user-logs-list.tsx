@@ -1,16 +1,13 @@
-import React, { createRef, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import ReactPaginate from 'react-paginate'
 import styled from 'styled-components'
-import Color from '../../../const/color'
-import { Icon } from '../../../components/atoms/icon'
-import { IconImage } from '../../../components/atoms/icon-image'
-import { Checkbox, Select } from '../../../components/atoms/form'
-import { List, ListItem } from '../../../components/molecules/list'
-import { LabelSeverity } from '../../../components/atoms/label'
-import { LoadingIcon } from '../../../components/atoms/loading-icon'
+import Color from '../../../../const/color'
+import { Icon } from '../../../atoms/icon'
+import { Select } from '../../../atoms/form'
+import { List, ListItem } from '../../../molecules/list'
+import { LoadingIcon } from '../../../atoms/loading-icon'
 import { NextPage } from 'next'
-import { useVulnerabilityRead } from '../../../hooks/pages/vulnerability/use-vulnerability'
 
 type Props = {
   data: any[]
@@ -20,7 +17,6 @@ type Props = {
   isLoading?: boolean
   setIsLoading: any
   totalCount?: number
-  setListBulkChangeShow?: any
 }
 
 const perPageSelectData = [
@@ -42,7 +38,7 @@ const perPageSelectData = [
   },
 ]
 
-const VulnerabilityList: NextPage<Props> = (props) => {
+const UserLogsList: NextPage<Props> = (props) => {
   const router = useRouter()
   const query = router.query
   const [offset, setOffset] = useState<number>(0)
@@ -59,6 +55,7 @@ const VulnerabilityList: NextPage<Props> = (props) => {
   const handlePageChange = (e) => {
     const pageNumber = e.selected
     router.push({
+      pathname: '/settings/user-logs',
       query: { ...router.query, offset: pageNumber * perPage },
     })
     setOffset(pageNumber * perPage)
@@ -67,35 +64,17 @@ const VulnerabilityList: NextPage<Props> = (props) => {
   const handleChangePerPage = (e) => {
     const perPage = Number(e.target.value)
     router.push({
+      pathname: '/settings/user-logs',
       query: { ...router.query, limit: perPage },
     })
     setCurrentPage(Math.ceil(offset / perPage))
     setPerPage(perPage)
   }
 
-  const handleCheck = (target: any, id: number) => {
-    const flagItems = items.map((data) => {
-      if (data.id === id) {
-        return {
-          ...data,
-          flag: target.checked,
-        }
-      } else {
-        return {
-          ...data,
-        }
-      }
-    })
-
-    const flagCheck = (data) => data.flag === true
-
-    props.setListBulkChangeShow(flagItems.some(flagCheck))
-    props.setData(flagItems)
-  }
-
   useEffect(() => {
     setItems(props.data)
     setPageCount(Math.ceil(props.totalCount / perPage))
+    console.log(props.totalCount)
   }, [offset, perPage, props.data, props.totalCount])
 
   useEffect(() => {
@@ -129,85 +108,14 @@ const VulnerabilityList: NextPage<Props> = (props) => {
             {items.length ? (
               <>
                 {items.map((data, i) => (
-                  <StyledListItem key={i} size={72}>
-                    {data.unread && <Unread />}
-                    <DataCheckbox>
-                      <Checkbox
-                        labelName={''}
-                        checked={data.flag}
-                        onChange={(e) => {
-                          handleCheck(e.target, data.id)
-                        }}
-                      />
-                    </DataCheckbox>
-                    <DataListItem
-                      onClick={() => {
-                        router.push({
-                          pathname: '/vulnerability/[id]',
-                          query: { id: data.id },
-                        })
-                      }}
-                    >
-                      <DataSeverity>
-                        {data.vuln && (
-                          <LabelSeverity
-                            score={data.vuln.cvss_base_score}
-                            severity={data.vuln.cvss_severity_ja}
-                            severityId={data.vuln.cvss_severity_id}
-                            small
-                          />
-                        )}
-                      </DataSeverity>
-                      <DataKind>公開</DataKind>
-                      <DataId>{data.vuln_id}</DataId>
-                      <DataTitle>
-                        {data.vuln ? (
-                          <p>{data.vuln.jvn_title}</p>
-                        ) : (
-                          <p>
-                            SQL Server Reporting Services
-                            におけるセキュリティ機能を回避される脆弱性
-                          </p>
-                        )}
-                      </DataTitle>
-                      <DataServer>
-                        <DataServerProjectName>
-                          {data.server.project.name}
-                        </DataServerProjectName>
-                        <DataServerName>{data.server.name}</DataServerName>
-                      </DataServer>
-                      <DataDate>{data.created_at}</DataDate>
-                      <DataAssignee>
-                        {data.assignee ? (
-                          <>
-                            <IconImage
-                              src={data.assignee.profile_image}
-                              size={32}
-                            />
-                            <DataAssigneeName>
-                              {data.assignee.name}
-                            </DataAssigneeName>
-                          </>
-                        ) : (
-                          <>
-                            <div></div>
-                            <DataAssigneeName>未設定</DataAssigneeName>
-                          </>
-                        )}
-                      </DataAssignee>
-                      <DataStatus>
-                        {data.status === 1 ? (
-                          <Icon.StatusBacklog />
-                        ) : data.status === 9 ? (
-                          <Icon.StatusDone />
-                        ) : data.status === 3 ? (
-                          <Icon.StatusClosed />
-                        ) : (
-                          data.status === 2 && <Icon.StatusProgress />
-                        )}
-
-                        <div>{data.status_name}</div>
-                      </DataStatus>
+                  <StyledListItem key={i}>
+                    <DataListItem>
+                      <DataCreatedAt>
+                        {data.created_at.replaceAll('-', '/')}
+                      </DataCreatedAt>
+                      <DataUserName>{data.user.name}</DataUserName>
+                      <DataEmail>{data.user.email}</DataEmail>
+                      <DataAction>{data.action_name}</DataAction>
                     </DataListItem>
                   </StyledListItem>
                 ))}
@@ -348,18 +256,9 @@ const StyledListItem = styled(ListItem)`
     margin-right: 16px;
   }
 `
-const Unread = styled.div`
-  position: absolute;
-  top: -17px;
-  left: -17px;
-  width: 34px;
-  height: 34px;
-  background: ${Color.COMPONENT.NOTICE};
-  transform: rotate(45deg);
-`
 const DataListItem = styled.div`
   display: grid !important;
-  grid-template-columns: 72px 48px 128px 1fr 130px minmax(96px, auto) 136px 96px;
+  grid-template-columns: 210px 160px 320px minmax(96px, auto);
   height: 100%;
   margin: 0;
   cursor: pointer;
@@ -370,54 +269,10 @@ const DataListItem = styled.div`
     margin-right: 16px;
   }
 `
-const DataCheckbox = styled.div``
-const DataSeverity = styled.div``
-const DataKind = styled.div`
-  white-space: nowrap;
-`
-const DataId = styled.div`
-  white-space: nowrap;
-`
-const DataTitle = styled.div`
-  min-width: 246px;
-
-  p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 14px;
-  }
-`
-const DataServer = styled.div`
-  display: flex;
-  align-items: flex-start !important;
-  flex-direction: column;
-`
-const DataServerProjectName = styled.div``
-const DataServerName = styled.div`
-  font-size: 12px;
-  color: #929daf;
-`
-const DataDate = styled.div`
-  max-width: 140px;
-`
-const DataAssignee = styled.div`
-  div:first-of-type {
-    width: 32px;
-    min-width: 32px;
-    height: 32px;
-    margin-right: 8px;
-  }
-`
-const DataAssigneeName = styled.div``
-const DataStatus = styled.div`
-  span {
-    display: inline-block;
-    margin-right: 8px;
-  }
-`
+const DataCreatedAt = styled.div``
+const DataUserName = styled.div``
+const DataEmail = styled.div``
+const DataAction = styled.div``
 const NothingText = styled.div`
   display: flex;
   justify-content: center;
@@ -428,4 +283,4 @@ const NothingText = styled.div`
   text-align: center;
 `
 
-export default VulnerabilityList
+export default UserLogsList

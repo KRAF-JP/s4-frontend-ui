@@ -16,7 +16,7 @@ const FileUpload: React.FC<Props> = (props) => {
     if (acceptedFiles.length != 0)
       props.setImage(createObjectURL(acceptedFiles[0]))
     console.log(acceptedFiles)
-    props.uploadFile(btoa(acceptedFiles[0]))
+    props.uploadFile(acceptedFiles[0])
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept,

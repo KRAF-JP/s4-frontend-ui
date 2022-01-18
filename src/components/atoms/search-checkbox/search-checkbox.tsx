@@ -36,6 +36,7 @@ const Wrap = styled.label`
   display: inline-block;
   border-radius: 8px;
   background: ${Color.COMPONENT.SURFACE};
+  overflow: hidden;
 
   input {
     display: none;

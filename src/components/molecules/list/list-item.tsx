@@ -21,8 +21,7 @@ const ListItem: React.FC<Props> = (props) => {
 
 const Wrap = styled.li<Props>`
   position: relative;
-  padding: 16px;
-  height: ${({ large }) => (large ? '72px' : '64px')};
+  padding: 10px 16px;
   height: ${({ size }) => (size ? `${size}px` : 'auto')};
   border-radius: 8px;
   background: ${Color.COMPONENT.SURFACE};
@@ -31,7 +30,7 @@ const Wrap = styled.li<Props>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -41,6 +40,11 @@ const Wrap = styled.li<Props>`
       opacity: 0.5;
       pointer-events: none;
     `}
+  ${({ onClick }) =>
+    onClick &&
+    `
+      cursor: pointer;
+  `}
   &:hover {
     background: ${Color.COMPONENT.WHITE_HOVER};
   }
