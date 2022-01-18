@@ -39,6 +39,7 @@ export { default as LoginForm } from './components/molecules/login-form'
 export { default as PageHeader } from './components/molecules/page-header'
 export { default as PopupCard } from './components/molecules/popup-card'
 export { default as ProfileImage } from './components/molecules/profile-image'
+export { default as SearchToggle } from './components/molecules/search-toggle'
 export { Tab, TabItem } from './components/molecules/tab'
 
 // components/organisms
@@ -50,16 +51,14 @@ export { default as NotificationSettingProvider } from './components/organisms/n
 export { default as PersonalNav } from './components/organisms/personal-nav'
 export { default as SearchMember } from './components/organisms/search-member'
 export { default as SearchVuln } from './components/organisms/search-vuln'
+export { FileUpload } from './components/organisms/settings'
 export { default as SettingsTab } from './components/organisms/settings-tab'
 export { default as Toaster } from './components/organisms/toaster'
 
 // components/pages
-export { FileUpload } from './components/pages/settings'
-export {
-  VulnerabilityList,
-  VulnerabilitySortable,
-  VulnerabilitySearch,
-} from './components/pages/vulnerability'
+export { MembersList, MembersSortable, MembersSearch } from './components/pages/settings/members'
+export { UserLogsList, UserLogsSortable, UserLogsSearch } from './components/pages/settings/user-logs'
+export { VulnerabilityList, VulnerabilitySortable, VulnerabilitySearch, } from './components/pages/vulnerability'
 
 // components/pages
 export { DefaultTemplate } from './components/template'
@@ -78,14 +77,18 @@ export {
   alphabeticAndNumeric,
   email,
   url,
-  time
+  time,
 } from './components/utils/varidator'
 
 // const
+export { default as AuthorityName } from './const/authority-name'
 export { default as Color } from './const/color'
+export { default as Role } from './const/role'
 export { Time } from './const/time'
 
 // hooks
+export { useUsers, useUserDetail } from './hooks/pages/settings/members'
+export { useUserLogs } from './hooks/pages/settings/user-logs'
 export { useAccessFilter } from './hooks/pages/settings/use-access-filter'
 export {
   useVulnerabilityRead,
