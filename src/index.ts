@@ -64,7 +64,7 @@ export { VulnerabilityList, VulnerabilitySortable, VulnerabilitySearch, } from '
 export { DefaultTemplate } from './components/template'
 
 // components/utils
-export { default as Auth } from './components/utils/auth'
+//export { default as Auth } from './components/utils/auth'
 export { default as GlobalHead } from './components/utils/global-head'
 export { default as GlobalStyle } from './components/utils/global-style'
 export {
@@ -99,7 +99,7 @@ export {
 } from './hooks/pages/vulnerability/use-vulnerability'
 export { useNotification } from './hooks/pages/use-notification'
 export { apiClient } from './hooks/api-client'
-export { default as useAuth } from './hooks/use-auth'
+//export { default as useAuth } from './hooks/use-auth'
 export { useOrganization } from './hooks/use-organization'
 export { useUser } from './hooks/use-user'
 
