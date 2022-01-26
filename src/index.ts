@@ -88,9 +88,9 @@ export { default as Role } from './const/role'
 export { Time } from './const/time'
 
 // hooks
-export { useUsers, useUserDetail } from './hooks/pages/settings/members'
+export { useUsers } from './hooks/pages/settings/members'
 export { useUserLogs } from './hooks/pages/settings/user-logs'
-export { useAccessFilter } from './hooks/pages/settings/use-access-filter'
+export { useAccessFilter } from './hooks/pages/settings/restrictions/use-access-filter'
 export {
   useVulnerabilityRead,
   useVulnerability,

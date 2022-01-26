@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
-import { apiClient } from '@hooks/api-client'
-import GlobalContext from '@store/context'
+import { apiClient } from '../../../api-client'
+import GlobalContext from '../../../../store/context'
+import { Simulate } from 'react-dom/test-utils'
 
 export const useAccessFilter = () => {
   const { dispatch } = useContext(GlobalContext)
@@ -46,9 +47,11 @@ export const useAccessFilter = () => {
   const putRequest = async () => {
     apiClient
       .put(`/org/access_filters/${target.id}`, target)
-      .then((res) => {})
+      .then((res) => {
+        console.log(res.data)
+      })
       .catch((error) => {
-        // #TODO sentry
+        console.log(error)
       })
   }
 
@@ -56,25 +59,10 @@ export const useAccessFilter = () => {
     apiClient
       .post('/org/access_filters', target)
       .then((res) => {
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `登録が完了しました`,
-            type: 'success',
-          },
-        })
+        console.log(res)
       })
       .catch((error) => {
-        // #TODO sentry
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `正常に登録できませんでした`,
-            type: 'error',
-          },
-        })
+        console.log(error)
       })
   }
 
@@ -82,6 +70,7 @@ export const useAccessFilter = () => {
     apiClient
       .delete(`/org/access_filters/${target.id}`)
       .then((res) => {
+        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -92,6 +81,7 @@ export const useAccessFilter = () => {
         })
       })
       .catch((error) => {
+        console.log(error)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -115,7 +105,6 @@ export const useAccessFilter = () => {
   useEffect(() => {
     if (!postTrigger) return
     postRequest()
-    setPostTrigger(false)
   }, [target, postTrigger])
 
   useEffect(() => {
