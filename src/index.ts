@@ -19,6 +19,7 @@ export {
   LabelIcon,
 } from './components/atoms/label'
 export { LinkButton } from './components/atoms/link-button'
+export { LoadingIcon } from './components/atoms/loading-icon'
 export { NewArrival } from './components/atoms/new-arrival'
 export { NotificationIcon } from './components/atoms/notification-icon'
 export {
