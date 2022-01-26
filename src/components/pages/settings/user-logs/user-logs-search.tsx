@@ -104,7 +104,6 @@ const UserLogsSearch: React.FC<Props> = (props) => {
 
     clearTimeout(timer)
     timer = setTimeout(() => {
-      console.log(keyword)
       if (!keyword) {
         delete router.query.keyword
         router.push({

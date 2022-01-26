@@ -45,10 +45,21 @@ export const globalStateReducer = (dataState, action) => {
         ...dataState,
         notification: { is_newly: action.payload },
       }
+    case 'update_vulnerability_unread':
+      return {
+        ...dataState,
+        vulnerability: { unread: action.payload },
+      }
     case 'update_user_profile_image':
       return {
         ...dataState,
         user: { ...dataState.user, profile_image: action.payload },
+      }
+    case 'update_organization_image':
+      return {
+        ...dataState,
+        organization: { ...dataState.user, org_image: action.payload },
+        user: { ...dataState.user, org_image: action.payload },
       }
     default:
       return dataState

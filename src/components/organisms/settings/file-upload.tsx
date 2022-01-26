@@ -10,12 +10,11 @@ type Props = {
 }
 
 const FileUpload: React.FC<Props> = (props) => {
-  const accept = 'image/png'
+  const accept = 'image/png, image/jpg, image/jpeg, image/gif'
   const onDrop = useCallback((acceptedFiles) => {
     const createObjectURL = (window.URL || window.webkitURL).createObjectURL
     if (acceptedFiles.length != 0)
       props.setImage(createObjectURL(acceptedFiles[0]))
-    console.log(acceptedFiles)
     props.uploadFile(acceptedFiles[0])
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -70,6 +69,8 @@ const ImageWrap = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `
 const Text = styled.div``

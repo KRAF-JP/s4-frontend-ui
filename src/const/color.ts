@@ -42,6 +42,7 @@ export default {
     DENY: '#FFF5F5',
     INACTIVE: '#F0F0F0',
     GRAY_HOVER: '#7D8E9B',
+    TEXTAREA: '#222E40',
   },
   ICON: {
     ALLOW: '#05ABEF',

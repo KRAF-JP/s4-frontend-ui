@@ -11,42 +11,73 @@ type Props = {
 const HistoryList: React.FC<Props> = (props) => {
   return (
     <List>
-      {props.items &&
-        props.items.map((item, i) => (
-          <Link key={i} href={''}>
-            <Item>
-              {item.is_newly && <ReadIcon />}
-              <Left>
-                {item.user.profile_image && (
-                  <IconImage src={item.user.profile_image} size={32} />
-                )}
-              </Left>
-              <Right>
-                <Content isRead={item.read_at}>
-                  {/ProjectAssigned/.test(item.type) && (
-                    <>
-                      {item.user.name}さんが、あなたを「{item.resource.name}
-                      」に追加しました。
-                    </>
+      {props.items ? (
+        <>
+          {props.items &&
+            props.items.map((item, i) => (
+              <Item key={i}>
+                {item.is_newly && <ReadIcon />}
+                <Left>
+                  {item.user.profile_image && (
+                    <IconImage src={item.user.profile_image} size={32} />
                   )}
-                  {/IssueStatusUpdated/.test(item.type) && (
-                    <>
-                      {item.user.name}さんが、「{item.resource.vuln_id}
-                      」を{item.resource.status_name}に変更しました
-                    </>
-                  )}
-                  {/IssueAssigned/.test(item.type) && (
-                    <>
-                      {item.user.name}さんが、あなたを「{item.resource.vuln_id}
-                      」の担当者に設定しました
-                    </>
-                  )}
-                </Content>
-                <Date>{item.resource.created_at}</Date>
-              </Right>
-            </Item>
-          </Link>
-        ))}
+                </Left>
+                <Right>
+                  <Content isRead={item.read_at}>
+                    {item.type && (
+                      <>
+                        {/ProjectAssigned/.test(item.type) && (
+                          <>
+                            {item.user.name}さんが、あなたを「
+                            {item.resource.name}
+                            」に追加しました。
+                          </>
+                        )}
+                        {/IssueStatusUpdated/.test(item.type) && (
+                          <>
+                            {item.user.name}さんが、「{item.resource.vuln_id}
+                            」を{item.resource.status_name}に変更しました
+                          </>
+                        )}
+                        {/IssueAssigned/.test(item.type) && (
+                          <>
+                            {item.user.name}さんが、あなたを「
+                            {item.resource.vuln_id}
+                            」の担当者に設定しました
+                          </>
+                        )}
+                      </>
+                    )}
+
+                    {item.update_contents && (
+                      <>
+                        {item.user_id ? (
+                          <>
+                            <HistoryName>{item.user.name}</HistoryName>さん
+                          </>
+                        ) : (
+                          <HistoryName>システム</HistoryName>
+                        )}
+                        が、
+                        {item.update_contents_front.map((data, i) => (
+                          <>
+                            {i >= 1 && '、'}
+                            {data.property}を「
+                            {data.new_value}」に
+                          </>
+                        ))}
+                        変更しました。
+                      </>
+                    )}
+                  </Content>
+                  <Date>{item.created_at.replaceAll('-', '/')}</Date>
+                </Right>
+              </Item>
+            ))}
+        </>
+      ) : (
+        '履歴はありません'
+      )}
     </List>
   )
 }
@@ -56,16 +87,11 @@ const Item = styled.li`
   display: flex;
   justify-content: start;
   position: relative;
-  padding: 8px 8px 8px 16px;
+  padding: 8px 0;
   border-radius: 16px;
-  cursor: pointer;
 
   &:not(:last-child) {
     margin-bottom: 8px;
-  }
-
-  &:hover {
-    background: ${Color.COMPONENT.WHITE_HOVER};
   }
 `
 const Left = styled.div`
@@ -79,7 +105,6 @@ const Right = styled.div`
 `
 const Content = styled.div<{ isRead?: boolean }>`
   font-size: 14px;
-  font-weight: ${({ isRead }) => (isRead ? 'normal' : 'bold')};
 `
 const Date = styled.span`
   font-size: 12px;
@@ -93,6 +118,10 @@ const ReadIcon = styled.div`
   height: 16px;
   border-radius: 8px;
   background: ${Color.COMPONENT.NOTICE};
+`
+const HistoryName = styled.span`
+  padding-right: 4px;
+  font-weight: bold;
 `
 
 export default HistoryList

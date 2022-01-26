@@ -67,7 +67,6 @@ const MembersSortable: React.FC<Props> = (props) => {
         return 0
       }
     })
-    console.log(sortData)
     props.setData([...sortData])
   }
 

@@ -17,6 +17,10 @@ import { useNotification } from '../../../hooks/pages/use-notification'
 import { useUser } from '../../../hooks/use-user'
 import { Form, Field } from 'react-final-form'
 import { composeValidators, required } from '../../utils/varidator'
+import { useUserLogout } from '../../../hooks/use-user-logout'
+import Modal from '../modal'
+import { FileUpload } from '../settings'
+import { useUploadImage } from '../../../hooks/use-upload-image'
 
 type Props = {}
 
@@ -30,7 +34,12 @@ const PersonalNav: React.FC<Props> = (props) => {
   const { notifications } = useNotification()
   const { state } = useContext(GlobalContext)
   const { setPutTrigger, setTarget } = useUser()
-
+  const { setPostUserLogoutTrigger } = useUserLogout()
+  const [isShowModal, setIsShowModal] = useState<boolean>(false)
+  const [isShowSelect, setIsSelect] = useState<boolean>(false)
+  const [imageFile, setImageFile] = useState<string>('')
+  const [uploadFile, setUploadFile] = useState()
+  const { setUserPostTrigger, setUserDeleteTrigger, setData } = useUploadImage()
   const handleShowHistory = () => {
     setIsAlert(true)
     setIsPersonalSetting(false)
@@ -60,6 +69,26 @@ const PersonalNav: React.FC<Props> = (props) => {
       setTarget(target)
       setPutTrigger(true)
     }
+  }
+
+  const handleUserLogout = () => {
+    setPostUserLogoutTrigger(true)
+  }
+
+  const handleFileUploadCancel = () => {
+    setImageFile('')
+    setIsShowModal(false)
+  }
+
+  const handleFileDelete = () => {
+    setUserDeleteTrigger(true)
+    setIsShowModal(false)
+  }
+
+  const handleFileUploadSubmit = () => {
+    setData(uploadFile)
+    setUserPostTrigger(true)
+    setIsShowModal(false)
   }
 
   useEffect(() => {
@@ -113,9 +142,48 @@ const PersonalNav: React.FC<Props> = (props) => {
             title={'ユーザー情報'}
             width={332}
           >
-            <ProfileImageBox>
+            <ProfileImageBox
+              onClick={() => {
+                setIsSelect(true)
+              }}
+            >
               <ProfileImage src={state.user.profile_image} />
             </ProfileImageBox>
+            <Options isShow={isShowSelect}>
+              <OptionItem
+                onClick={() => {
+                  setIsSelect(false)
+                  setIsShowModal(true)
+                }}
+              >
+                写真を変更
+              </OptionItem>
+              <OptionItem
+                onClick={() => {
+                  setIsSelect(false)
+                  handleFileDelete()
+                }}
+              >
+                削除
+              </OptionItem>
+            </Options>
+            <Modal
+              title={''}
+              isShow={isShowModal}
+              submit={{
+                label: '保存',
+                buttonType: 'primary',
+                disabled: false,
+              }}
+              handleClickCancel={handleFileUploadCancel}
+              handleClickSubmit={handleFileUploadSubmit}
+            >
+              <FileUpload
+                image={imageFile}
+                setImage={setImageFile}
+                uploadFile={setUploadFile}
+              />
+            </Modal>
             <Form
               onSubmit={handleSubmit}
               initialValues={{
@@ -150,7 +218,6 @@ const PersonalNav: React.FC<Props> = (props) => {
                             <InputText
                               {...(input as any)}
                               size={'M'}
-                              defaultValue={state.user.lastname}
                               invalidMessage={
                                 meta.error && meta.touched && meta.error
                               }
@@ -164,7 +231,6 @@ const PersonalNav: React.FC<Props> = (props) => {
                             <InputText
                               {...(input as any)}
                               size={'M'}
-                              defaultValue={state.user.firstname}
                               invalidMessage={
                                 meta.error && meta.touched && meta.error
                               }
@@ -191,7 +257,12 @@ const PersonalNav: React.FC<Props> = (props) => {
             </FormField>
 
             <ButtonGroup>
-              <Button label={'ログアウト'} buttonType={'secondary'} small />
+              <Button
+                label={'ログアウト'}
+                buttonType={'secondary'}
+                handleClick={handleUserLogout}
+                small
+              />
             </ButtonGroup>
           </PopupCard>
         </PersonalNavItem>
@@ -221,6 +292,7 @@ const PersonalNavItem = styled.li`
   box-shadow: ${Color.ELEVATION.L};
 `
 const ProfileImageBox = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   margin-bottom: 24px;
@@ -262,5 +334,39 @@ const Newly = styled.div`
   font-weight: 500;
   color: ${Color.TEXT.WHITE};
 `
+const Options = styled.div<{ isShow: boolean }>`
+  display: ${({ isShow }) => (isShow ? 'flex' : 'none')};
+  flex-direction: column;
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  width: 160px;
+  max-height: 200px;
+  padding: 8px;
+  border-radius: 8px;
+  background: ${Color.COMPONENT.SURFACE};
+  box-shadow: ${Color.ELEVATION.L};
+  scroll-behavior: smooth;
+  z-index: 10;
+`
+const OptionItem = styled.div`
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  background: Color.COMPONENT.WHITE_HOVER : Color.COMPONENT.SURFACE};
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1.4;
 
+  &:last-child {
+    margin: 0;
+  }
+
+  &:hover {
+    background: ${Color.COMPONENT.WHITE_HOVER};
+  }
+`
 export default PersonalNav

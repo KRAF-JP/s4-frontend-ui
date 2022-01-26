@@ -26,6 +26,7 @@ const Modal: React.FC<Props> = (props) => {
         {props.children && <Content>{props.children}</Content>}
         <Footer>
           <Button
+            type={'button'}
             label={'キャンセル'}
             buttonType={'secondary'}
             handleClick={props.handleClickCancel}
@@ -33,6 +34,7 @@ const Modal: React.FC<Props> = (props) => {
           />
           {props.submit && (
             <Button
+              type={'button'}
               form={props.submit.form}
               label={props.submit.label}
               buttonType={props.submit.buttonType}

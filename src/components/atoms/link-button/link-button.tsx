@@ -7,7 +7,7 @@ import Link from 'next/link'
 type Props = {
   href?: string
   title: string
-  date: string
+  date?: string
   disabled?: boolean
 }
 
@@ -16,24 +16,25 @@ const LinkButton: React.FC<Props> = (props) => {
     <Wrap {...props}>
       {props.href ? (
         <Link href={props.href}>
-          <IconWrapper>
-            <ButtonTitle>
-              {props.title}
-              <DateWrap>
-                <Icon.History />
-                <DateText>{props.date}</DateText>
-              </DateWrap>
-            </ButtonTitle>
-            <Icon.ExternalLink />
-          </IconWrapper>
+          <a target="_blank" rel="noreferrer noopener">
+            <IconWrapper>
+              <ButtonTitle>
+                {props.title}
+                <DateWrap>
+                  <Icon.History size={11} />
+                  <DateText>{props.date}</DateText>
+                </DateWrap>
+              </ButtonTitle>
+              <Icon.ExternalLink />
+            </IconWrapper>
+          </a>
         </Link>
       ) : (
         <IconWrapper>
           <ButtonTitle>
             {props.title}
             <DateWrap>
-              <Icon.History />
-              <DateText>{props.date}</DateText>
+              <Icon.History size={11} />
             </DateWrap>
           </ButtonTitle>
           <Icon.ExternalLink />
@@ -44,16 +45,21 @@ const LinkButton: React.FC<Props> = (props) => {
 }
 
 const Wrap = styled.div<Props>`
-  width: 143px;
+  display: flex;
+  align-items: center;
+  width: 148px;
   height: 56px;
-  padding: 12px 16px 9px;
+  padding: 0 16px;
   border-radius: 8px;
   background-color: ${Color.TEXT.GRAY};
+  cursor: ${({ href }) => (href ? 'pointer' : 'initial')};
+  opacity: ${({ href }) => (href ? 1 : 0.5)};
+  transition: background 0.2s linear;
+
   &:hover {
-    background: ${({ disabled }) =>
-      disabled ? '' : `${Color.COMPONENT.GRAY_HOVER}`};
+    background: ${({ href }) => (href ? Color.COMPONENT.GRAY_HOVER : '')};
+    transition: background 0.2s linear;
   }
-  opacity: ${({ disabled }) => (disabled ? 0.5 : '')};
 `
 const ButtonTitle = styled.div`
   margin: 0 16px 0 0;
@@ -69,13 +75,15 @@ const IconWrapper = styled.div`
 const DateWrap = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 2px;
-  > span > svg {
-    width: 11px;
+  margin-top: 4px;
+  font-weight: normal;
+  > span {
+    display: inherit;
   }
 `
 const DateText = styled.span`
-  font-size: 10px;
+  margin-left: 4px;
+  font-size: 12px;
 `
 
 export default LinkButton

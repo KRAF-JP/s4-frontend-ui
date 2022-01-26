@@ -8,8 +8,12 @@ export const useOrganization = () => {
   const [putTrigger, setPutTrigger] = useState<boolean>(false)
   const [slackSendTrigger, setSlackSendTrigger] = useState<boolean>(false)
   const [emailSendTrigger, setEmailSendTrigger] = useState<boolean>(false)
+  const [emailVerificationSendTrigger, setEmailVerificationSendTrigger] =
+    useState<boolean>()
+  const [emailVerificationTrigger, setEmailVerificationTrigger] =
+    useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const { dispatch } = useContext(GlobalContext)
+  const { state, dispatch } = useContext(GlobalContext)
 
   const fetchRequest = async () => {
     apiClient
@@ -44,29 +48,76 @@ export const useOrganization = () => {
         }
       })
       .catch((error) => {
-        console.log(error.response)
+        // #TODO sentry
       })
   }
 
   const slackSendTest = async () => {
     apiClient
       .post('/org/slack/test', target)
-      .then((res) => {
-        console.log(res)
-      })
+      .then((res) => {})
       .catch((error) => {
-        console.log(error)
+        // #TODO sentry
       })
   }
 
   const emailSendTest = async () => {
     apiClient
-      .post('/org/slack/test', target)
+      .post('/org/notification_email/test')
       .then((res) => {
-        console.log(res)
+        dispatch({
+          type: 'update_toaster',
+          payload: {
+            isShow: true,
+            text: 'テスト送信が完了しました',
+            type: 'success',
+          },
+        })
       })
       .catch((error) => {
-        console.log(error)
+        // #TODO sentry
+      })
+  }
+
+  const emailVerificationSend = async () => {
+    apiClient
+      .post('/org/notification_email/resend')
+      .then((res) => {})
+      .catch((error) => {
+        dispatch({
+          type: 'update_toaster',
+          payload: {
+            isShow: true,
+            text: '認証メールが送信できませんでした',
+            type: 'error',
+          },
+        })
+      })
+  }
+
+  const emailVerification = async () => {
+    apiClient
+      .put('/org/notification_email/verify', target)
+      .then((res) => {
+        fetchRequest()
+        dispatch({
+          type: 'update_toaster',
+          payload: {
+            isShow: true,
+            text: '認証が完了しました',
+            type: 'success',
+          },
+        })
+      })
+      .catch((error) => {
+        dispatch({
+          type: 'update_toaster',
+          payload: {
+            isShow: true,
+            text: '認証できませんでした',
+            type: 'error',
+          },
+        })
       })
   }
 
@@ -77,17 +128,32 @@ export const useOrganization = () => {
   useEffect(() => {
     if (!putTrigger) return
     putRequest()
+    setPutTrigger(false)
   }, [target, putTrigger])
 
   useEffect(() => {
     if (!slackSendTrigger) return
     slackSendTest()
-  }, [target, setSlackSendTrigger])
+    setSlackSendTrigger(false)
+  }, [target, slackSendTrigger])
 
   useEffect(() => {
     if (!emailSendTrigger) return
     emailSendTest()
-  }, [target, setEmailSendTrigger])
+    setEmailSendTrigger(false)
+  }, [emailSendTrigger])
+
+  useEffect(() => {
+    if (!emailVerificationSendTrigger) return
+    emailVerificationSend()
+    setEmailVerificationSendTrigger(false)
+  }, [emailVerificationSendTrigger])
+
+  useEffect(() => {
+    if (!emailVerificationTrigger) return
+    emailVerification()
+    setEmailVerificationSendTrigger(false)
+  }, [emailVerificationTrigger])
 
   return {
     organization,
@@ -96,5 +162,7 @@ export const useOrganization = () => {
     setPutTrigger,
     setSlackSendTrigger,
     setEmailSendTrigger,
+    setEmailVerificationSendTrigger,
+    setEmailVerificationTrigger,
   }
 }

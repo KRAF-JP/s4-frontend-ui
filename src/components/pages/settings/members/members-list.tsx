@@ -51,14 +51,20 @@ const perPageSelectData = [
 const MembersList: React.FC<Props> = (props) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false)
   const [isActiveUsers, setIsActiveUsers] = useState({})
-  const { setTarget, setDeleteTrigger, setRestoreTrigger, setPutTrigger } =
-    useUsers()
-  const { user, setUser, setId } = useUserDetail()
 
   const [offset, setOffset] = useState<number>(0)
   const [perPage, setPerPage] = useState<number>(20)
   const [pageCount, setPageCount] = useState<number>(0)
   const [items, setItems] = useState([])
+  const [editUser, setEditUser] = useState<any>({
+    id: null,
+    lastName: null,
+    firstName: null,
+    email: null,
+    role: null,
+  })
+  const { setTarget, setDeleteTrigger, setRestoreTrigger, setPutTrigger } =
+    useUsers()
 
   const handlePageChange = (e) => {
     let pageNumber = e.selected
@@ -74,28 +80,53 @@ const MembersList: React.FC<Props> = (props) => {
     setIsShowModal(false)
   }
 
-  const handleSubmit = async (formValues: any) => {
-    const { lastname, firstname, id, role } = formValues
+  const handleEditSubmit = async (formValue) => {
+    const { lastname, firstname, role } = formValue.values
     const target = {
-      id: id,
+      id: editUser.id,
       data: {
         lastname: lastname,
         firstname: firstname,
-        role: role ? 1 : 0,
+        role: role ? 2 : 0,
       },
     }
     setIsShowModal(false)
+    setTarget(target)
+    setPutTrigger(true)
 
-    if (target) {
-      setTarget(target)
-      setPutTrigger(true)
-    }
+    const data = props.data.map((data) => {
+      if (editUser.id === data.id) {
+        const name = `${lastname} ${firstname}`
+        return {
+          ...data,
+          name: name,
+          role: role ? 2 : 0,
+        }
+      } else {
+        return {
+          ...data,
+        }
+      }
+    })
+
+    setItems(data)
   }
 
-  const handleClickEdit = (id: number) => {
+  const handleClickEdit = (
+    id: number,
+    lastname: string,
+    firstname: string,
+    role: number,
+    email: string
+  ) => {
     setIsShowModal(true)
-    setId(id)
-    setUser(id)
+    setEditUser({
+      id: id,
+      lastName: lastname,
+      firstName: firstname,
+      email: email,
+      role: role,
+    })
   }
 
   const handleUserActive = (e) => {
@@ -140,8 +171,13 @@ const MembersList: React.FC<Props> = (props) => {
                       {data.deleted_at === null && data.role !== 1 ? (
                         <IconButton
                           handleClick={() => {
-                            console.log(data.id)
-                            handleClickEdit(data.id)
+                            handleClickEdit(
+                              data.id,
+                              data.lastname,
+                              data.firstname,
+                              data.role,
+                              data.email
+                            )
                           }}
                         >
                           <Icon.Pen />
@@ -178,47 +214,50 @@ const MembersList: React.FC<Props> = (props) => {
           <LoadingIcon />
         )}
       </StyledList>
-      <Modal
-        isShow={isShowModal}
-        submit={{
-          label: '保存',
-          buttonType: 'primary',
-          disabled: false,
-          form: 'submitUserEdit',
+
+      <Form
+        onSubmit={handleEditSubmit}
+        initialValues={{
+          id: editUser.id,
+          lastname: editUser.lastName,
+          firstname: editUser.firstName,
+          role: editUser.role === 2,
         }}
-        handleClickSubmit={handleSubmit}
-        handleClickCancel={handleUserEditCancel}
-      >
-        <>
-          <ModalHeader>
-            <ModalUserName>{user.name}</ModalUserName>
-            メンバー編集
-          </ModalHeader>
-          <ModalContent>
-            <Form
-              onSubmit={handleSubmit}
-              initialValues={{
-                id: user.id,
-                lastname: user.lastname,
-                firstname: user.firstname,
-                role: user.role === 2,
+        validate={(values: any) => {
+          const errors: any = {}
+
+          errors.lastname = composeValidators(required('姓を入力してください'))(
+            values.lastname
+          )
+
+          errors.firstname = composeValidators(
+            required('名を入力してください')
+          )(values.firstname)
+
+          return errors
+        }}
+        render={({ handleSubmit, form }) => (
+          <form onSubmit={handleSubmit} id={'submitUserEdit'}>
+            <Modal
+              isShow={isShowModal}
+              setIsShow={setIsShowModal}
+              submit={{
+                label: '保存',
+                buttonType: 'primary',
+                disabled: false,
+                form: 'submitUserEdit',
               }}
-              validate={(values: any) => {
-                const errors: any = {}
-
-                errors.lastname = composeValidators(
-                  required('姓を入力してください')
-                )(values.lastname)
-
-                errors.firstname = composeValidators(
-                  required('名を入力してください')
-                )(values.firstname)
-
-                return errors
+              handleClickSubmit={() => {
+                handleEditSubmit(form.getState())
               }}
-              render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit} id={'submitUserEdit'}>
-                  <input type={'hidden'} name={'id'} value={user.id} />
+              handleClickCancel={handleUserEditCancel}
+            >
+              <>
+                <ModalHeader>
+                  <ModalUserName>{editUser.name}</ModalUserName>
+                  メンバー編集
+                </ModalHeader>
+                <ModalContent>
                   <FormNameWrap>
                     <FormField marginBottom={24} label={'姓'}>
                       <Field name={'lastname'} type={'text'}>
@@ -252,7 +291,7 @@ const MembersList: React.FC<Props> = (props) => {
                     </FormField>
                   </FormNameWrap>
                   <FormField marginBottom={24} label={'メールアドレス'}>
-                    {user.email}
+                    {editUser.email}
                   </FormField>
                   <FormField marginBottom={24} label={'権限'}>
                     <Field name={'role'} type={'checkbox'}>
@@ -266,12 +305,13 @@ const MembersList: React.FC<Props> = (props) => {
                       )}
                     </Field>
                   </FormField>
-                </form>
-              )}
-            />
-          </ModalContent>
-        </>
-      </Modal>
+                </ModalContent>
+              </>
+            </Modal>
+          </form>
+        )}
+      />
+
       <ListFooter>
         <PerPageList>
           <PerPageListShow>

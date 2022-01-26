@@ -10,7 +10,7 @@ const TextList: React.FC<Props> = (props) => {
 }
 
 const Text = styled.li`
-  margin-bottom: 8px;
+  margin: 0 8px 0 20px;
   list-style-type: disc;
   font-size: 14px;
 `

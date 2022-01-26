@@ -34,6 +34,7 @@ export type userState = {
     notification_email_enabled: boolean
     notification_email: any
     notification_email_verified_at: any
+    notification_email_verify_expires_at: string
     notification_slack_enabled: boolean
     notification_slack_url: any
     notification_week_0: boolean
@@ -51,6 +52,9 @@ export type userState = {
   }
   notification: {
     is_newly: number
+  }
+  vulnerability: {
+    unread: number
   }
 }
 
@@ -89,7 +93,8 @@ export const initialUserState = {
     deleted_at: null,
     notification_email_enabled: false,
     notification_email: null,
-    notification_email_verified_at: '10:00:00',
+    notification_email_verified_at: null,
+    notification_email_verify_expires_at: null,
     notification_slack_enabled: false,
     notification_slack_url: null,
     notification_week_0: false,
@@ -108,6 +113,9 @@ export const initialUserState = {
   notification: {
     is_newly: 0,
   },
+  vulnerability: {
+    unread: 0,
+  },
 }
 
 export type Action =
@@ -120,4 +128,6 @@ export type Action =
   | { type: 'update_organization'; payload: any }
   | { type: 'update_user_org_name'; payload: any }
   | { type: 'update_notification_newly'; payload: any }
+  | { type: 'update_vulnerability_unread'; payload: any }
   | { type: 'update_user_profile_image'; payload: any }
+  | { type: 'update_organization_image'; payload: any }

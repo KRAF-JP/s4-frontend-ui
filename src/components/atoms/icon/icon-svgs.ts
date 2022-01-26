@@ -41,6 +41,7 @@ import Trash from './tsx/Trash'
 import User from './tsx/User'
 import SortAsc from './tsx/SortAsc'
 import SortDesc from './tsx/SortDesc'
+import Copy from './tsx/Copy'
 
 export default {
   ArrowLeft,
@@ -86,4 +87,5 @@ export default {
   User,
   SortAsc,
   SortDesc,
+  Copy,
 }

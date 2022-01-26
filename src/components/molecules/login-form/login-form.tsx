@@ -15,6 +15,7 @@ const LoginForm: React.FC<Props> = (props) => {
 
   const handleLoginMicrosoft = () => {
     setLoginMsEnable(true)
+    window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/graph`
   }
 
   return (
@@ -41,7 +42,8 @@ const LoginForm: React.FC<Props> = (props) => {
             </>
           )}
         </LoginButton>
-        <LoginButton>
+
+        <LoginButton onClick={handleLoginMicrosoft} isLogging={loginMsEnable}>
           {loginMsEnable ? (
             <Logging>
               <LoginButtonText>ログインしています...</LoginButtonText>

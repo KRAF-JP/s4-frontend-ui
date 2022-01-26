@@ -19,26 +19,19 @@ export const useUsers = () => {
     apiClient
       .get('/users', { params: query })
       .then((res) => {
-        console.log(query)
-        console.log(res.data)
         setDefaultData(res.data)
         setUsers(res.data)
         setIsLoading(true)
       })
       .catch((error) => {
         // #TODO sentry
-        console.log(query)
-        console.log(error)
       })
   }
 
   const putRequest = async () => {
-    console.log('Target Value::::')
-    console.log(target)
     apiClient
       .put(`/users/${target.id}`, target.data)
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -50,15 +43,15 @@ export const useUsers = () => {
       })
       .catch((error) => {
         // #TODO sentry
-        console.log(error)
-        // dispatch({
-        //   type: 'update_toaster',
-        //   payload: {
-        //     isShow: true,
-        //     text: `保存できませんでした。`,
-        //     type: 'error',
-        //   },
-        // })
+        console.log(error.response)
+        dispatch({
+          type: 'update_toaster',
+          payload: {
+            isShow: true,
+            text: `更新できませんでした。`,
+            type: 'error',
+          },
+        })
       })
   }
 
@@ -66,7 +59,6 @@ export const useUsers = () => {
     apiClient
       .delete(`/users/${target.id}`)
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -78,7 +70,6 @@ export const useUsers = () => {
       })
       .catch((error) => {
         // #TODO sentry
-        console.log(error)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -94,7 +85,6 @@ export const useUsers = () => {
     apiClient
       .put(`/users/${target.id}/restore`)
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -106,7 +96,6 @@ export const useUsers = () => {
       })
       .catch((error) => {
         // #TODO sentry
-        console.log(error)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -126,16 +115,19 @@ export const useUsers = () => {
   useEffect(() => {
     if (!putTrigger) return
     putRequest()
+    setPutTrigger(false)
   }, [target, putTrigger])
 
   useEffect(() => {
     if (!deleteTrigger) return
     deleteRequest()
+    setDeleteTrigger(false)
   }, [target, deleteTrigger])
 
   useEffect(() => {
     if (!restoreTrigger) return
     restoreRequest()
+    setRestoreTrigger(false)
   }, [target, restoreTrigger])
 
   return {
@@ -148,36 +140,5 @@ export const useUsers = () => {
     setUsers,
     isLoading,
     setIsLoading,
-  }
-}
-
-export const useUserDetail = () => {
-  const [id, setId] = useState<number>()
-  const [user, setUser] = useState<any>({})
-
-  const fetchRequest = async (id: number) => {
-    console.log(id)
-    apiClient
-      .get(`/users/${id}`)
-      .then((res) => {
-        console.log(res)
-        setUser(res.data)
-      })
-      .catch((error) => {
-        // #TODO sentry
-        console.log(error)
-      })
-  }
-
-  useEffect(() => {
-    if (id) {
-      fetchRequest(id)
-    }
-  }, [id])
-
-  return {
-    user,
-    setUser,
-    setId,
   }
 }

@@ -24,6 +24,11 @@ const Title = styled.h1`
   font-size: 24px;
   font-weight: 500;
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
 const Description = styled.p`
   font-size: 12px;

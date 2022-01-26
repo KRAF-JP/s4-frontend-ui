@@ -12,9 +12,12 @@ import {
   required,
   url,
   email,
+  number,
 } from '../../utils/varidator'
 import GlobalContext from '../../../store/context'
 import { useOrganization } from '../../../hooks/use-organization'
+import Modal from '../../organisms/modal'
+import { CardInner } from '../../atoms/card'
 
 type Props = {}
 
@@ -28,7 +31,16 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
   )
   const [isShowSlack, setIsShowSlack] = useState<boolean>()
   const [isShowEmail, setIsShowEmail] = useState<boolean>()
-  const { setTarget, setPutTrigger, setSlackSendTrigger } = useOrganization()
+  const [isShowModal, setIsShowModal] = useState<boolean>()
+  const [isShowModalSubmit, setIsShowModalSubmit] = useState<boolean>(true)
+  const {
+    setTarget,
+    setPutTrigger,
+    setSlackSendTrigger,
+    setEmailSendTrigger,
+    setEmailVerificationSendTrigger,
+    setEmailVerificationTrigger,
+  } = useOrganization()
 
   const handleSlackEnable = async () => {
     setIsActiveSlack(!isActiveSlack)
@@ -91,9 +103,28 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
     }
   }
 
-  /* TODO :email send test */
-  const handleEmailSendTest = async (formValues) => {
-    const { email } = formValues.values
+  const handleVerificationSend = async () => {
+    setEmailVerificationSendTrigger(true)
+    setIsShowModal(true)
+  }
+
+  const handleEmailSendTest = async () => {
+    setEmailSendTrigger(true)
+  }
+
+  const handleClickModalCancel = () => {
+    setIsShowModal(false)
+  }
+
+  const handleEmailVerificationSubmit = async (form) => {
+    const { verificationCode } = form.getState().values
+    const data = {
+      verify_code: verificationCode,
+    }
+    form.reset()
+    setTarget(data)
+    setEmailVerificationTrigger(true)
+    setIsShowModal(false)
   }
 
   useEffect(() => {
@@ -188,6 +219,9 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
             const errors: any = {}
 
             errors.email = composeValidators(email)(values.email)
+            errors.verificationCode = composeValidators(number)(
+              values.verificationCode
+            )
 
             return errors
           }}
@@ -197,7 +231,7 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
                 <Field name={'email'} type={'text'}>
                   {({ input, meta }) => (
                     <FormField label={'通知用メールアドレス'}>
-                      {isShowEmail && (
+                      {!isShowEmail && (
                         <SeparateWrap isShow={isShowEmail}>
                           {input.value && (
                             <>
@@ -244,9 +278,7 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
                                 label={'テスト送信'}
                                 buttonType={'secondary'}
                                 small
-                                handleClick={() => {
-                                  handleEmailSendTest(form.getState())
-                                }}
+                                handleClick={handleEmailSendTest}
                               />
                             </SeparateWrap>
                           ) : (
@@ -256,6 +288,7 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
                                 label={'認証メール送信'}
                                 buttonType={'primary'}
                                 small
+                                handleClick={handleVerificationSend}
                               />
                             </SeparateWrap>
                           )}
@@ -264,6 +297,53 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
                     </FormField>
                   )}
                 </Field>
+
+                <Modal
+                  title={'メールアドレス認証'}
+                  isShow={isShowModal}
+                  setIsShow={setIsShowModal}
+                  submit={{
+                    label: '認証',
+                    buttonType: 'primary',
+                    disabled: isShowModalSubmit,
+                  }}
+                  handleClickCancel={handleClickModalCancel}
+                  handleClickSubmit={() => {
+                    handleEmailVerificationSubmit(form)
+                  }}
+                >
+                  <ModalDescription>
+                    {state.organization.notification_email}
+                    宛に認証メールを送信しました。
+                    <br />
+                    ご確認の上、メールに記載の認証コードを入力してください。
+                  </ModalDescription>
+                  <Field name={'verificationCode'} type={'text'}>
+                    {({ input, meta }) => (
+                      <FormField label={'認証コード'} marginBottom={24}>
+                        <InputText
+                          {...(input as any)}
+                          size={'XXL'}
+                          onChange={(e) => {
+                            input.onChange(e)
+                            if (
+                              !e.target.value ||
+                              !e.target.value.match(/^[0-9]+$/)
+                            ) {
+                              setIsShowModalSubmit(true)
+                            } else {
+                              setIsShowModalSubmit(false)
+                            }
+                          }}
+                          invalidMessage={
+                            meta.error && meta.touched && meta.error
+                          }
+                        />
+                      </FormField>
+                    )}
+                  </Field>
+                  <ResendEmail>認証コードを再送する</ResendEmail>
+                </Modal>
               </Content>
             </form>
           )}
@@ -296,6 +376,16 @@ const Content = styled.div<{ isShow: boolean }>`
 `
 const SeparateWrap = styled.div<{ isShow: boolean }>`
   display: ${({ isShow }) => (isShow ? 'none' : 'block')};
+`
+const ModalDescription = styled.div`
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.71;
+`
+const ResendEmail = styled.div`
+  font-size: 14px;
+  color: ${Color.PRIMARY._500};
+  text-decoration: underline;
 `
 
 export default NotificationSettingProvider

@@ -18,7 +18,6 @@ const GlobalNav: React.FC<Props> = (props) => {
   const handleClickNav = (bool) => {
     setNavToggle(!bool)
     dispatch({ type: 'is_nav', payload: !state.isNavOpen })
-    console.log(!state.isNavOpen)
   }
 
   useEffect(() => {
@@ -50,19 +49,24 @@ const GlobalNav: React.FC<Props> = (props) => {
               icon={'assets'}
               navToggle={navToggle}
             />
-            <GlobalNavItem
-              name={'脆弱性'}
-              path={'/vulnerability'}
-              icon={'vuln'}
-              navToggle={navToggle}
-              notification={3}
-            />
-            <GlobalNavItem
-              name={'脅威'}
-              path={'/threat'}
-              icon={'threat'}
-              navToggle={navToggle}
-            />
+            <>
+              {state.vulnerability.unread !== 0 ? (
+                <GlobalNavItem
+                  name={'脆弱性'}
+                  path={'/vulnerability'}
+                  icon={'vuln'}
+                  navToggle={navToggle}
+                  notification={state.vulnerability.unread}
+                />
+              ) : (
+                <GlobalNavItem
+                  name={'脆弱性'}
+                  path={'/vulnerability'}
+                  icon={'vuln'}
+                  navToggle={navToggle}
+                />
+              )}
+            </>
           </NavList>
           {state.user.role >= 1 && (
             <NavList navToggle={navToggle}>

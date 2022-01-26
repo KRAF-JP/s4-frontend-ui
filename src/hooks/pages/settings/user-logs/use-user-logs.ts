@@ -20,14 +20,12 @@ export const useUserLogs = () => {
       })
       .then((res) => {
         setDefaultData(res.data)
-        console.log(res.data)
         setUserLogs(res.data)
         setIsLoading(true)
         setTotalCount(Number(res.headers['x-total-count']))
       })
       .catch((error) => {
         // #TODO sentry
-        console.log(error)
       })
   }
 
@@ -70,7 +68,6 @@ export const useUserLogsSearchItem = () => {
       })
       .catch((error) => {
         // #TODO sentry
-        console.log(error)
       })
   }
 

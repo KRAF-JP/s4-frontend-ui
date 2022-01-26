@@ -7,7 +7,7 @@ import Skeleton from 'react-loading-skeleton'
 import { ListItem } from '../../molecules/list'
 import { IconButton } from '../../atoms/icon-button'
 import { CardInner } from '../../atoms/card'
-import { useAccessFilter } from '../../../hooks/pages/settings/use-access-filter'
+import { useAccessFilter } from '../../../hooks/pages/settings/restrictions/use-access-filter'
 import Modal from '../../organisms/modal'
 import FormField from '../../molecules/form-field'
 import { InputText } from '../../atoms/form'
@@ -131,8 +131,17 @@ const AccessFilterCard: React.FC<Props> = (props) => {
     props.dataDispatch(data)
   }
 
-  const handleClickAdd = (data: []) => {
-    setTarget(data)
+  const handleClickAdd = (data: any) => {
+    const addData = data.map((data) => {
+      return data.filter_value
+    })
+
+    const setData = {
+      filter_type: data[0].filter_type,
+      filter_value: addData,
+    }
+
+    setTarget(setData)
     setPostTrigger(true)
     setIsShowAddModal(false)
 
@@ -176,14 +185,6 @@ const AccessFilterCard: React.FC<Props> = (props) => {
       </CardHeader>
 
       <CardContents isMore={isShowAccordion}>
-        {props.isLoading || (
-          <Skeleton
-            baseColor={Color.COMPONENT.BORDER}
-            width={'100%'}
-            height={64}
-            borderRadius={16}
-          />
-        )}
         {props.data.map((data, i) => (
           <ListItem key={i}>
             <div>
@@ -392,7 +393,7 @@ const CardHeaderTitle = styled.h3`
   line-height: 1.5;
 `
 const CardContents = styled.div<{ isMore?: boolean }>`
-  max-height: ${({ isMore }) => (isMore ? 'auto' : '208px')};
+  max-height: ${({ isMore }) => (isMore ? 'auto' : '190px')};
   margin-top: 16px;
   overflow: hidden;
 `

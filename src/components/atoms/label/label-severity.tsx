@@ -88,9 +88,9 @@ const BarWrap = styled.div`
   display: flex;
   align-items: center;
 `
-const ContentWrap = styled.div`
-  display: flex;
-  flex-flow: column;
+const ContentWrap = styled.div<Props>`
+  margin-bottom: ${({ small }) => (small ? '0' : '4')}px;
+
   > div {
     ${getSeverityTextColor};
   }
@@ -101,7 +101,7 @@ const Score = styled.div<{ small?: boolean }>`
   line-height: 1.11;
 `
 const SeverityText = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.67;
 `

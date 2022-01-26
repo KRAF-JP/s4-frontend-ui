@@ -27,7 +27,6 @@ const MembersSearch: React.FC<Props> = (props) => {
     const { keyword } = formValues.values
     clearTimeout(timer)
     timer = setTimeout(() => {
-      // console.log(keyword)
       if (!keyword) {
         delete router.query.keyword
         router.push({
@@ -133,6 +132,7 @@ const MembersSearch: React.FC<Props> = (props) => {
                   </InputWrap>
                   <InputWrap>
                     <Button
+                      type={'button'}
                       label={'絞り込みをリセット'}
                       small={true}
                       buttonType={'secondary'}

@@ -74,7 +74,6 @@ const UserLogsList: NextPage<Props> = (props) => {
   useEffect(() => {
     setItems(props.data)
     setPageCount(Math.ceil(props.totalCount / perPage))
-    console.log(props.totalCount)
   }, [offset, perPage, props.data, props.totalCount])
 
   useEffect(() => {
