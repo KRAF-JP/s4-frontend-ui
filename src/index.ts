@@ -97,13 +97,14 @@ export { Time } from './const/time'
 export { useUsers } from './hooks/pages/settings/members'
 export { useUserLogs } from './hooks/pages/settings/user-logs'
 export { useAccessFilter } from './hooks/pages/settings/restrictions/use-access-filter'
-export {
+/*export {
   useVulnerabilityRead,
   useVulnerability,
   useVulnerabilityBulkChange,
   useVulnerabilityDetail,
   useVulnerabilitySearchItem
 } from './hooks/pages/vulnerability/use-vulnerability'
+ */
 export { useNotification } from './hooks/pages/use-notification'
 export { apiClient } from './hooks/api-client'
 //export { default as useAuth } from './hooks/use-auth'
