@@ -118,5 +118,5 @@ export { globalStateReducer } from './store/reducer'
 
 // types
 export type { vulnerabilityState } from './types/vulnerability-detail'
-export { vulnerabilityDetailInitialState } from './types/vulnerability-detail'
+export { default as vulnerabilityDetailInitialState } from './types/vulnerability-detail'
 
