@@ -8,13 +8,13 @@ type Props = {
   value?: string
   name?: string
   labelName: string
-  icon?: React.ReactNode
+  small?: boolean
 }
 
 const RadioButton: React.FC<Props> = (props) => {
   return (
     <StyledRadioButton>
-      <Marker checked={props.checked} />
+      <Marker checked={props.checked} small={props.small} />
       {props.labelName}
       <InnerInput type={'radio'} {...props} />
     </StyledRadioButton>
@@ -27,15 +27,28 @@ const StyledRadioButton = styled.label`
   font-size: 14px;
   cursor: pointer;
 `
-const Marker = styled.div<{ checked?: boolean }>`
+const Marker = styled.div<{ checked?: boolean; small?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 24px;
-  height: 24px;
+  width: ${({ small }) => (small ? 16 : 24)}px;
+  min-width: ${({ small }) => (small ? 16 : 24)}px;
+  height: ${({ small }) => (small ? 16 : 24)}px;
+  min-height: ${({ small }) => (small ? 16 : 24)}px;
   margin-right: 8px;
   border: 2px solid ${Color.COMPONENT.FORM_BORDER};
   border-radius: 12px;
+
+  &::before {
+    display: none;
+    width: ${({ small }) => (small ? 8 : 12)}px;
+    min-width: ${({ small }) => (small ? 8 : 12)}px;
+    height: ${({ small }) => (small ? 8 : 12)}px;
+    min-height: ${({ small }) => (small ? 8 : 12)}px;
+    border-radius: 6px;
+    background: ${Color.PRIMARY._500};
+    content: '';
+  }
 
   ${({ checked }) =>
     checked &&
@@ -44,11 +57,6 @@ const Marker = styled.div<{ checked?: boolean }>`
     
     &::before {
       display: block;
-      width: 12px;
-      height: 12px;
-      border-radius: 6px;
-      background: ${Color.PRIMARY._500};
-      content: '';
     }
   `}
 `

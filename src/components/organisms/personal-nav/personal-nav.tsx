@@ -30,8 +30,9 @@ const PersonalNav: React.FC<Props> = (props) => {
   const [isPersonalSetting, setIsPersonalSetting] = useState(false)
   const notificationElement = useRef(null)
   const personalSettingElement = useRef(null)
+  const PopupElement = useRef(null)
   const documentClickHandler = useRef(null)
-  const { notifications } = useNotification()
+  const documentClickPopUpHandler = useRef(null)
   const { state } = useContext(GlobalContext)
   const { setPutTrigger, setTarget } = useUser()
   const { setPostUserLogoutTrigger } = useUserLogout()
@@ -40,10 +41,14 @@ const PersonalNav: React.FC<Props> = (props) => {
   const [imageFile, setImageFile] = useState<string>('')
   const [uploadFile, setUploadFile] = useState()
   const { setUserPostTrigger, setUserDeleteTrigger, setData } = useUploadImage()
+  const { setPutHistoryTrigger } = useNotification()
+
   const handleShowHistory = () => {
     setIsAlert(true)
     setIsPersonalSetting(false)
     document.addEventListener('click', documentClickHandler.current)
+    if (state.notification.is_newly === 0) return
+    setPutHistoryTrigger(true)
   }
 
   const handleShowPersonalSetting = () => {
@@ -60,6 +65,10 @@ const PersonalNav: React.FC<Props> = (props) => {
     document.removeEventListener('click', documentClickHandler.current)
   }
 
+  const removeDocumentClickPopUpHandler = () => {
+    document.removeEventListener('click', documentClickPopUpHandler.current)
+  }
+
   const handleSubmit = async (formValues: any) => {
     const { firstname, lastname } = formValues
     const target = { firstname: firstname, lastname: lastname }
@@ -71,8 +80,19 @@ const PersonalNav: React.FC<Props> = (props) => {
     }
   }
 
-  const handleUserLogout = () => {
-    setPostUserLogoutTrigger(true)
+  const handleImageSubmit = () => {
+    setIsSelect(true)
+    document.addEventListener('click', documentClickPopUpHandler.current)
+  }
+
+  const handlePopupChange = () => {
+    setIsShowModal(true)
+    setIsSelect(false)
+  }
+
+  const handlePopupDelete = () => {
+    setIsSelect(false)
+    handleFileDelete()
   }
 
   const handleFileUploadCancel = () => {
@@ -91,6 +111,10 @@ const PersonalNav: React.FC<Props> = (props) => {
     setIsShowModal(false)
   }
 
+  const handleUserLogout = () => {
+    setPostUserLogoutTrigger(true)
+  }
+
   useEffect(() => {
     documentClickHandler.current = (e) => {
       if (
@@ -102,6 +126,18 @@ const PersonalNav: React.FC<Props> = (props) => {
       setIsAlert(false)
       setIsPersonalSetting(false)
       removeDocumentClickHandler()
+    }
+
+    return () => {
+      removeDocumentClickHandler()
+    }
+  }, [])
+
+  useEffect(() => {
+    documentClickPopUpHandler.current = (e) => {
+      if (PopupElement.current.contains(e.target)) return
+      setIsSelect(false)
+      removeDocumentClickPopUpHandler()
     }
   }, [])
 
@@ -116,13 +152,14 @@ const PersonalNav: React.FC<Props> = (props) => {
             <Newly>{state.notification.is_newly}</Newly>
           )}
           <PopupCard isShow={isAlert} title={'通知'}>
-            {notifications.length !== 0 ? (
-              <HistoryList items={notifications} />
+            {state.notification.items.length !== 0 ? (
+              <HistoryList items={state.notification.items} />
             ) : (
               '通知はありません。'
             )}
           </PopupCard>
         </PersonalNavItem>
+
         <PersonalNavItem ref={personalSettingElement}>
           {state.isLoadingUser || (
             <Skeleton
@@ -142,31 +179,19 @@ const PersonalNav: React.FC<Props> = (props) => {
             title={'ユーザー情報'}
             width={332}
           >
-            <ProfileImageBox
-              onClick={() => {
-                setIsSelect(true)
-              }}
-            >
-              <ProfileImage src={state.user.profile_image} />
-            </ProfileImageBox>
-            <Options isShow={isShowSelect}>
-              <OptionItem
+            <PopupWrap ref={PopupElement}>
+              <ProfileImageBox
                 onClick={() => {
-                  setIsSelect(false)
-                  setIsShowModal(true)
+                  handleImageSubmit()
                 }}
               >
-                写真を変更
-              </OptionItem>
-              <OptionItem
-                onClick={() => {
-                  setIsSelect(false)
-                  handleFileDelete()
-                }}
-              >
-                削除
-              </OptionItem>
-            </Options>
+                <ProfileImage src={state.user.profile_image} />
+              </ProfileImageBox>
+              <PopupSelect isShow={isShowSelect}>
+                <PopItem label={'写真を変更'} handleClick={handlePopupChange} />
+                <PopItem label={'削除'} handleClick={handlePopupDelete} />
+              </PopupSelect>
+            </PopupWrap>
             <Modal
               title={''}
               isShow={isShowModal}
@@ -291,6 +316,7 @@ const PersonalNavItem = styled.li`
   background: #fff;
   box-shadow: ${Color.ELEVATION.L};
 `
+const PopupWrap = styled.div``
 const ProfileImageBox = styled.div`
   position: relative;
   display: flex;
@@ -334,39 +360,5 @@ const Newly = styled.div`
   font-weight: 500;
   color: ${Color.TEXT.WHITE};
 `
-const Options = styled.div<{ isShow: boolean }>`
-  display: ${({ isShow }) => (isShow ? 'flex' : 'none')};
-  flex-direction: column;
-  position: absolute;
-  top: 30%;
-  left: 45%;
-  width: 160px;
-  max-height: 200px;
-  padding: 8px;
-  border-radius: 8px;
-  background: ${Color.COMPONENT.SURFACE};
-  box-shadow: ${Color.ELEVATION.L};
-  scroll-behavior: smooth;
-  z-index: 10;
-`
-const OptionItem = styled.div`
-  display: flex;
-  align-items: center;
-  min-height: 40px;
-  margin-bottom: 8px;
-  padding: 10px;
-  border-radius: 8px;
-  background: Color.COMPONENT.WHITE_HOVER : Color.COMPONENT.SURFACE};
-  font-size: 14px;
-  cursor: pointer;
-  line-height: 1.4;
 
-  &:last-child {
-    margin: 0;
-  }
-
-  &:hover {
-    background: ${Color.COMPONENT.WHITE_HOVER};
-  }
-`
 export default PersonalNav

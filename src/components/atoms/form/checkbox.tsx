@@ -11,14 +11,29 @@ type Props = {
   name?: string
   labelName: string
   isInvalid?: boolean
+  small?: boolean
 }
 
 const Checkbox: React.FC<Props> = (props) => {
   return (
     <StyledCheckbox>
-      <Marker checked={props.checked} isInvalid={props.isInvalid}>
-        {props.checked && <Icon.Check color={Color.TEXT.WHITE} size={16} />}
-      </Marker>
+      {props.small ? (
+        <Marker
+          checked={props.checked}
+          isInvalid={props.isInvalid}
+          small={props.small}
+        >
+          {props.checked && <Icon.Check color={Color.TEXT.WHITE} size={11} />}
+        </Marker>
+      ) : (
+        <Marker
+          checked={props.checked}
+          isInvalid={props.isInvalid}
+          small={props.small}
+        >
+          {props.checked && <Icon.Check color={Color.TEXT.WHITE} size={16} />}
+        </Marker>
+      )}
       {props.labelName && <Label>{props.labelName}</Label>}
       <InnerInput type={'checkbox'} {...props} />
     </StyledCheckbox>
@@ -31,12 +46,16 @@ const StyledCheckbox = styled.label`
   font-size: 14px;
   cursor: pointer;
 `
-const Marker = styled.div<{ checked?: boolean; isInvalid?: boolean }>`
+const Marker = styled.div<{
+  checked?: boolean
+  isInvalid?: boolean
+  small?: boolean
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 24px;
-  height: 24px;
+  width: ${({ small }) => (small ? '16px' : '24px')};
+  height: ${({ small }) => (small ? '16px' : '24px')};
   border: 2px solid ${Color.COMPONENT.FORM_BORDER};
   border-radius: 6px;
   line-height: 1;

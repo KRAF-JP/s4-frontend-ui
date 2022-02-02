@@ -121,7 +121,7 @@ const UserLogsList: NextPage<Props> = (props) => {
               </>
             ) : (
               <NothingText>
-                検索条件に合う脆弱性はありませんでした。
+                検索条件に合うユーザーログはありませんでした。
               </NothingText>
             )}
           </>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import GlobalContext from '../../../store/context'
 import styled from 'styled-components'
 import Color from '../../../const/color'
 import { Icon } from '../../atoms/icon'
@@ -21,6 +22,7 @@ const ProjectList: NextPage<Props> = (props) => {
   const router = useRouter()
   const [items, setItems] = useState([])
   const [openToggle, setOpenToggle] = useState({})
+  const { state } = useContext(GlobalContext)
 
   const handleClickOpen = (i) => {
     setOpenToggle({
@@ -76,9 +78,11 @@ const ProjectList: NextPage<Props> = (props) => {
                         <IconButton>
                           <Icon.Pen />
                         </IconButton>
-                        <IconButton>
-                          <Icon.Trash />
-                        </IconButton>
+                        {state.user.role !== 0 && (
+                          <IconButton>
+                            <Icon.Trash />
+                          </IconButton>
+                        )}
                         <IconButton
                           handleClick={() => {
                             handleClickOpen(i)

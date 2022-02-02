@@ -87,7 +87,7 @@ const MembersList: React.FC<Props> = (props) => {
       data: {
         lastname: lastname,
         firstname: firstname,
-        role: role ? 2 : 0,
+        role: role ? 1 : 0,
       },
     }
     setIsShowModal(false)
@@ -316,7 +316,10 @@ const MembersList: React.FC<Props> = (props) => {
         <PerPageList>
           <PerPageListShow>
             全 {props.data.length} 件中
-            <PageCurrentNumber>{Number(offset) + 1}</PageCurrentNumber>〜
+            <PageCurrentNumber>
+              {props.data.length ? Number(offset) + 1 : 0}
+            </PageCurrentNumber>
+            〜
             {props.data.length > Number(offset) + Number(perPage) ? (
               <PageCurrentNumber>
                 {Number(offset) + Number(perPage)}

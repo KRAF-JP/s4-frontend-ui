@@ -55,4 +55,8 @@ export default {
     XL: '0 8px 24px 3px rgba(0, 0, 0, 0.16)',
     XXL: '0 12px 24px 4px rgba(0, 0, 0, 0.16)',
   },
+  ETC: {
+    GREY: '#92A2AF',
+    LIGHT_PINK: '#FFF5F5',
+  },
 }

@@ -8,6 +8,8 @@ import { NextPage } from 'next'
 import { IconButton } from '../../atoms/icon-button'
 import { CardInner } from '../../atoms/card'
 import Button from '../../atoms/button/button'
+import { usePackagesList } from '../../../hooks/pages/assets/use-packages'
+import { LoadingIcon } from '../../atoms/loading-icon'
 
 type Props = {
   data: any[]
@@ -18,14 +20,25 @@ const PackageList: NextPage<Props> = (props) => {
   const router = useRouter()
   const [items, setItems] = useState([])
   const [openToggle, setOpenToggle] = useState<boolean>(false)
+  const { isLoading, setTarget, setFetchTrigger, packages } = usePackagesList()
 
   const handleClickOpen = () => {
     setOpenToggle(!openToggle)
   }
 
+  const handleClickReload = () => {
+    setTarget(props.server)
+    setFetchTrigger(true)
+  }
+
   useEffect(() => {
     setItems(props.data)
   }, [props.data])
+
+  useEffect(() => {
+    if (!packages) return
+    setItems(packages)
+  }, [packages])
 
   return (
     <>
@@ -37,7 +50,11 @@ const PackageList: NextPage<Props> = (props) => {
                 <CardHeaderTitle>パッケージ</CardHeaderTitle>
               </WrapLeft>
               <WrapRight>
-                <ServerOption onClick={() => {}}>
+                <ServerOption
+                  onClick={() => {
+                    handleClickReload()
+                  }}
+                >
                   <IconButton>
                     <Icon.Reload />
                   </IconButton>
@@ -50,12 +67,32 @@ const PackageList: NextPage<Props> = (props) => {
                 <PackageLabel>パッケージ</PackageLabel>
                 <PackageLabel>バージョン</PackageLabel>
               </PackageListHeader>
-              {items.map((data, i) => (
-                <PackageListItem key={i}>
-                  <PackageName>{data.name}</PackageName>
-                  <PackageVersion>{data.version}</PackageVersion>
-                </PackageListItem>
-              ))}
+              <StyledList isOpen={openToggle}>
+                {isLoading ? (
+                  <>
+                    {items ? (
+                      <>
+                        {items.length ? (
+                          <>
+                            {items.map((data, i) => (
+                              <PackageListItem key={i} size={48}>
+                                <PackageName>{data.name}</PackageName>
+                                <PackageVersion>{data.version}</PackageVersion>
+                              </PackageListItem>
+                            ))}
+                          </>
+                        ) : (
+                          <NothingText>情報更新に失敗しました。</NothingText>
+                        )}
+                      </>
+                    ) : (
+                      <NothingText>情報更新に失敗しました。</NothingText>
+                    )}
+                  </>
+                ) : (
+                  <LoadingIcon />
+                )}
+              </StyledList>
               <CardFooter>
                 <WrapLeft>
                   {items.length > 3 ? (
@@ -173,13 +210,21 @@ const PackageLabel = styled.div`
   font-size: 12px;
   color: ${Color.TEXT.LIGHT_GRAY};
 `
+const StyledList = styled(List)<{ isOpen: boolean }>`
+  max-height: 157px;
+  overflow: hidden;
+  padding-bottom: 2px;
+  transition: all 0.2s ease-out;
+  ${({ isOpen }) =>
+    isOpen &&
+    `
+      max-height: 200vh !important;
+  `}
+`
 const PackageListItem = styled(ListItem)`
-  position: relative;
   display: grid;
   grid-template-columns: 240px 1fr;
-  height: 100%;
   border-radius: 8px;
-  line-height: 1.71;
   overflow: hidden;
   margin: 2px 2px 4px;
 
@@ -192,5 +237,14 @@ const PackageListItem = styled(ListItem)`
 `
 const PackageName = styled.div``
 const PackageVersion = styled.div``
+const NothingText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1.71;
+  text-align: center;
+`
 
 export default PackageList

@@ -37,7 +37,14 @@ const SoftwareList: NextPage<Props> = (props) => {
                 <CardHeaderTitle>ソフトウェア</CardHeaderTitle>
               </WrapLeft>
               <WrapRight>
-                <ServerOption onClick={() => {}}>
+                <ServerOption
+                  onClick={() => {
+                    router.push({
+                      pathname: `/assets/servers/${props.server}/software/register`,
+                      query: {},
+                    })
+                  }}
+                >
                   <IconButton>
                     <Icon.Plus />
                   </IconButton>
@@ -57,21 +64,23 @@ const SoftwareList: NextPage<Props> = (props) => {
                 <SoftwareLabel>バージョン</SoftwareLabel>
                 <SoftwareLabel>ベンダー</SoftwareLabel>
               </SoftwareListHeader>
-              {items.map((data, i) => (
-                <SoftwareListItem key={i}>
-                  <SoftwareName>{data.product_name}</SoftwareName>
-                  <SoftwareVersion>{data.version}</SoftwareVersion>
-                  <SoftwareVendor>{data.vendor_name}</SoftwareVendor>
-                  <SoftwareAction>
-                    <IconButton handleClick={() => {}}>
-                      <Icon.Pen />
-                    </IconButton>
-                    <IconButton handleClick={() => {}}>
-                      <Icon.Trash />
-                    </IconButton>
-                  </SoftwareAction>
-                </SoftwareListItem>
-              ))}
+              <StyledList isOpen={openToggle}>
+                {items.map((data, i) => (
+                  <SoftwareListItem key={i} size={48}>
+                    <SoftwareName>{data.product_name}</SoftwareName>
+                    <SoftwareVersion>{data.version}</SoftwareVersion>
+                    <SoftwareVendor>{data.vendor_name}</SoftwareVendor>
+                    <SoftwareAction>
+                      <IconButton handleClick={() => {}}>
+                        <Icon.Pen />
+                      </IconButton>
+                      <IconButton handleClick={() => {}}>
+                        <Icon.Trash />
+                      </IconButton>
+                    </SoftwareAction>
+                  </SoftwareListItem>
+                ))}
+              </StyledList>
               <CardFooter>
                 <WrapLeft>
                   {items.length > 3 ? (
@@ -206,14 +215,22 @@ const SoftwareLabel = styled.div`
   font-size: 12px;
   color: ${Color.TEXT.LIGHT_GRAY};
 `
+const StyledList = styled(List)<{ isOpen: boolean }>`
+  max-height: 157px;
+  overflow: hidden;
+  padding-bottom: 2px;
+  transition: max-height 0.2s ease-out;
+  ${({ isOpen }) =>
+    isOpen &&
+    `
+      max-height: 200vh !important;
+  `}
+`
 const SoftwareListItem = styled(ListItem)`
-  position: relative;
-  display: grid !important;
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
-  height: 100%;
   border-radius: 8px;
   line-height: 1.71;
-  overflow: hidden;
   margin: 2px 2px 4px;
   padding: 2px 16px !important;
 

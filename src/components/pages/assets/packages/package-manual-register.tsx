@@ -23,6 +23,7 @@ const PackageManualRegister: NextPage<Props> = (props) => {
   const [manualCommand, setManualCommand] = useState<any>({})
   const [serverDetail, setServerDetail] = useState<any>({})
   const [pasteResult, setPasteResult] = useState<string>()
+  const [submitDisabled, setSubmitDisabled] = useState<boolean>(true)
   const { json, setPostTrigger, setJsonTrigger, setTarget } =
     useManualPackageRegisterJson()
   const { dispatch } = useContext(GlobalContext)
@@ -62,6 +63,7 @@ const PackageManualRegister: NextPage<Props> = (props) => {
     console.log('aaa')
     setPasteResult('')
     setItems('')
+    setSubmitDisabled(true)
   }
 
   useEffect(() => {
@@ -70,6 +72,10 @@ const PackageManualRegister: NextPage<Props> = (props) => {
   }, [props, router.query.server])
 
   useEffect(() => {
+    if (!json) return
+    if (json.length) {
+      setSubmitDisabled(false)
+    }
     setItems(json)
   }, [json])
 
@@ -129,6 +135,7 @@ const PackageManualRegister: NextPage<Props> = (props) => {
             buttonType={'primary'}
             small={true}
             label={'登録'}
+            disabled={submitDisabled}
             handleClick={() => {
               handleSubmit()
             }}

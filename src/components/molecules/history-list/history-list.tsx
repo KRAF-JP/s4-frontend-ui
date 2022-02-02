@@ -13,67 +13,71 @@ const HistoryList: React.FC<Props> = (props) => {
     <List>
       {props.items ? (
         <>
-          {props.items &&
-            props.items.map((item, i) => (
-              <Item key={i}>
-                {item.is_newly && <ReadIcon />}
-                <Left>
-                  {item.user.profile_image && (
-                    <IconImage src={item.user.profile_image} size={32} />
+          {props.items.map((item, i) => (
+            <Item key={i}>
+              {item.is_newly && <ReadIcon />}
+              <Left>
+                {item.user.profile_image && (
+                  <IconImage src={item.user.profile_image} size={32} />
+                )}
+              </Left>
+              <Right>
+                <Content isRead={item.read_at}>
+                  {item.type && (
+                    <>
+                      {/ProjectAssigned/.test(item.type) && (
+                        <>
+                          {item.user.name}さんが、あなたを「
+                          <Link href={'/assets'}>{item.resource.name}</Link>
+                          」に追加しました。
+                        </>
+                      )}
+                      {/IssueStatusUpdated/.test(item.type) && (
+                        <>
+                          {item.user.name}さんが、「
+                          <Link href={`/vulnerability/${item.resource.id}`}>
+                            <a>{item.resource.vuln_id}</a>
+                          </Link>
+                          」を{item.resource.status_name}に変更しました
+                        </>
+                      )}
+                      {/IssueAssigned/.test(item.type) && (
+                        <>
+                          {item.user.name}さんが、あなたを「
+                          <Link href={`/vulnerability/${item.resource.id}`}>
+                            <a>{item.resource.vuln_id}</a>
+                          </Link>
+                          」の担当者に設定しました
+                        </>
+                      )}
+                    </>
                   )}
-                </Left>
-                <Right>
-                  <Content isRead={item.read_at}>
-                    {item.type && (
-                      <>
-                        {/ProjectAssigned/.test(item.type) && (
-                          <>
-                            {item.user.name}さんが、あなたを「
-                            {item.resource.name}
-                            」に追加しました。
-                          </>
-                        )}
-                        {/IssueStatusUpdated/.test(item.type) && (
-                          <>
-                            {item.user.name}さんが、「{item.resource.vuln_id}
-                            」を{item.resource.status_name}に変更しました
-                          </>
-                        )}
-                        {/IssueAssigned/.test(item.type) && (
-                          <>
-                            {item.user.name}さんが、あなたを「
-                            {item.resource.vuln_id}
-                            」の担当者に設定しました
-                          </>
-                        )}
-                      </>
-                    )}
 
-                    {item.update_contents && (
-                      <>
-                        {item.user_id ? (
-                          <>
-                            <HistoryName>{item.user.name}</HistoryName>さん
-                          </>
-                        ) : (
-                          <HistoryName>システム</HistoryName>
-                        )}
-                        が、
-                        {item.update_contents_front.map((data, i) => (
-                          <>
-                            {i >= 1 && '、'}
-                            {data.property}を「
-                            {data.new_value}」に
-                          </>
-                        ))}
-                        変更しました。
-                      </>
-                    )}
-                  </Content>
-                  <Date>{item.created_at.replaceAll('-', '/')}</Date>
-                </Right>
-              </Item>
-            ))}
+                  {item.update_contents && (
+                    <>
+                      {item.user_id ? (
+                        <>
+                          <HistoryName>{item.user.name}</HistoryName>さん
+                        </>
+                      ) : (
+                        <HistoryName>システム</HistoryName>
+                      )}
+                      が、
+                      {item.update_contents_front.map((data, i) => (
+                        <span key={i}>
+                          {i >= 1 && '、'}
+                          {data.property}を「
+                          {data.new_value}」に
+                        </span>
+                      ))}
+                      変更しました。
+                    </>
+                  )}
+                </Content>
+                <Date>{item.created_at.replaceAll('-', '/')}</Date>
+              </Right>
+            </Item>
+          ))}
         </>
       ) : (
         '履歴はありません'
@@ -105,6 +109,10 @@ const Right = styled.div`
 `
 const Content = styled.div<{ isRead?: boolean }>`
   font-size: 14px;
+
+  a {
+    text-decoration: underline;
+  }
 `
 const Date = styled.span`
   font-size: 12px;

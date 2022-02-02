@@ -52,6 +52,8 @@ export type userState = {
   }
   notification: {
     is_newly: number
+    is_load: boolean
+    items: any
   }
   vulnerability: {
     unread: number
@@ -112,6 +114,8 @@ export const initialUserState = {
   },
   notification: {
     is_newly: 0,
+    is_load: true,
+    items: [],
   },
   vulnerability: {
     unread: 0,
@@ -128,6 +132,8 @@ export type Action =
   | { type: 'update_organization'; payload: any }
   | { type: 'update_user_org_name'; payload: any }
   | { type: 'update_notification_newly'; payload: any }
+  | { type: 'update_notification_load'; payload: any }
+  | { type: 'update_notification_items'; payload: any }
   | { type: 'update_vulnerability_unread'; payload: any }
   | { type: 'update_user_profile_image'; payload: any }
   | { type: 'update_organization_image'; payload: any }

@@ -14,7 +14,7 @@ const TabItem: React.FC<Props> = (props) => {
   const router = useRouter()
 
   const currentPath = (path) => {
-    return router.asPath === path
+    return router.pathname == path
   }
 
   return (

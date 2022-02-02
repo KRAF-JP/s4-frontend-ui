@@ -7,12 +7,18 @@ type Props = {
   className?: string
   children?: React.ReactNode
   marginBottom?: number
+  required?: boolean
 }
 
 const FormField: React.FC<Props> = (props) => {
   return (
     <Wrap className={props.className} marginBottom={props.marginBottom}>
-      {props.label && <Label>{props.label}</Label>}
+      {props.label && (
+        <Label>
+          {props.label}
+          {props.required && <Required>★</Required>}
+        </Label>
+      )}
       <ChildrenWrap>{props.children}</ChildrenWrap>
     </Wrap>
   )
@@ -23,11 +29,11 @@ const Wrap = styled.div<{ marginBottom?: number }>`
   font-size: 14px;
 `
 const Label = styled.p`
+  display: flex;
   margin-bottom: 8px;
   font-size: 14px;
   color: ${Color.TEXT.GRAY};
   line-height: 1.43;
-  display: block;
   width: 100%;
 `
 const ChildrenWrap = styled.div`
@@ -41,6 +47,13 @@ const ChildrenWrap = styled.div`
       margin: 0;
     }
   }
+`
+const Required = styled.span`
+  display: block;
+  margin-left: 4px;
+  font-size: 10px;
+  color: ${Color.COMPONENT.DANGER};
+  transform: scale(0.7);
 `
 
 export default FormField

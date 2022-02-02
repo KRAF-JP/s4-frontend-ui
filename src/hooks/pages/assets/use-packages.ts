@@ -13,7 +13,7 @@ export const useAutoPackageRegister = () => {
   const { dispatch } = useContext(GlobalContext)
 
   const fetchRequest = async () => {
-    setIsLoading(true)
+    setIsLoading(false)
 
     apiClient
       .get(`/servers/${Number(server)}`, {})
@@ -42,7 +42,7 @@ export const useAutoPackageRegister = () => {
       .then((res) => {
         console.log(res.data)
         setCommand(res.data)
-        setIsLoading(false)
+        setIsLoading(true)
       })
       .catch((error) => {
         // #TODO sentry
@@ -73,14 +73,14 @@ export const useAutoPackageRegisterResult = () => {
   const { dispatch } = useContext(GlobalContext)
 
   const fetchRequest = async () => {
-    setIsLoading(true)
+    setIsLoading(false)
 
     apiClient
       .get(`/package_curls/${Number(target)}`, {})
       .then((res) => {
         console.log(res.data)
         setResult(res.data)
-        setIsLoading(false)
+        setIsLoading(true)
       })
       .catch((error) => {
         // #TODO sentry
@@ -89,7 +89,7 @@ export const useAutoPackageRegisterResult = () => {
   }
 
   const postRequest = async () => {
-    setIsLoading(true)
+    setIsLoading(false)
 
     apiClient
       .post(`/package_curls/${Number(target)}/register_packages`, {})
@@ -103,7 +103,7 @@ export const useAutoPackageRegisterResult = () => {
             type: 'success',
           },
         })
-        setIsLoading(false)
+        setIsLoading(true)
       })
       .catch((error) => {
         // #TODO sentry
@@ -151,7 +151,7 @@ export const useManualPackageRegister = () => {
   const { dispatch } = useContext(GlobalContext)
 
   const fetchRequest = async () => {
-    setIsLoading(true)
+    setIsLoading(false)
 
     apiClient
       .get(`/servers/${Number(server)}`, {})
@@ -180,7 +180,7 @@ export const useManualPackageRegister = () => {
       .then((res) => {
         console.log(res.data)
         setCommand(res.data)
-        setIsLoading(false)
+        setIsLoading(true)
       })
       .catch((error) => {
         // #TODO sentry
@@ -213,7 +213,7 @@ export const useManualPackageRegisterJson = () => {
   const { dispatch } = useContext(GlobalContext)
 
   const jsonRequest = async () => {
-    setIsLoading(true)
+    setIsLoading(false)
 
     apiClient
       .post(`/servers/${Number(server)}/packages/format_packages`, {
@@ -223,7 +223,7 @@ export const useManualPackageRegisterJson = () => {
       .then((res) => {
         console.log(res.data)
         setJson(res.data)
-        setIsLoading(false)
+        setIsLoading(true)
       })
       .catch((error) => {
         // #TODO sentry
@@ -232,7 +232,7 @@ export const useManualPackageRegisterJson = () => {
   }
 
   const postRequest = async () => {
-    setIsLoading(true)
+    setIsLoading(false)
 
     apiClient
       .post(`/servers/${Number(server)}/packages/bulk_store`, {
@@ -249,7 +249,7 @@ export const useManualPackageRegisterJson = () => {
             type: 'success',
           },
         })
-        setIsLoading(false)
+        setIsLoading(true)
       })
       .catch((error) => {
         dispatch({
@@ -283,6 +283,46 @@ export const useManualPackageRegisterJson = () => {
     setTarget,
     setJsonTrigger,
     setPostTrigger,
+    isLoading,
+    setIsLoading,
+  }
+}
+
+export const usePackagesList = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [packages, setPackages] = useState<any>()
+  const [target, setTarget] = useState<any>()
+  const [fetchTrigger, setFetchTrigger] = useState<boolean>(false)
+  const { dispatch } = useContext(GlobalContext)
+
+  const fetchRequest = async () => {
+    setIsLoading(false)
+
+    apiClient
+      .get(`/servers/${Number(target)}/packages`, {})
+      .then((res) => {
+        console.log(res.data)
+        setPackages(res.data)
+        setIsLoading(true)
+      })
+      .catch((error) => {
+        // #TODO sentry
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    if (!fetchTrigger) return
+    fetchRequest()
+    setFetchTrigger(false)
+  }, [fetchTrigger])
+
+  return {
+    packages,
+    setPackages,
+    fetchTrigger,
+    setFetchTrigger,
+    setTarget,
     isLoading,
     setIsLoading,
   }
