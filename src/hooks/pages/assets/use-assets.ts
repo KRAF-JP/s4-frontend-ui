@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { apiClient } from '../../api-client'
+import { useRouter } from 'next/router'
 
 export const useProjects = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)

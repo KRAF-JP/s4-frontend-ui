@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 import Color from '../../../const/color'
 import { Icon } from '../../atoms/icon'
 
