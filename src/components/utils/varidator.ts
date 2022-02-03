@@ -94,3 +94,9 @@ export const time = (value: any) => {
     ? undefined
     : '正しい時間を入力してください'
 }
+
+export const alphabeticAndNumericAndSymbolic = (value: any) => {
+  value = value || ''
+  if (value === '') return undefined
+  return /^[!-~]+$/.test(value) ? undefined : '半角英数記号で入力してください'
+}

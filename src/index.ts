@@ -85,6 +85,7 @@ export {
   email,
   url,
   time,
+  alphabeticAndNumericAndSymbolic
 } from './components/utils/varidator'
 
 // const
