@@ -100,3 +100,9 @@ export const alphabeticAndNumericAndSymbolic = (value: any) => {
   if (value === '') return undefined
   return /^[!-~]+$/.test(value) ? undefined : '半角英数記号で入力してください'
 }
+
+export const password = (value: any) => {
+  value = value || ''
+  if (value === '') return undefined
+  return /^(?=.*?[a-zA-Z])(?=.*?\d)(?=.*?[!-\/:-@[-`{-~])[!-~]+$/.test(value) ? undefined : '半角英大文字・小文字・数字・記号をそれぞれ含む必要があります'
+}
