@@ -134,7 +134,10 @@ const UserLogsList: NextPage<Props> = (props) => {
         <PerPageList>
           <PerPageListShow>
             全 {props.totalCount} 件中
-            <PageCurrentNumber>{Number(offset) + 1}</PageCurrentNumber>〜
+            <PageCurrentNumber>
+              {props.totalCount ? Number(offset) + 1 : 0}
+            </PageCurrentNumber>
+            〜
             {props.totalCount > Number(offset) + Number(perPage) ? (
               <PageCurrentNumber>
                 {Number(offset) + Number(perPage)}

@@ -8,6 +8,9 @@ import { NextPage } from 'next'
 import { IconButton } from '../../atoms/icon-button'
 import { CardInner } from '../../atoms/card'
 import { PackageList, SoftwareList } from '../../pages/assets'
+import Modal from '../../organisms/modal'
+import { useServers } from '../../../hooks/pages/assets/use-servers'
+import { Button } from '../../atoms/button'
 
 type Props = {
   data: any[]
@@ -16,12 +19,27 @@ type Props = {
 const ServerList: NextPage<Props> = (props) => {
   const [items, setItems] = useState([])
   const [openToggle, setOpenToggle] = useState({})
+  const [isShowModal, setIsShowModal] = useState<boolean>(false)
+  const { setTarget, target, setDeleteTrigger } = useServers()
 
   const handleClickOpen = (id: number) => {
     setOpenToggle({
       ...openToggle,
       [id]: !openToggle[id],
     })
+  }
+
+  const handleSubmitDelete = () => {
+    setDeleteTrigger(true)
+    setIsShowModal(false)
+  }
+
+  const handleSubmitCancel = () => {
+    setTarget({
+      id: null,
+      name: null,
+    })
+    setIsShowModal(false)
   }
 
   useEffect(() => {
@@ -55,23 +73,36 @@ const ServerList: NextPage<Props> = (props) => {
                         <IconButton>
                           <Icon.Pen />
                         </IconButton>
-                        <IconButton>
+                        <IconButton
+                          handleClick={() => {
+                            setTarget({
+                              id: data.id,
+                              name: data.name,
+                            })
+                            setIsShowModal(true)
+                          }}
+                        >
                           <Icon.Trash />
                         </IconButton>
-                        <ServerOption
-                          onClick={() => {
+                        <ServerOptionButton
+                          type={'button'}
+                          label={'オプション'}
+                          beforeIcon={
+                            <>
+                              {openToggle[data.id] ? (
+                                <Icon.ChevronUp />
+                              ) : (
+                                <Icon.ChevronDown />
+                              )}
+                            </>
+                          }
+                          small
+                          handleClick={() => {
                             handleClickOpen(data.id)
                           }}
                         >
-                          <IconButton>
-                            {openToggle[data.id] ? (
-                              <Icon.ChevronUp />
-                            ) : (
-                              <Icon.ChevronDown />
-                            )}
-                          </IconButton>
                           オプション
-                        </ServerOption>
+                        </ServerOptionButton>
                       </WrapRight>
                     </ServerListHeader>
                   </CardHeaderTitle>
@@ -98,6 +129,28 @@ const ServerList: NextPage<Props> = (props) => {
                   )}
                   <SoftwareList data={data.software} server={data.id} />
                 </CardContents>
+                <Modal
+                  isShow={isShowModal}
+                  setIsShow={setIsShowModal}
+                  submit={{
+                    label: '削除',
+                    buttonType: 'danger',
+                    disabled: false,
+                  }}
+                  title={'サーバを削除'}
+                  handleClickSubmit={() => {
+                    handleSubmitDelete()
+                  }}
+                  handleClickCancel={() => {
+                    handleSubmitCancel()
+                  }}
+                >
+                  <>
+                    「{target.name}」を削除しますか？
+                    <br />
+                    （該当の資産で検出された脆弱性も削除されます）
+                  </>
+                </Modal>
               </CardInner>
             ))}
           </>
@@ -209,14 +262,9 @@ const ServerLabel = styled.div`
   display: inline-block;
   color: ${Color.TEXT.LIGHT_GRAY};
 `
-const ServerOption = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 16px;
-  cursor: pointer;
-  color: ${Color.TEXT.GRAY};
-  font-weight: bold;
+const ServerOptionButton = styled(Button)`
+  background: none;
+  border: none;
 `
 
 export default ServerList

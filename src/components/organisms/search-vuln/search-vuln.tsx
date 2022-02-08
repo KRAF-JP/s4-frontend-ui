@@ -148,9 +148,9 @@ const SearchVuln: React.FC<Props> = (props) => {
 
             <InputWrap>
               <FormField label={'提出日'}>
-                <InputDate onChange={() => null} placeholder={'0000/00/00'} />
+                <InputDate placeholder={'0000/00/00'} />
                 <Between>{'〜'}</Between>
-                <InputDate onChange={() => null} placeholder={'0000/00/00'} />
+                <InputDate placeholder={'0000/00/00'} />
                 <IconButton>
                   <Icon.Calendar color={Color.TEXT.GRAY} />
                 </IconButton>

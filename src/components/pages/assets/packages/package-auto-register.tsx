@@ -18,11 +18,15 @@ type Props = {
 const PackageAutoRegister: NextPage<Props> = (props) => {
   const router = useRouter()
   const { server } = router.query
-  const [items, setItems] = useState<any>({})
+  const [items, setItems] = useState<any>({
+    is_curl_received: false,
+    packages: {},
+  })
+  const [itemOutput, setItemOutput] = useState<string>(null)
   const [packageCurl, setPackageCurl] = useState<any>({})
   const [secCount, setSecCount] = useState<number>(10)
   const [disabled, setDisabled] = useState<boolean>(true)
-  const { result, setResultTrigger, setTarget, setPostTrigger } =
+  const { result, setResultTrigger, setTarget, setPostTrigger, setWaitFetch } =
     useAutoPackageRegisterResult()
   const { dispatch } = useContext(GlobalContext)
 
@@ -46,7 +50,7 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
   }
 
   const handleSubmit = () => {
-    setTarget(Number(server))
+    setTarget(packageCurl.id)
     setPostTrigger(true)
   }
 
@@ -63,9 +67,32 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
   }, [props.command, router.isReady])
 
   useEffect(() => {
-    setItems(result)
-    if (result) setDisabled(!result.is_curl_received)
+    if (!packageCurl) return
+    setTarget(packageCurl.id)
+  }, [packageCurl])
+
+  useEffect(() => {
+    console.log(result)
+    if (result) {
+      setItems(result)
+      setDisabled(!result.is_curl_received)
+    }
+    setWaitFetch(false)
   }, [result])
+
+  useEffect(() => {
+    if (!items.packages) return
+    let out = ''
+    for (const key of Object.keys(items.packages)) {
+      let data = items.packages[key]
+      if (items.os === 'ubuntu' || items.os === 'debian') {
+        out += `${data.name} ${data.evr} ${data.source_name} ${data.source_evr}\n`
+      } else {
+        out += `${data.name} ${data.evr}\n`
+      }
+    }
+    setItemOutput(out)
+  }, [items])
 
   useEffect(() => {
     let cnt = 10
@@ -74,16 +101,17 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
       setSecCount((preSecCount) => preSecCount - 1)
       cnt = cnt - 1
       console.log(cnt)
-      if (cnt <= 0) {
-        setTarget(Number(server))
+      if (cnt < 0) {
+        setWaitFetch(true)
         setResultTrigger(true)
-        clearInterval(timer)
+        cnt = 10
+        setSecCount(10)
       }
     }, 1000)
     return () => {
       clearInterval(timer)
     }
-  }, [result])
+  }, [])
 
   return (
     <Wrap>
@@ -112,18 +140,7 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
 
         <CommandArea
           readOnly={true}
-          value={
-            items
-              ? items.packages !== null ??
-                items.packages((data) => {
-                  if (items.os === 'ubuntu' || items.os === 'debian') {
-                    return `${data.name} ${data.evr} ${data.source_name} ${data.source_evr}\n`
-                  } else {
-                    return `${data.name} ${data.evr}\n`
-                  }
-                })
-              : `あと${secCount}秒で更新します…`
-          }
+          value={itemOutput ? itemOutput : `あと${secCount}秒で更新します…`}
         />
         <TextAttention>
           ※ コマンド実行がエラーになる場合は、「手動登録」をお試しください。

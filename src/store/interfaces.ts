@@ -130,6 +130,8 @@ export type Action =
   | { type: 'fetch_init_user'; payload: any }
   | { type: 'fetch_init_organization'; payload: any }
   | { type: 'update_organization'; payload: any }
+  | { type: 'update_user'; payload: any }
+  | { type: 'update_user_name'; payload: any }
   | { type: 'update_user_org_name'; payload: any }
   | { type: 'update_notification_newly'; payload: any }
   | { type: 'update_notification_load'; payload: any }

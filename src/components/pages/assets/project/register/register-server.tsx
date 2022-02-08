@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Color from '../../../../../const/color'
@@ -15,20 +15,83 @@ import ToggleTabList from '../../../../molecules/toggle-tab-list/toggle-tab-list
 import { Field, Form } from 'react-final-form'
 import { composeValidators, required } from '../../../../utils/varidator'
 import { Button } from '../../../../atoms/button'
+import Modal from '../../../../organisms/modal'
+import { LoadingIcon } from '../../../../atoms/loading-icon'
+import { List, ListItem } from '../../../../molecules/list'
 
 type Props = {
   data: any
   setData: any
   versionList: any
   windowsOsList: any
+  otherOsList: any
   setOsFamily: any
   setWindowsOs: any
+  setOtherOsSearchKeyword: any
+  setFetchOtherOsTrigger: any
+  isLoading: boolean
 }
 
 const RegisterServer: React.FC<Props> = (props) => {
+  const [selectItem, setSelectItem] = useState<string>()
+  const [otherOsItems, setOtherOsItems] = useState<{
+    count: number
+    data: any
+  }>({
+    count: 0,
+    data: [],
+  })
+  const [modalIsShow, setModalIsShow] = useState<boolean>(false)
+  const [os, setOs] = useState<string>()
   const [isWindows, setIsWindows] = useState<boolean>(false)
   const [isOther, setIsOther] = useState<boolean>(false)
-  const [isOtherData, setIsOtherData] = useState<any>()
+  const [otherSearchKeyword, setOtherSearchKeyword] = useState<string>(null)
+  const [otherSelectOsVersion, setOtherSelectOsVersion] = useState<{
+    os_name: string
+    os_version: string
+    os_vendor: string
+  }>({
+    os_name: null,
+    os_version: null,
+    os_vendor: null,
+  })
+  const [serverData, setServerData] = useState<{
+    name: string
+    os_family: string
+    os_release: string
+    last_modified_date: string
+  }>({
+    name: null,
+    os_family: 'amazon',
+    os_release: null,
+    last_modified_date: null,
+  })
+  const [serverWindowsData, setServerWindowsData] = useState<{
+    name: string
+    os_name: string
+    os_version: string
+    auto_update_enabled: boolean
+    last_modified_date: string
+  }>({
+    name: null,
+    os_name: null,
+    os_version: null,
+    auto_update_enabled: false,
+    last_modified_date: null,
+  })
+  const [serverOtherData, setServerOtherData] = useState<{
+    name: string
+    os_vendor: string
+    os_name: string
+    os_version: string
+    last_modified_date: string
+  }>({
+    name: null,
+    os_vendor: null,
+    os_name: null,
+    os_version: null,
+    last_modified_date: null,
+  })
 
   const handleSubmit = () => {}
 
@@ -44,25 +107,38 @@ const RegisterServer: React.FC<Props> = (props) => {
     if (server_os_family === 'windows') {
       setIsOther(false)
       setIsWindows(true)
+      setOs(server_os_family)
       props.setOsFamily({ os_family: server_os_family })
+      props.setData({ ...serverWindowsData, name: props.data.name })
     } else if (server_os_family === 'other') {
       setIsOther(true)
       setIsWindows(false)
+      setOs(server_os_family)
+      props.setOsFamily({ os_family: server_os_family })
+      props.setData({ ...serverOtherData, name: props.data.name })
     } else {
       setIsOther(false)
       setIsWindows(false)
+      setOs(server_os_family)
       props.setOsFamily({ os_family: server_os_family })
+      props.setData({
+        ...serverData,
+        os_family: server_os_family,
+        name: props.data.name,
+      })
     }
-
-    props.setData({ ...props.data, os_family: server_os_family })
   }
 
   const handleVersionChange = (e) => {
-    props.setData({ ...props.data, os_release: e.target.value })
+    if (os === 'windows') {
+      props.setData({ ...props.data, os_version: e.target.value })
+    } else {
+      props.setData({ ...props.data, os_release: e.target.value })
+    }
   }
 
   const handleWindowsOsChange = (e) => {
-    props.setData({ ...props.data, os_family: e.target.value })
+    props.setData({ ...props.data, os_name: e.target.value })
     props.setWindowsOs(e.target.value)
   }
 
@@ -87,13 +163,87 @@ const RegisterServer: React.FC<Props> = (props) => {
     })
   }
 
+  const handleUpdateMeans = (formValue) => {
+    const { update_means } = formValue.values
+
+    if (os === 'windows') {
+      update_means === 'true'
+        ? props.setData({ ...props.data, auto_update_enabled: true })
+        : props.setData({ ...props.data, auto_update_enabled: false })
+    }
+  }
+
+  const handleKeywordChange = (formValues: any) => {
+    const { other_os_keyword } = formValues.values
+    setOtherSearchKeyword(other_os_keyword)
+  }
+
+  const handleOsVersionSet = (os, version, vendor) => {
+    setOtherSelectOsVersion({
+      os_name: os,
+      os_version: version,
+      os_vendor: vendor,
+    })
+  }
+
+  const handleClickOthersSelect = () => {
+    props.setData({ ...props.data, ...otherSelectOsVersion })
+    setModalIsShow(false)
+  }
+
+  useEffect(() => {
+    if (os !== 'windows') return
+    props.setData({
+      ...props.data,
+      os_name: props.windowsOsList[0].value,
+    })
+  }, [props.windowsOsList, os])
+
+  useEffect(() => {
+    if (os === 'windows') {
+      props.setData({
+        ...props.data,
+        os_version: props.versionList[0].value,
+      })
+    } else if (os === 'other') {
+      props.setData({
+        ...props.data,
+      })
+    } else {
+      props.setData({
+        ...props.data,
+        os_release: props.versionList[0].value,
+      })
+    }
+  }, [props.versionList])
+
+  useEffect(() => {
+    props.setOtherOsSearchKeyword(otherSearchKeyword)
+
+    const timer = setTimeout(() => {
+      if (!otherSearchKeyword) {
+        setOtherOsItems({ ...otherOsItems, data: [] })
+      } else {
+        props.setFetchOtherOsTrigger(true)
+      }
+    }, 2000)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [otherSearchKeyword])
+
+  useEffect(() => {
+    setOtherOsItems(props.otherOsList)
+  }, [props.otherOsList])
+
   return (
     <>
       <ContentsTitle>サーバー情報</ContentsTitle>
 
       <Form
         onSubmit={handleSubmit}
-        initialValues={{ server_os_family: 'amazon' }}
+        initialValues={{ server_os_family: 'amazon', update_means: 'false' }}
         validate={(values: any) => {
           const errors: any = {}
 
@@ -241,26 +391,43 @@ const RegisterServer: React.FC<Props> = (props) => {
               </RadioGroup>
             </FormField>
 
-            {isOther && isOtherData && (
-              <FieldFlex>
-                <FormField label={'OS'} marginBottom={24} required>
-                  OS
-                </FormField>
+            {isOther && otherSelectOsVersion.os_name && (
+              <>
+                <FieldFlex>
+                  <FormField label={'OS'} marginBottom={16} required>
+                    {otherSelectOsVersion.os_name}
+                  </FormField>
 
-                <FormField label={'バージョン'} marginBottom={24} required>
-                  バージョン
+                  <FormField label={'バージョン'} marginBottom={16} required>
+                    {otherSelectOsVersion.os_version}
+                  </FormField>
+                </FieldFlex>
+
+                <FormField marginBottom={24}>
+                  <Button
+                    type={'button'}
+                    label={'OS選択'}
+                    buttonType={'primary'}
+                    small
+                    handleClick={() => {
+                      setModalIsShow(true)
+                    }}
+                  />
                 </FormField>
-              </FieldFlex>
+              </>
             )}
 
             <FieldFlex>
-              {isOther && !isWindows && (
+              {isOther && !isWindows && !otherSelectOsVersion.os_name && (
                 <FormField label={'OS・バージョン'} marginBottom={24} required>
                   <Button
                     type={'button'}
                     label={'OS選択'}
                     buttonType={'primary'}
                     small
+                    handleClick={() => {
+                      setModalIsShow(true)
+                    }}
                   />
                 </FormField>
               )}
@@ -315,8 +482,30 @@ const RegisterServer: React.FC<Props> = (props) => {
             {isWindows && (
               <FormField label={'更新手段'} marginBottom={10}>
                 <ToggleTabList>
-                  <ToggleTab label={'自動更新'} />
-                  <ToggleTab label={'手動更新'} />
+                  <Field name={'update_means'} type={'radio'} value={'true'}>
+                    {({ input, meta }) => (
+                      <ToggleTab
+                        {...input}
+                        label={'自動更新'}
+                        onChange={(e) => {
+                          input.onChange(e)
+                          handleUpdateMeans(form.getState())
+                        }}
+                      />
+                    )}
+                  </Field>
+                  <Field name={'update_means'} type={'radio'} value={'false'}>
+                    {({ input, meta }) => (
+                      <ToggleTab
+                        {...input}
+                        label={'手動更新'}
+                        onChange={(e) => {
+                          input.onChange(e)
+                          handleUpdateMeans(form.getState())
+                        }}
+                      />
+                    )}
+                  </Field>
                 </ToggleTabList>
               </FormField>
             )}
@@ -329,6 +518,91 @@ const RegisterServer: React.FC<Props> = (props) => {
                 </Link>
               </Help>
             )}
+
+            <Modal
+              title={'OS選択'}
+              isShow={modalIsShow}
+              setIsShow={setModalIsShow}
+              submit={{
+                label: '選択',
+                buttonType: 'primary',
+              }}
+              handleClickSubmit={handleClickOthersSelect}
+              handleClickCancel={() => {
+                setModalIsShow(false)
+              }}
+            >
+              <Field name={'other_os_keyword'} type={'text'}>
+                {({ input, meta }) => (
+                  <InputText
+                    {...(input as any)}
+                    icon={<Icon.Search color={Color.TEXT.GRAY} />}
+                    size={'XXL'}
+                    placeholder={'OS、バージョン、ベンダーで検索'}
+                    onKeyUp={(e) => {
+                      input.onChange(e)
+                      handleKeywordChange(form.getState())
+                    }}
+                  />
+                )}
+              </Field>
+
+              <ListWrap>
+                <ListHeader>
+                  <HeaderItem>OS</HeaderItem>
+                  <HeaderItem>バージョン</HeaderItem>
+                  <HeaderItem>ベンダー</HeaderItem>
+                </ListHeader>
+                <StyledList>
+                  {props.isLoading ? (
+                    <>
+                      {otherOsItems ? (
+                        <>
+                          {otherOsItems.data.length ? (
+                            <>
+                              {otherOsItems.data.map((data, i) => (
+                                <StyledListItem
+                                  key={i}
+                                  handleClick={() => {
+                                    setSelectItem(i)
+                                    handleOsVersionSet(
+                                      data['product'],
+                                      data['version'],
+                                      data['vendor']
+                                    )
+                                  }}
+                                  select={selectItem === i}
+                                  disabled={data['disabled']}
+                                >
+                                  <ContentItem>{data['product']}</ContentItem>
+                                  <ContentItem>{data['version']}</ContentItem>
+                                  <ContentItem>{data['vendor']}</ContentItem>
+                                </StyledListItem>
+                              ))}
+                            </>
+                          ) : (
+                            <NothingText>
+                              検索条件に合うソフトウェアはありませんでした。
+                            </NothingText>
+                          )}
+                        </>
+                      ) : (
+                        <NothingText>
+                          検索条件に合うソフトウェアはありませんでした。
+                        </NothingText>
+                      )}
+                    </>
+                  ) : (
+                    <LoadingIcon />
+                  )}
+                </StyledList>
+              </ListWrap>
+              <Text>
+                検索結果 {otherOsItems.count} 件中{' '}
+                {otherOsItems.data.length ? 1 : 0} 〜 {otherOsItems.data.length}{' '}
+                件を表示
+              </Text>
+            </Modal>
           </form>
         )}
       />
@@ -367,6 +641,63 @@ const Help = styled.div<{ marginBottom?: number }>`
     color: ${Color.PRIMARY._500};
     text-decoration: underline;
   }
+`
+const ListWrap = styled.div`
+  min-width: 560px;
+  margin-top: 16px;
+`
+const ListHeader = styled.div`
+  display: grid;
+  grid-template-columns: 136px 136px 1fr;
+  border-bottom: 1px solid ${Color.COMPONENT.BORDER};
+  font-size: 12px;
+  color: ${Color.TEXT.LIGHT_GRAY};
+`
+const HeaderItem = styled.div`
+  margin: 8px 16px;
+`
+const StyledList = styled(List)`
+  height: 460px;
+  overflow-y: scroll;
+  padding: 8px 0;
+  line-height: 1.5;
+`
+const StyledListItem = styled(ListItem)<{ select?: boolean }>`
+  display: grid;
+  grid-template-columns: 136px 136px 1fr;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 14px;
+  word-break: break-word;
+
+  ${({ select }) =>
+    select &&
+    `
+    outline: 2px solid ${Color.PRIMARY._500};
+    outline-offset: -2px;
+    background: ${Color.COMPONENT.WHITE_HOVER};
+    `}
+
+  > div {
+    padding-right: 8px;
+  }
+`
+const ContentItem = styled.div``
+const NothingText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  line-height: 1.71;
+  text-align: center;
+`
+const Text = styled.p`
+  position: absolute;
+  bottom: 44px;
+  color: ${Color.TEXT.BLACK};
+  font-size: 14px;
 `
 
 export default RegisterServer

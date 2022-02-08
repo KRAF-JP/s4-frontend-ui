@@ -75,6 +75,7 @@ const PersonalNav: React.FC<Props> = (props) => {
     const { firstname, lastname } = formValues
     const target = { firstname: firstname, lastname: lastname }
     setIsPersonalSetting(false)
+    setIsShow(false)
 
     if (target) {
       setTarget(target)
@@ -108,7 +109,9 @@ const PersonalNav: React.FC<Props> = (props) => {
   }
 
   const handleFileUploadSubmit = () => {
+    setImageFile('')
     setData(uploadFile)
+    setUserDeleteTrigger(false)
     setUserPostTrigger(true)
     setIsShowModal(false)
   }
@@ -155,7 +158,11 @@ const PersonalNav: React.FC<Props> = (props) => {
           )}
           <PopupCard isShow={isAlert} title={'通知'}>
             {state.notification.items.length !== 0 ? (
-              <HistoryList items={state.notification.items} />
+              <HistoryList
+                items={state.notification.items}
+                setIsAlert={setIsAlert}
+                removeHandler={removeDocumentClickHandler}
+              />
             ) : (
               '通知はありません。'
             )}

@@ -4,6 +4,7 @@ import Color from '../../../const/color'
 
 type Props = {
   label?: string
+  onChange?: (e: React.SyntheticEvent) => void
 }
 
 const ToggleTab: React.FC<Props> = (props) => {

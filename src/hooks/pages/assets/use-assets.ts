@@ -39,8 +39,18 @@ export const useProjects = () => {
 
 export const useProjectRegister = () => {
   const router = useRouter()
+  const [projectId, setProjectId] = useState<number>()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [osFamily, setOsFamily] = useState<any>({ os_family: 'amazon' })
   const [windowsOsList, setWindowsOsList] = useState<any>([{}])
+  const [otherOsList, setOtherOsList] = useState<{
+    count: number
+    data: any
+  }>({
+    count: 0,
+    data: [],
+  })
+  const [otherOsSearchKeyword, setOtherOsSearchKeyword] = useState<string>()
   const [selectedWindowsOs, setSelectedWindowsOs] =
     useState<string>('windows_10')
   const [versionListData, setVersionListData] = useState<any>([{}])
@@ -48,17 +58,17 @@ export const useProjectRegister = () => {
     name: string
     platform: string
   }>()
-  const [targetRegisterServer, setTargetRegisterServer] = useState<{
-    name: string
-    os_family: string
-    os_release: string
-    last_modified_date: string
-  }>()
+  const [targetRegisterServer, setTargetRegisterServer] = useState<any>()
   const [registerProjectTrigger, setRegisterProjectTrigger] =
     useState<boolean>(false)
+  const [registerServerTrigger, setRegisterServerTrigger] =
+    useState<boolean>(false)
   const [addServerTrigger, setAddServerTrigger] = useState<boolean>(false)
+  const [fetchOtherOsTrigger, setFetchOtherOsTrigger] = useState<boolean>(false)
 
   const fetchVersionRequest = async () => {
+    setVersionListData([{}])
+
     if (osFamily.os_family === 'windows') {
       apiClient
         .get('/cpes/get_versions', {
@@ -77,6 +87,8 @@ export const useProjectRegister = () => {
         .catch((error) => {
           console.log(error.response)
         })
+    } else if (osFamily.os_family === 'other') {
+      return
     } else {
       apiClient
         .get('/servers/get_version_list', { params: osFamily })
@@ -106,6 +118,23 @@ export const useProjectRegister = () => {
       })
   }
 
+  const fetchOtherOsRequest = async () => {
+    setIsLoading(false)
+    apiClient
+      .get('/cpes/search?part[]=o', {
+        params: { limit: 100, keyword: otherOsSearchKeyword },
+      })
+      .then((res) => {
+        console.log(res.data)
+        setIsLoading(true)
+        setOtherOsList(res.data)
+      })
+      .catch((error) => {
+        setIsLoading(true)
+        console.log(error.response)
+      })
+  }
+
   const fetchWindowsVersionRequest = async () => {
     apiClient
       .get('/cpes/get_versions', {
@@ -129,22 +158,44 @@ export const useProjectRegister = () => {
     apiClient
       .post('/projects', targetRegisterProject)
       .then((res) => {
-        registerServerRequest(res.data.id)
+        console.log(res.data)
+        setProjectId(res.data.id)
+        setRegisterServerTrigger(true)
       })
       .catch((error) => {
         console.log(error.response)
       })
   }
 
-  const registerServerRequest = async (projectId: number) => {
-    apiClient
-      .post(`/projects/${projectId}/servers`, targetRegisterServer)
-      .then((res) => {
-        router.push('/assets')
-      })
-      .catch((error) => {
-        console.log(error.response)
-      })
+  const registerServerRequest = async () => {
+    if (osFamily.os_family === 'windows') {
+      apiClient
+        .post(`/projects/${projectId}/servers/windows`, targetRegisterServer)
+        .then((res) => {
+          router.push('/assets')
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+    } else if (osFamily.os_family === 'other') {
+      apiClient
+        .post(`/projects/${projectId}/servers/other`, targetRegisterServer)
+        .then((res) => {
+          router.push('/assets')
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+    } else {
+      apiClient
+        .post(`/projects/${projectId}/servers`, targetRegisterServer)
+        .then((res) => {
+          router.push('/assets')
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+    }
   }
 
   const addServerRequest = async (projectId: number) => {
@@ -179,20 +230,37 @@ export const useProjectRegister = () => {
   }, [registerProjectTrigger])
 
   useEffect(() => {
+    if (!registerServerTrigger) return
+    registerServerRequest()
+    setRegisterServerTrigger(false)
+  }, [registerServerTrigger])
+
+  useEffect(() => {
     if (!addServerTrigger) return
     const query = router.query
     addServerRequest(Number(query.project))
     setAddServerTrigger(false)
   }, [addServerTrigger])
 
+  useEffect(() => {
+    if (!fetchOtherOsTrigger) return
+    fetchOtherOsRequest()
+    setFetchOtherOsTrigger(false)
+  }, [fetchOtherOsTrigger])
+
   return {
     versionListData,
     windowsOsList,
+    otherOsList,
+    osFamily,
     setOsFamily,
     setSelectedWindowsOs,
     setTargetRegisterProject,
     setTargetRegisterServer,
+    setOtherOsSearchKeyword,
     setRegisterProjectTrigger,
     setAddServerTrigger,
+    setFetchOtherOsTrigger,
+    isLoading,
   }
 }

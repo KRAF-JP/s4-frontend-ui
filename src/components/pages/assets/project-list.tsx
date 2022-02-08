@@ -10,6 +10,9 @@ import { IconButton } from '../../atoms/icon-button'
 import { ServerList } from '../../pages/assets'
 import { Card } from '../../atoms/card'
 import { useRouter } from 'next/router'
+import { useProjects } from '../../../hooks/pages/assets/use-projects'
+import Modal from '../../organisms/modal'
+import { Button } from '../../atoms/button'
 
 type Props = {
   data: any[]
@@ -22,6 +25,8 @@ const ProjectList: NextPage<Props> = (props) => {
   const router = useRouter()
   const [items, setItems] = useState([])
   const [openToggle, setOpenToggle] = useState({})
+  const [isShowModal, setIsShowModal] = useState<boolean>(false)
+  const { setTarget, target, setDeleteTrigger } = useProjects()
   const { state } = useContext(GlobalContext)
 
   const handleClickOpen = (i) => {
@@ -29,6 +34,19 @@ const ProjectList: NextPage<Props> = (props) => {
       ...openToggle,
       [i]: !openToggle[i],
     })
+  }
+
+  const handleSubmitDelete = () => {
+    setDeleteTrigger(true)
+    setIsShowModal(false)
+  }
+
+  const handleSubmitCancel = () => {
+    setTarget({
+      id: null,
+      name: null,
+    })
+    setIsShowModal(false)
   }
 
   useEffect(() => {
@@ -60,18 +78,22 @@ const ProjectList: NextPage<Props> = (props) => {
                         </ProjectScanLastDate>
                       </WrapLeft>
                       <WrapRight>
-                        <ProjectServer
-                          onClick={() => {
+                        <Button
+                          type={'button'}
+                          label={'サーバー登録'}
+                          beforeIcon={<Icon.Plus color={Color.TEXT.GRAY} />}
+                          small
+                          handleClick={() => {
                             router.push({
                               pathname: `/assets/projects/${data.id}/register`,
+                              query: {
+                                id: data.id,
+                              },
                             })
                           }}
                         >
-                          <IconButton>
-                            <Icon.Plus />
-                          </IconButton>
                           サーバ登録
-                        </ProjectServer>
+                        </Button>
                         <IconButton>
                           <Icon.User />
                         </IconButton>
@@ -79,7 +101,15 @@ const ProjectList: NextPage<Props> = (props) => {
                           <Icon.Pen />
                         </IconButton>
                         {state.user.role !== 0 && (
-                          <IconButton>
+                          <IconButton
+                            handleClick={() => {
+                              setTarget({
+                                id: data.id,
+                                name: data.name,
+                              })
+                              setIsShowModal(true)
+                            }}
+                          >
                             <Icon.Trash />
                           </IconButton>
                         )}
@@ -101,6 +131,28 @@ const ProjectList: NextPage<Props> = (props) => {
                     </OpenWrap>
                   </Card>
                 ))}
+                <Modal
+                  isShow={isShowModal}
+                  setIsShow={setIsShowModal}
+                  submit={{
+                    label: '削除',
+                    buttonType: 'danger',
+                    disabled: false,
+                  }}
+                  title={'プロジェクトを削除'}
+                  handleClickSubmit={() => {
+                    handleSubmitDelete()
+                  }}
+                  handleClickCancel={() => {
+                    handleSubmitCancel()
+                  }}
+                >
+                  <>
+                    「{target.name}」を削除しますか？
+                    <br />
+                    （該当の資産で検出された脆弱性も削除されます）
+                  </>
+                </Modal>
               </>
             ) : (
               <NothingText>
@@ -109,7 +161,9 @@ const ProjectList: NextPage<Props> = (props) => {
             )}
           </>
         ) : (
-          <LoadingIcon />
+          <LoadingWrap>
+            <LoadingIcon />
+          </LoadingWrap>
         )}
       </StyledList>
     </Wrap>
@@ -119,6 +173,9 @@ const ProjectList: NextPage<Props> = (props) => {
 const Wrap = styled.div`
   min-width: 830px;
   font-size: 14px;
+`
+const LoadingWrap = styled.div`
+  height: calc(100vh - 106px);
 `
 const StyledList = styled(List)<{ height?: number }>`
   height: calc(100vh - ${({ height }) => height && height}px);
@@ -185,12 +242,6 @@ const ProjectScanLastDate = styled.div`
   font-size: 12px;
   font-weight: normal;
   color: ${Color.TEXT.GRAY};
-`
-const ProjectServer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 16px;
 `
 const OpenWrap = styled.div<{ isOpen: any }>`
   display: none;

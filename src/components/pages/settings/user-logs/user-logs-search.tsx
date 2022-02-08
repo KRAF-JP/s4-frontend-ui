@@ -223,8 +223,8 @@ const UserLogsSearch: React.FC<Props> = (props) => {
                         </Field>
                         <Field
                           name={'action'}
-                          type={'inactive'}
-                          value={'active'}
+                          type={'checkbox'}
+                          value={'inactive'}
                         >
                           {({ input, meta }) => (
                             <SearchCheckbox
@@ -240,7 +240,7 @@ const UserLogsSearch: React.FC<Props> = (props) => {
                         </Field>
                         <Field
                           name={'action'}
-                          type={'inactive'}
+                          type={'checkbox'}
                           value={'login'}
                         >
                           {({ input, meta }) => (
@@ -257,7 +257,7 @@ const UserLogsSearch: React.FC<Props> = (props) => {
                         </Field>
                         <Field
                           name={'action'}
-                          type={'inactive'}
+                          type={'checkbox'}
                           value={'logout'}
                         >
                           {({ input, meta }) => (

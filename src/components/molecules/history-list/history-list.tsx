@@ -3,12 +3,30 @@ import styled from 'styled-components'
 import Color from '../../../const/color'
 import { IconImage } from '../../atoms/icon-image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 type Props = {
   items?: any[]
+  setIsAlert?: any
+  removeHandler?: any
 }
 
 const HistoryList: React.FC<Props> = (props) => {
+  const router = useRouter()
+
+  const handleLinkClick = (id) => {
+    const linkId = Number(id)
+
+    router.push({
+      pathname: '/vulnerability/[id]',
+      query: { id: linkId },
+    })
+
+    props.setIsAlert(false)
+
+    props.removeHandler()
+  }
+
   return (
     <List>
       {props.items ? (
@@ -35,18 +53,26 @@ const HistoryList: React.FC<Props> = (props) => {
                       {/IssueStatusUpdated/.test(item.type) && (
                         <>
                           {item.user.name}さんが、「
-                          <Link href={`/vulnerability/${item.resource.id}`}>
-                            <a>{item.resource.vuln_id}</a>
-                          </Link>
+                          <ContentLink
+                            onClick={() => {
+                              handleLinkClick(item.resource.id)
+                            }}
+                          >
+                            {item.resource.vuln_id}
+                          </ContentLink>
                           」を{item.resource.status_name}に変更しました
                         </>
                       )}
                       {/IssueAssigned/.test(item.type) && (
                         <>
                           {item.user.name}さんが、あなたを「
-                          <Link href={`/vulnerability/${item.resource.id}`}>
-                            <a>{item.resource.vuln_id}</a>
-                          </Link>
+                          <ContentLink
+                            onClick={() => {
+                              handleLinkClick(item.resource.id)
+                            }}
+                          >
+                            {item.resource.vuln_id}
+                          </ContentLink>
                           」の担当者に設定しました
                         </>
                       )}
@@ -113,6 +139,12 @@ const Content = styled.div<{ isRead?: boolean }>`
   a {
     text-decoration: underline;
   }
+`
+const ContentLink = styled.div`
+  display: inline;
+  color: ${Color.TEXT.LINK};
+  text-decoration: underline;
+  cursor: pointer;
 `
 const Date = styled.span`
   font-size: 12px;

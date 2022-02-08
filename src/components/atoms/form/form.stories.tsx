@@ -121,11 +121,22 @@ storiesOf('Components/Atoms/From', module)
         <FieldGroupTitle>Props: checked</FieldGroupTitle>
         <Field>
           <FieldTitle>true</FieldTitle>
-          <Checkbox labelName={'checkbox'} checked={true} />
+          <Checkbox labelName={'checkbox'} checked={true} small={false} />
         </Field>
         <Field>
           <FieldTitle>false</FieldTitle>
-          <Checkbox labelName={'checkbox'} checked={false} />
+          <Checkbox labelName={'checkbox'} checked={false} small={false} />
+        </Field>
+      </FieldGroup>
+      <FieldGroup>
+        <FieldGroupTitle>Checkbox small</FieldGroupTitle>
+        <Field>
+          <FieldTitle>true</FieldTitle>
+          <Checkbox labelName={'checkbox'} checked={true} small={true} />
+        </Field>
+        <Field>
+          <FieldTitle>false</FieldTitle>
+          <Checkbox labelName={'checkbox'} checked={false} small={true} />
         </Field>
       </FieldGroup>
     </Wrap>

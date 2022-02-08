@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 type Props = {
   label: string
+  link?: string
 }
 
 const LinkBack: React.FC<Props> = (props) => {
@@ -14,7 +15,7 @@ const LinkBack: React.FC<Props> = (props) => {
   return (
     <LinkBackWrap
       onClick={() => {
-        router.back()
+        props.link ? router.push(props.link) : router.back()
       }}
     >
       <LinkBackIcon>

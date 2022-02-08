@@ -31,6 +31,13 @@ export const useUser = () => {
             type: 'success',
           },
         })
+        dispatch({ type: 'update_user', payload: res.data })
+        if (res.data.name) {
+          dispatch({
+            type: 'update_user_name',
+            payload: res.data.name,
+          })
+        }
       })
       .catch((error) => {
         // #TODO sentry

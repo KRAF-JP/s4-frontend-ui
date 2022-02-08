@@ -69,6 +69,7 @@ export const useAutoPackageRegisterResult = () => {
   const [result, setResult] = useState<any>()
   const [resultTrigger, setResultTrigger] = useState<boolean>(false)
   const [postTrigger, setPostTrigger] = useState<boolean>(false)
+  const [waitFetch, setWaitFetch] = useState<boolean>(false)
   const [target, setTarget] = useState<any>()
   const { dispatch } = useContext(GlobalContext)
 
@@ -120,10 +121,10 @@ export const useAutoPackageRegisterResult = () => {
   }
 
   useEffect(() => {
-    if (!resultTrigger) return
+    if (!resultTrigger || !waitFetch) return
     fetchRequest()
     setResultTrigger(false)
-  }, [target, resultTrigger])
+  }, [target, resultTrigger, waitFetch])
 
   useEffect(() => {
     if (!postTrigger) return
@@ -138,6 +139,7 @@ export const useAutoPackageRegisterResult = () => {
     setIsLoading,
     setResultTrigger,
     setPostTrigger,
+    setWaitFetch,
   }
 }
 

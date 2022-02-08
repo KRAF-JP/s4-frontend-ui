@@ -1,3 +1,5 @@
+import { data } from 'browserslist'
+
 export const globalStateReducer = (dataState, action) => {
   switch (action.type) {
     case 'is_loading_user':
@@ -35,15 +37,35 @@ export const globalStateReducer = (dataState, action) => {
         ...dataState,
         organization: action.payload,
       }
+    case 'update_user':
+      return {
+        ...dataState,
+        user: action.payload,
+      }
     case 'update_user_org_name':
       return {
         ...dataState,
         user: { ...dataState.user, org_name: action.payload },
       }
+    case 'update_user_name':
+      return {
+        ...dataState,
+        user: { ...dataState.user, name: action.payload },
+      }
     case 'update_notification_newly':
       return {
         ...dataState,
-        notification: { is_newly: action.payload },
+        notification: { ...dataState.notification, is_newly: action.payload },
+      }
+    case 'update_notification_load':
+      return {
+        ...dataState,
+        notification: { ...dataState.notification, is_load: action.payload },
+      }
+    case 'update_notification_items':
+      return {
+        ...dataState,
+        notification: { ...dataState.notification, items: action.payload },
       }
     case 'update_vulnerability_unread':
       return {

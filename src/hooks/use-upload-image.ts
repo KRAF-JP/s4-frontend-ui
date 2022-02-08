@@ -82,7 +82,7 @@ export const useUploadImage = () => {
   useEffect(() => {
     if (!userDeleteTrigger) return
     deleteUserRequest()
-  }, [target, userDeleteTrigger])
+  }, [userDeleteTrigger])
 
   useEffect(() => {
     if (!orgPostTrigger) return
@@ -92,7 +92,7 @@ export const useUploadImage = () => {
   useEffect(() => {
     if (!orgDeleteTrigger) return
     deleteOrgRequest()
-  }, [target, orgDeleteTrigger])
+  }, [orgDeleteTrigger])
 
   return {
     setData,

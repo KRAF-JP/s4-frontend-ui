@@ -117,6 +117,7 @@ const IconWrap = styled.div`
   left: 16px;
   height: 16px;
   transform: translate(0, -50%);
+  line-height: 1;
 `
 const IconErrorWrap = styled.div`
   position: absolute;

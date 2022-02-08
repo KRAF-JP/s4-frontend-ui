@@ -20,8 +20,8 @@ type Props = {
 
 const Modal: React.FC<Props> = (props) => {
   return (
-    <Overlay isShow={props.isShow} onClick={() => props.setIsShow(false)}>
-      <Block onClick={(e) => e.stopPropagation()}>
+    <>
+      <Block isShow={props.isShow}>
         {props.title && <Header>{props.title}</Header>}
         {props.children && <Content>{props.children}</Content>}
         <Footer>
@@ -45,27 +45,26 @@ const Modal: React.FC<Props> = (props) => {
           )}
         </Footer>
       </Block>
-    </Overlay>
+      <Overlay isShow={props.isShow} onClick={() => props.setIsShow(false)} />
+    </>
   )
 }
 
 const Overlay = styled.div<{ isShow: boolean }>`
-  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   opacity: 0;
   visibility: hidden;
-
+  z-index: 100;
   transition: opacity 0.3s, visibility 0.3s;
+
   ${({ isShow }) =>
     isShow &&
     `
@@ -73,13 +72,28 @@ const Overlay = styled.div<{ isShow: boolean }>`
     opacity: 1;
   `}
 `
-const Block = styled.div`
+const Block = styled.div<{ isShow: boolean }>`
+  position: fixed;
+  top: 50%;
+  left: 50%;
   z-index: 101;
   min-width: 400px;
   background: ${Color.COMPONENT.SURFACE};
   padding: 36px 40px;
   border-radius: 16px;
   box-shadow: ${Color.ELEVATION.XL};
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+
+  ${({ isShow }) =>
+    isShow &&
+    `
+    visibility: visible;
+    opacity: 1;
+  `};
+
   @media (max-width: 768px) {
     margin: 0.5em;
   }

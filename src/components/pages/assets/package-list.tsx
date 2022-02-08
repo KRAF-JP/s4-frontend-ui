@@ -50,16 +50,17 @@ const PackageList: NextPage<Props> = (props) => {
                 <CardHeaderTitle>パッケージ</CardHeaderTitle>
               </WrapLeft>
               <WrapRight>
-                <ServerOption
-                  onClick={() => {
+                <Button
+                  type={'button'}
+                  label={'情報更新'}
+                  beforeIcon={<Icon.Reload />}
+                  small
+                  handleClick={() => {
                     handleClickReload()
                   }}
                 >
-                  <IconButton>
-                    <Icon.Reload />
-                  </IconButton>
                   情報更新
-                </ServerOption>
+                </Button>
               </WrapRight>
             </CardHeader>
             <CardContents isOpen={true}>
@@ -96,16 +97,25 @@ const PackageList: NextPage<Props> = (props) => {
               <CardFooter>
                 <WrapLeft>
                   {items.length > 3 ? (
-                    <ServerOption
-                      onClick={() => {
+                    <Button
+                      type={'button'}
+                      label={openToggle ? '閉じる' : 'もっと見る'}
+                      beforeIcon={
+                        <>
+                          {openToggle ? (
+                            <Icon.ChevronUp />
+                          ) : (
+                            <Icon.ChevronDown />
+                          )}
+                        </>
+                      }
+                      small
+                      handleClick={() => {
                         handleClickOpen()
                       }}
                     >
-                      <IconButton>
-                        {openToggle ? <Icon.ChevronUp /> : <Icon.ChevronDown />}
-                      </IconButton>
                       {openToggle ? '閉じる' : 'もっと見る'}
-                    </ServerOption>
+                    </Button>
                   ) : (
                     <></>
                   )}

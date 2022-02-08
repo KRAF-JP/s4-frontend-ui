@@ -8,6 +8,8 @@ import { NextPage } from 'next'
 import { IconButton } from '../../atoms/icon-button'
 import { CardInner } from '../../atoms/card'
 import Button from '../../atoms/button/button'
+import Modal from '../../organisms/modal'
+import { useSoftwareDelete } from '../../../hooks/pages/assets/use-softwares'
 
 type Props = {
   data: any[]
@@ -18,9 +20,24 @@ const SoftwareList: NextPage<Props> = (props) => {
   const router = useRouter()
   const [items, setItems] = useState([])
   const [openToggle, setOpenToggle] = useState<boolean>(false)
+  const [isShowModal, setIsShowModal] = useState<boolean>(false)
+  const { target, setTarget, setDeleteTrigger } = useSoftwareDelete()
 
   const handleClickOpen = () => {
     setOpenToggle(!openToggle)
+  }
+
+  const handleSubmitDelete = () => {
+    setDeleteTrigger(true)
+    setIsShowModal(false)
+  }
+
+  const handleSubmitCancel = () => {
+    setTarget({
+      id: null,
+      name: null,
+    })
+    setIsShowModal(false)
   }
 
   useEffect(() => {
@@ -37,25 +54,29 @@ const SoftwareList: NextPage<Props> = (props) => {
                 <CardHeaderTitle>ソフトウェア</CardHeaderTitle>
               </WrapLeft>
               <WrapRight>
-                <ServerOption
-                  onClick={() => {
+                <Button
+                  type={'button'}
+                  label={'個別登録'}
+                  beforeIcon={<Icon.Plus />}
+                  small
+                  handleClick={() => {
                     router.push({
                       pathname: `/assets/servers/${props.server}/software/register`,
                       query: {},
                     })
                   }}
                 >
-                  <IconButton>
-                    <Icon.Plus />
-                  </IconButton>
                   個別登録
-                </ServerOption>
-                <ServerOption onClick={() => {}}>
-                  <IconButton>
-                    <Icon.DownLoad />
-                  </IconButton>
-                  CSV一括登録
-                </ServerOption>
+                </Button>
+                <Button
+                  type={'button'}
+                  label={'CSV一括登録'}
+                  beforeIcon={<Icon.DownLoad />}
+                  small
+                  handleClick={() => {}}
+                >
+                  個別登録
+                </Button>
               </WrapRight>
             </CardHeader>
             <CardContents isOpen={true}>
@@ -74,7 +95,15 @@ const SoftwareList: NextPage<Props> = (props) => {
                       <IconButton handleClick={() => {}}>
                         <Icon.Pen />
                       </IconButton>
-                      <IconButton handleClick={() => {}}>
+                      <IconButton
+                        handleClick={() => {
+                          setTarget({
+                            id: data.id,
+                            name: data.product_name,
+                          })
+                          setIsShowModal(true)
+                        }}
+                      >
                         <Icon.Trash />
                       </IconButton>
                     </SoftwareAction>
@@ -84,16 +113,25 @@ const SoftwareList: NextPage<Props> = (props) => {
               <CardFooter>
                 <WrapLeft>
                   {items.length > 3 ? (
-                    <ServerOption
-                      onClick={() => {
+                    <Button
+                      type={'button'}
+                      label={openToggle ? '閉じる' : 'もっと見る'}
+                      beforeIcon={
+                        <>
+                          {openToggle ? (
+                            <Icon.ChevronUp />
+                          ) : (
+                            <Icon.ChevronDown />
+                          )}
+                        </>
+                      }
+                      small
+                      handleClick={() => {
                         handleClickOpen()
                       }}
                     >
-                      <IconButton>
-                        {openToggle ? <Icon.ChevronUp /> : <Icon.ChevronDown />}
-                      </IconButton>
                       {openToggle ? '閉じる' : 'もっと見る'}
-                    </ServerOption>
+                    </Button>
                   ) : (
                     <></>
                   )}
@@ -102,6 +140,28 @@ const SoftwareList: NextPage<Props> = (props) => {
               </CardFooter>
             </CardContents>
           </CardInner>
+          <Modal
+            isShow={isShowModal}
+            setIsShow={setIsShowModal}
+            submit={{
+              label: '削除',
+              buttonType: 'danger',
+              disabled: false,
+            }}
+            title={'ソフトウェアを削除'}
+            handleClickSubmit={() => {
+              handleSubmitDelete()
+            }}
+            handleClickCancel={() => {
+              handleSubmitCancel()
+            }}
+          >
+            <>
+              「{target.name}」を削除しますか？
+              <br />
+              （該当の資産で検出された脆弱性も削除されます）
+            </>
+          </Modal>
         </>
       ) : (
         <>
