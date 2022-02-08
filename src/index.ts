@@ -96,7 +96,7 @@ export { default as Role } from './const/role'
 export { Time } from './const/time'
 
 // hooks
-export { useUsers } from './hooks/pages/settings/members'
+export { useUsers } from './hooks/pages/settings/members/use-users'
 export { useUserLogs } from './hooks/pages/settings/user-logs'
 export { useAccessFilter } from './hooks/pages/settings/restrictions/use-access-filter'
 /*export {
@@ -107,7 +107,7 @@ export { useAccessFilter } from './hooks/pages/settings/restrictions/use-access-
   useVulnerabilitySearchItem
 } from './hooks/pages/vulnerability/use-vulnerability'
  */
-export { useNotification } from './hooks/pages/use-notification'
+export { useNotification } from './hooks/use-notification'
 export { apiClient } from './hooks/api-client'
 //export { default as useAuth } from './hooks/use-auth'
 export { useOrganization } from './hooks/use-organization'
