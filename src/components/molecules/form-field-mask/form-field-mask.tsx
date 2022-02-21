@@ -40,7 +40,7 @@ const Form = styled.div<{ isShow: boolean }>`
   display: ${({ isShow }) => (isShow ? 'flex' : 'none')};
 
   > div {
-    margin-right: 8px;
+    margin: 0 8px 24px 0;
   }
 `
 

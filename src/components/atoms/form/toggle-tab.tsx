@@ -4,13 +4,14 @@ import Color from '../../../const/color'
 
 type Props = {
   label?: string
+  checked?: boolean
   onChange?: (e: React.SyntheticEvent) => void
 }
 
 const ToggleTab: React.FC<Props> = (props) => {
   return (
     <Wrap>
-      <input type="radio" {...props} />
+      <input type="radio" {...props} checked={props.checked} />
       <span>{props.label}</span>
     </Wrap>
   )

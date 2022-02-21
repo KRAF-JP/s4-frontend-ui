@@ -56,7 +56,9 @@ const PackageList: NextPage<Props> = (props) => {
                   beforeIcon={<Icon.Reload />}
                   small
                   handleClick={() => {
-                    handleClickReload()
+                    router.push({
+                      pathname: `/assets/servers/${props.server}/packages/register`,
+                    })
                   }}
                 >
                   情報更新

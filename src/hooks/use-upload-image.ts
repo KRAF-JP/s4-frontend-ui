@@ -1,6 +1,7 @@
 import { apiClient } from './api-client'
 import { useContext, useEffect, useState } from 'react'
 import GlobalContext from '../store/context'
+import { useErrorHandle } from './use-error-handle'
 
 export const useUploadImage = () => {
   const { dispatch } = useContext(GlobalContext)
@@ -9,6 +10,7 @@ export const useUploadImage = () => {
   const [userDeleteTrigger, setUserDeleteTrigger] = useState<boolean>(false)
   const [orgPostTrigger, setOrgPostTrigger] = useState<boolean>(false)
   const [orgDeleteTrigger, setOrgDeleteTrigger] = useState<boolean>(false)
+  const errorHandle = useErrorHandle()
 
   const postUserRequest = async () => {
     const data = new FormData()
@@ -23,8 +25,8 @@ export const useUploadImage = () => {
           payload: res.data,
         })
       })
-      .catch((err) => {
-        // #TODO sentry
+      .catch((error) => {
+        errorHandle(error)
       })
   }
 
@@ -37,8 +39,8 @@ export const useUploadImage = () => {
           payload: res.data,
         })
       })
-      .catch((err) => {
-        // #TODO sentry
+      .catch((error) => {
+        errorHandle(error)
       })
   }
 
@@ -55,8 +57,8 @@ export const useUploadImage = () => {
           payload: res.data,
         })
       })
-      .catch((err) => {
-        // #TODO sentry
+      .catch((error) => {
+        errorHandle(error)
       })
   }
 
@@ -69,8 +71,8 @@ export const useUploadImage = () => {
           payload: '',
         })
       })
-      .catch((err) => {
-        // #TODO sentry
+      .catch((error) => {
+        errorHandle(error)
       })
   }
 

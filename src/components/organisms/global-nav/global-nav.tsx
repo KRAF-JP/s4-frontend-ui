@@ -6,6 +6,7 @@ import { Icon } from '../../atoms/icon'
 import { IconImage } from '../../atoms/icon-image'
 import GlobalNavItem from '../../organisms/global-nav/global-nav-item'
 import Skeleton from 'react-loading-skeleton'
+import { useVulnerabilityUnRead } from '../../../hooks/pages/vulnerability/use-vulnerability'
 
 type Props = {
   className?: string
@@ -14,6 +15,7 @@ type Props = {
 const GlobalNav: React.FC<Props> = (props) => {
   const { state, dispatch } = useContext(GlobalContext)
   const [navToggle, setNavToggle] = useState(state.isNavOpen)
+  const {} = useVulnerabilityUnRead()
 
   const handleClickNav = (bool) => {
     setNavToggle(!bool)
@@ -68,7 +70,7 @@ const GlobalNav: React.FC<Props> = (props) => {
               )}
             </>
           </NavList>
-          {state.user.role >= 1 && (
+          {state.user.role === 1 && (
             <NavList navToggle={navToggle}>
               <GlobalNavItem
                 name={'管理'}

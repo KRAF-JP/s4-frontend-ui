@@ -15,13 +15,14 @@ type Props = {
   data?: any[]
   top?: boolean
   className?: string
+  disabled?: boolean
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
 
 const Select: React.FC<Props> = (props) => {
   const [onFocus, setOnFocus] = useState(false)
-  const [selectedItem, setSelectedItem] = useState(props.defaultData)
+  const [selectedItem, setSelectedItem] = useState<any>(props.defaultData)
   const selectedItemElement = useRef(null)
   const optionItemElement = useRef(null)
 
@@ -55,7 +56,7 @@ const Select: React.FC<Props> = (props) => {
   }, [props.defaultData])
 
   return (
-    <Wrap className={props.className}>
+    <Wrap className={props.className} disabled={props.disabled}>
       <SelectedItem
         ref={selectedItemElement}
         focus={onFocus}
@@ -115,8 +116,14 @@ const anime = keyframes`
   }
 `
 
-const Wrap = styled.div`
+const Wrap = styled.div<{ disabled?: boolean }>`
   position: relative;
+  ${({ disabled }) =>
+    disabled &&
+    `
+    opacity: 0.5;
+    pointer-events: none;
+  `}
 `
 const SelectedItem = styled.div<{ focus: boolean }>`
   display: flex;

@@ -115,6 +115,10 @@ const NotificationIconStyled = styled(NotificationIcon)`
   position: absolute;
   top: 50%;
   right: 16px;
+  width: initial;
+  min-width: 24px;
+  padding: 0 8px;
+  font-family: Roboto, sans-serif;
   transform: translate(0, -50%);
 `
 const NavItemName = styled.div<{ navToggle: boolean }>`

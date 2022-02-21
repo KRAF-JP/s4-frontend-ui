@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { apiClient } from '../../../api-client'
 import GlobalContext from '../../../../store/context'
 import { useRouter } from 'next/router'
+import { useErrorHandle } from '../../../use-error-handle'
 
 export const useUserLogs = () => {
   const router = useRouter()
@@ -9,7 +10,7 @@ export const useUserLogs = () => {
   const [defaultData, setDefaultData] = useState<any>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async (query) => {
     setIsLoading(false)
@@ -25,7 +26,7 @@ export const useUserLogs = () => {
         setTotalCount(Number(res.headers['x-total-count']))
       })
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 
@@ -46,6 +47,7 @@ export const useUserLogs = () => {
 
 export const useUserLogsSearchItem = () => {
   const [userList, setUserList] = useState<any>([])
+  const errorHandle = useErrorHandle()
 
   const fetchUserList = async () => {
     apiClient
@@ -67,7 +69,7 @@ export const useUserLogsSearchItem = () => {
         setUserList(users)
       })
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 

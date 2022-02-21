@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react'
 import { apiClient } from './api-client'
 import GlobalContext from '../store/context'
+import { useErrorHandle } from './use-error-handle'
 
 export const useUser = () => {
   const [user, setUser] = useState<any>([])
   const [target, setTarget] = useState<any>()
   const [putTrigger, setPutTrigger] = useState<boolean>(false)
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     apiClient
@@ -15,7 +17,7 @@ export const useUser = () => {
         setUser(res.data)
       })
       .catch((error) => {
-        setUser(error)
+        errorHandle(error)
       })
   }
 
@@ -40,7 +42,7 @@ export const useUser = () => {
         }
       })
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 
@@ -51,6 +53,7 @@ export const useUser = () => {
   useEffect(() => {
     if (!putTrigger) return
     putRequest()
+    setPutTrigger(false)
   }, [target, putTrigger])
 
   return {

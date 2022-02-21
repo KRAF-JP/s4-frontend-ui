@@ -19,13 +19,7 @@ const RegisterProject: React.FC<Props> = (props) => {
   const handleProjectName = (formValue: any) => {
     const { project_name } = formValue.values
 
-    props.setData({ ...props.data, name: project_name })
-  }
-
-  const handleEnvironment = (formValue: any) => {
-    const { project_environment } = formValue.values
-
-    props.setData({ ...props.data, platform: project_environment })
+    props.setData({ ...props.data, name: project_name, platform: '' })
   }
 
   return (
@@ -47,7 +41,7 @@ const RegisterProject: React.FC<Props> = (props) => {
           <form onSubmit={handleSubmit}>
             <Field name={'project_name'} type={'text'}>
               {({ input, meta }) => (
-                <FormField label={'プロジェクト名'} marginBottom={24} required>
+                <FormField label={'プロジェクト名'} required>
                   <InputText
                     {...(input as any)}
                     size={'XL'}
@@ -60,113 +54,6 @@ const RegisterProject: React.FC<Props> = (props) => {
                 </FormField>
               )}
             </Field>
-
-            <FormField label={'環境'}>
-              <RadioGroup>
-                <Field
-                  name={'project_environment'}
-                  type={'radio'}
-                  value={'aws'}
-                >
-                  {({ input, meta }) => (
-                    <RadioButton
-                      {...input}
-                      labelName={'AWS'}
-                      small
-                      onChange={(e) => {
-                        input.onChange(e)
-                        handleEnvironment(form.getState())
-                      }}
-                    />
-                  )}
-                </Field>
-                <Field
-                  name={'project_environment'}
-                  type={'radio'}
-                  value={'azure'}
-                >
-                  {({ input, meta }) => (
-                    <RadioButton
-                      {...input}
-                      labelName={'azure'}
-                      small
-                      onChange={(e) => {
-                        input.onChange(e)
-                        handleEnvironment(form.getState())
-                      }}
-                    />
-                  )}
-                </Field>
-                <Field
-                  name={'project_environment'}
-                  type={'radio'}
-                  value={'gcp'}
-                >
-                  {({ input, meta }) => (
-                    <RadioButton
-                      {...input}
-                      labelName={'GCP'}
-                      small
-                      onChange={(e) => {
-                        input.onChange(e)
-                        handleEnvironment(form.getState())
-                      }}
-                    />
-                  )}
-                </Field>
-                <Field
-                  name={'project_environment'}
-                  type={'radio'}
-                  value={'salesforce'}
-                >
-                  {({ input, meta }) => (
-                    <RadioButton
-                      {...input}
-                      labelName={'salesforce'}
-                      small
-                      onChange={(e) => {
-                        input.onChange(e)
-                        handleEnvironment(form.getState())
-                      }}
-                    />
-                  )}
-                </Field>
-                <Field
-                  name={'project_environment'}
-                  type={'radio'}
-                  value={'onpremises'}
-                >
-                  {({ input, meta }) => (
-                    <RadioButton
-                      {...input}
-                      labelName={'オンプレミス'}
-                      small
-                      onChange={(e) => {
-                        input.onChange(e)
-                        handleEnvironment(form.getState())
-                      }}
-                    />
-                  )}
-                </Field>
-                <Field
-                  name={'project_environment'}
-                  type={'radio'}
-                  value={'other'}
-                >
-                  {({ input, meta }) => (
-                    <RadioButton
-                      {...input}
-                      labelName={'その他'}
-                      small
-                      onChange={(e) => {
-                        input.onChange(e)
-                        handleEnvironment(form.getState())
-                      }}
-                    />
-                  )}
-                </Field>
-              </RadioGroup>
-            </FormField>
           </form>
         )}
       />

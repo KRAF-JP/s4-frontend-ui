@@ -4,6 +4,7 @@ import Color from '../../../const/color'
 import { IconImage } from '../../atoms/icon-image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Icon } from '../../atoms/icon'
 
 type Props = {
   items?: any[]
@@ -35,8 +36,14 @@ const HistoryList: React.FC<Props> = (props) => {
             <Item key={i}>
               {item.is_newly && <ReadIcon />}
               <Left>
-                {item.user.profile_image && (
-                  <IconImage src={item.user.profile_image} size={32} />
+                {item.user_id ? (
+                  <>
+                    {item.user.profile_image && (
+                      <IconImage src={item.user.profile_image} size={32} />
+                    )}
+                  </>
+                ) : (
+                  <Icon.LogoSymbol size={32} />
                 )}
               </Left>
               <Right>
@@ -79,26 +86,24 @@ const HistoryList: React.FC<Props> = (props) => {
                     </>
                   )}
 
-                  {item.update_contents && (
-                    <>
-                      {item.user_id ? (
-                        <>
-                          <HistoryName>{item.user.name}</HistoryName>さん
-                        </>
-                      ) : (
-                        <HistoryName>システム</HistoryName>
-                      )}
-                      が、
-                      {item.update_contents_front.map((data, i) => (
-                        <span key={i}>
-                          {i >= 1 && '、'}
-                          {data.property}を「
-                          {data.new_value}」に
-                        </span>
-                      ))}
-                      変更しました。
-                    </>
-                  )}
+                  <>
+                    {item.user_id ? (
+                      <>
+                        <HistoryName>{item.user.name}</HistoryName>さん
+                      </>
+                    ) : (
+                      <HistoryName>システム</HistoryName>
+                    )}
+                    が、
+                    {item.update_contents_front.map((data, i) => (
+                      <span key={i}>
+                        {i >= 1 && '、'}
+                        {data.property}を「
+                        {data.new_value}」に
+                      </span>
+                    ))}
+                    変更しました。
+                  </>
                 </Content>
                 <Date>{item.created_at.replaceAll('-', '/')}</Date>
               </Right>

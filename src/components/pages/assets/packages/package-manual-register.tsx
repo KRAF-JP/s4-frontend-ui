@@ -57,13 +57,19 @@ const PackageManualRegister: NextPage<Props> = (props) => {
     console.log(data)
     setTarget(data)
     setPostTrigger(true)
+    router.push({
+      pathname: `/assets/`,
+    })
   }
 
   const handleClear = () => {
-    console.log('aaa')
     setPasteResult('')
     setItems('')
     setSubmitDisabled(true)
+    router.push({
+      pathname: `/assets/`,
+      query: {},
+    })
   }
 
   useEffect(() => {
@@ -128,7 +134,7 @@ const PackageManualRegister: NextPage<Props> = (props) => {
         <Text>以下の内容で登録します。</Text>
         <CommandArea
           readOnly={true}
-          value={items ? JSON.stringify(items, null, 2) : ''}
+          value={items.length > 0 ? JSON.stringify(items, null, 2) : ''}
         />
         <ActionWrap>
           <Button

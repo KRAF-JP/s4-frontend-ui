@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { Form, Field } from 'react-final-form'
 import SearchToggle from '../../../molecules/search-toggle'
@@ -30,21 +30,30 @@ const UserLogsSearch: React.FC<Props> = (props) => {
   const [minDate, setMinDate] = useState<any>()
   const { userList } = useUserLogsSearchItem()
   const { state } = useContext(GlobalContext)
+  const [initialQuery, setInitailQuery] = useState<any>([])
 
   const [userListData, setUserListData] = useState<any>(defaultSelect)
 
   const handleUserChange = (e) => {
     const userId = Number(e.target.value)
-
+    delete router.query.offset
     if (userId) {
-      router.push({
-        query: { ...router.query, user_id: userId },
-      })
+      router.push(
+        {
+          query: { ...router.query, user_id: userId },
+        },
+        undefined,
+        { shallow: true }
+      )
     } else {
       delete router.query.user_id
-      router.push({
-        query: { ...router.query },
-      })
+      router.push(
+        {
+          query: { ...router.query },
+        },
+        undefined,
+        { shallow: true }
+      )
     }
   }
 
@@ -54,16 +63,26 @@ const UserLogsSearch: React.FC<Props> = (props) => {
       value: state.user.id,
       image: state.user.profile_image,
     })
-    router.push({
-      query: { ...router.query, user_id: state.user.id },
-    })
+    delete router.query.offset
+    router.push(
+      {
+        query: { ...router.query, user_id: state.user.id },
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const handleActionChange = (formState: any) => {
     const { action } = formState.values
-    router.push({
-      query: { ...router.query, 'action[]': action },
-    })
+    delete router.query.offset
+    router.push(
+      {
+        query: { ...router.query, 'action[]': action },
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const toDoubleDigits = (num) => {
@@ -81,9 +100,17 @@ const UserLogsSearch: React.FC<Props> = (props) => {
     const day = toDoubleDigits(createStartDate.getDate())
     setMinDate(createStartDate)
 
-    router.push({
-      query: { ...router.query, create_date_start: `${year}-${month}-${day}` },
-    })
+    delete router.query.offset
+    router.push(
+      {
+        query: {
+          ...router.query,
+          create_date_start: `${year}-${month}-${day}`,
+        },
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const handleEndDateChange = (formValues: any) => {
@@ -92,9 +119,17 @@ const UserLogsSearch: React.FC<Props> = (props) => {
     const month = toDoubleDigits(createEndDate.getMonth() + 1)
     const day = toDoubleDigits(createEndDate.getDate())
 
-    router.push({
-      query: { ...router.query, create_date_end: `${year}-${month}-${day}` },
-    })
+    delete router.query.offset
+    router.push(
+      {
+        query: {
+          ...router.query,
+          create_date_end: `${year}-${month}-${day}`,
+        },
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   let timer = null
@@ -104,17 +139,26 @@ const UserLogsSearch: React.FC<Props> = (props) => {
 
     clearTimeout(timer)
     timer = setTimeout(() => {
+      delete router.query.offset
       if (!keyword) {
         delete router.query.keyword
-        router.push({
-          pathname: '/settings/user-logs',
-          query: { ...router.query },
-        })
+        router.push(
+          {
+            pathname: '/settings/user-logs',
+            query: { ...router.query },
+          },
+          undefined,
+          { shallow: true }
+        )
       } else {
-        router.push({
-          pathname: '/settings/user-logs',
-          query: { ...router.query, keyword: keyword },
-        })
+        router.push(
+          {
+            pathname: '/settings/user-logs',
+            query: { ...router.query, keyword: keyword },
+          },
+          undefined,
+          { shallow: true }
+        )
       }
     }, 2000)
   }
@@ -122,13 +166,65 @@ const UserLogsSearch: React.FC<Props> = (props) => {
   const handleClear = () => {
     if (!Object.keys(router.query).length) return
 
-    router.push({
-      pathname: '/settings/user-logs',
-    })
+    if (router.query.limit) {
+      router.push(
+        {
+          pathname: '/settings/user-logs',
+          query: { limit: router.query.limit },
+        },
+        undefined,
+        { shallow: true }
+      )
+    } else {
+      router.push(
+        {
+          pathname: '/settings/user-logs',
+        },
+        undefined,
+        { shallow: true }
+      )
+    }
 
     setUserListData({ label: 'すべて', value: '' })
     props.setReset(true)
   }
+
+  useEffect(() => {
+    if (!userList.length) return
+    if (router.query.user_id) {
+      const initialUser = userList.filter((data) => {
+        return data.value === Number(router.query.user_id)
+      })
+      setUserListData(initialUser[0])
+    }
+  }, [router.isReady, userList])
+
+  useEffect(() => {
+    if (router.query['action[]']) {
+      const action = router.query['action[]']
+
+      if (Array.isArray(action)) {
+        const actionList = action.map((data) => {
+          return data
+        })
+
+        setInitailQuery((state) => ({
+          ...state,
+          action: actionList,
+        }))
+      } else {
+        setInitailQuery((state) => ({
+          ...state,
+          action: [router.query['action[]']],
+        }))
+      }
+    } else {
+      setInitailQuery((state) => ({
+        ...state,
+        action: [],
+      }))
+    }
+  }, [router.isReady, router.query])
 
   return (
     <Wrap ref={props.searchRef}>
@@ -138,6 +234,12 @@ const UserLogsSearch: React.FC<Props> = (props) => {
         form={
           <Form
             onSubmit={handleActionChange}
+            initialValues={{
+              createStartDate: router.query.create_date_start,
+              createEndDate: router.query.create_date_end,
+              action: initialQuery.action,
+              keyword: router.query.keyword,
+            }}
             render={({ handleSubmit, form }) => (
               <form onSubmit={handleSubmit}>
                 <FormWrap>

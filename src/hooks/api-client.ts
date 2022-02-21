@@ -24,3 +24,5 @@ export const apiClientVamsdb = axios.create({
     return qs.stringify(params, { arrayFormat: 'repeat' })
   },
 })
+
+export const fetcher = (url) => apiClient.get(url).then((res) => res.data)

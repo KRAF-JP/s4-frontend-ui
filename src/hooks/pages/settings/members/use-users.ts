@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { apiClient } from '../../../api-client'
 import GlobalContext from '../../../../store/context'
 import { useRouter } from 'next/router'
+import { useErrorHandle } from '../../../use-error-handle'
 
 export const useUsers = () => {
   const router = useRouter()
@@ -13,6 +14,7 @@ export const useUsers = () => {
   const [deleteTrigger, setDeleteTrigger] = useState<boolean>(false)
   const [restoreTrigger, setRestoreTrigger] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async (query) => {
     setIsLoading(false)
@@ -24,7 +26,7 @@ export const useUsers = () => {
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 
@@ -42,16 +44,7 @@ export const useUsers = () => {
         })
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error.response)
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `更新できませんでした。`,
-            type: 'error',
-          },
-        })
+        errorHandle(error, '更新できませんでした')
       })
   }
 
@@ -69,15 +62,7 @@ export const useUsers = () => {
         })
       })
       .catch((error) => {
-        // #TODO sentry
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `「${target.dataset.name}」を無効にできませんでした。`,
-            type: 'error',
-          },
-        })
+        errorHandle(error)
       })
   }
 
@@ -95,15 +80,7 @@ export const useUsers = () => {
         })
       })
       .catch((error) => {
-        // #TODO sentry
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `「${target.dataset.name}」を有効にできませんでした。`,
-            type: 'error',
-          },
-        })
+        errorHandle(error)
       })
   }
 

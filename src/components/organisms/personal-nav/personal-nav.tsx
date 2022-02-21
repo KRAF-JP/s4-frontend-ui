@@ -76,8 +76,9 @@ const PersonalNav: React.FC<Props> = (props) => {
     const target = { firstname: firstname, lastname: lastname }
     setIsPersonalSetting(false)
     setIsShow(false)
+    const name = state.user.name.replace(/\s/g, '')
 
-    if (target) {
+    if (lastname + firstname !== name) {
       setTarget(target)
       setPutTrigger(true)
     }
@@ -129,6 +130,7 @@ const PersonalNav: React.FC<Props> = (props) => {
         return
 
       setIsAlert(false)
+      setIsShow(false)
       setIsPersonalSetting(false)
       removeDocumentClickHandler()
     }

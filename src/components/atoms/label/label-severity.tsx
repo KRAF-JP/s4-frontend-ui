@@ -8,6 +8,7 @@ type Props = {
   score: number
   version?: number
   small?: boolean
+  short?: boolean
 }
 
 const getBackgroundColor = (props: Props): string => {
@@ -67,7 +68,7 @@ const LabelSeverity: React.FC<Props> = (props) => {
           {props.small ? (
             <>
               <Score small={props.small}>{props.score}</Score>
-              <SeverityText>{props.severity}</SeverityText>
+              {!props.short && <SeverityText>{props.severity}</SeverityText>}
             </>
           ) : (
             <>

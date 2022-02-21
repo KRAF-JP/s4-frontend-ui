@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Color from '../../../../../const/color'
@@ -298,7 +298,7 @@ const RegisterServer: React.FC<Props> = (props) => {
                   {({ input, meta }) => (
                     <RadioButton
                       {...input}
-                      labelName={'REDHAT Linux'}
+                      labelName={'Red Hat Enterprise Linux'}
                       small
                       onChange={(e) => {
                         input.onChange(e)
@@ -332,7 +332,7 @@ const RegisterServer: React.FC<Props> = (props) => {
                   {({ input, meta }) => (
                     <RadioButton
                       {...input}
-                      labelName={'Debian Linux'}
+                      labelName={'Debian'}
                       small
                       onChange={(e) => {
                         input.onChange(e)
@@ -349,7 +349,7 @@ const RegisterServer: React.FC<Props> = (props) => {
                   {({ input, meta }) => (
                     <RadioButton
                       {...input}
-                      labelName={'Ubuntu Linux'}
+                      labelName={'Ubuntu'}
                       small
                       onChange={(e) => {
                         input.onChange(e)
@@ -455,7 +455,7 @@ const RegisterServer: React.FC<Props> = (props) => {
 
             <FormField
               label={'インストール日または最終更新日'}
-              marginBottom={10}
+              marginBottom={24}
             >
               <Field name={'installDate'} type={'text'} value={1}>
                 {({ input, meta }) => (
@@ -469,15 +469,6 @@ const RegisterServer: React.FC<Props> = (props) => {
                 )}
               </Field>
             </FormField>
-
-            {isWindows && (
-              <Help marginBottom={24}>
-                <Icon.Question color={Color.PRIMARY._500} />
-                <Link href={''}>
-                  <a target={'_blank'}>最終更新日の確認方法</a>
-                </Link>
-              </Help>
-            )}
 
             {isWindows && (
               <FormField label={'更新手段'} marginBottom={10}>
@@ -508,15 +499,6 @@ const RegisterServer: React.FC<Props> = (props) => {
                   </Field>
                 </ToggleTabList>
               </FormField>
-            )}
-
-            {isWindows && (
-              <Help>
-                <Icon.Question color={Color.PRIMARY._500} />
-                <Link href={''}>
-                  <a target={'_blank'}>更新手段の確認方法</a>
-                </Link>
-              </Help>
             )}
 
             <Modal

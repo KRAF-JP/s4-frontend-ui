@@ -54,19 +54,27 @@ const UserLogsList: NextPage<Props> = (props) => {
 
   const handlePageChange = (e) => {
     const pageNumber = e.selected
-    router.push({
-      pathname: '/settings/user-logs',
-      query: { ...router.query, offset: pageNumber * perPage },
-    })
+    router.push(
+      {
+        pathname: '/settings/user-logs',
+        query: { ...router.query, offset: pageNumber * perPage },
+      },
+      undefined,
+      { shallow: true }
+    )
     setOffset(pageNumber * perPage)
   }
 
   const handleChangePerPage = (e) => {
     const perPage = Number(e.target.value)
-    router.push({
-      pathname: '/settings/user-logs',
-      query: { ...router.query, limit: perPage },
-    })
+    router.push(
+      {
+        pathname: '/settings/user-logs',
+        query: { ...router.query, limit: perPage },
+      },
+      undefined,
+      { shallow: true }
+    )
     setCurrentPage(Math.ceil(offset / perPage))
     setPerPage(perPage)
   }

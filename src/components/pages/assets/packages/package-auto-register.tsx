@@ -52,6 +52,9 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
   const handleSubmit = () => {
     setTarget(packageCurl.id)
     setPostTrigger(true)
+    router.push({
+      pathname: `/assets/`,
+    })
   }
 
   const handleClear = () => {

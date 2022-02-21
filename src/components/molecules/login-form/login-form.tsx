@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Image from 'next/image'
 import styled from 'styled-components'
 import Color from '../../../const/color'
 import { Icon } from '../../atoms/icon'
@@ -8,14 +9,32 @@ type Props = {}
 const LoginForm: React.FC<Props> = (props) => {
   const [loginGoogleEnable, setLoginGoogleEnable] = useState(false)
   const [loginMsEnable, setLoginMsEnable] = useState(false)
+  const [loginOktaEnable, setLoginOktaEnable] = useState(false)
   const handleLoginGoogle = () => {
     setLoginGoogleEnable(true)
+
+    setTimeout(() => {
+      setLoginGoogleEnable(false)
+    }, 2000)
     window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/google`
   }
 
   const handleLoginMicrosoft = () => {
     setLoginMsEnable(true)
+
+    setTimeout(() => {
+      setLoginMsEnable(false)
+    }, 2000)
     window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/graph`
+  }
+
+  const handleLoginOkta = () => {
+    setLoginOktaEnable(true)
+
+    setTimeout(() => {
+      setLoginOktaEnable(false)
+    }, 2000)
+    window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/okta`
   }
 
   return (
@@ -29,36 +48,39 @@ const LoginForm: React.FC<Props> = (props) => {
 
       <LoginButtonWrap>
         <LoginButton onClick={handleLoginGoogle} isLogging={loginGoogleEnable}>
-          {loginGoogleEnable ? (
-            <Logging>
-              <LoginButtonText>ログインしています...</LoginButtonText>
-            </Logging>
-          ) : (
-            <>
-              <LoginButtonLogo>
-                <Icon.LogoGoogle size={18} />
-              </LoginButtonLogo>
-              <LoginButtonText>Google アカウントでログイン</LoginButtonText>
-            </>
-          )}
+          <LoginButtonLogo>
+            <Icon.LogoGoogle size={18} />
+          </LoginButtonLogo>
+          <LoginButtonText>
+            {loginGoogleEnable
+              ? 'ログインしています...'
+              : 'Google アカウントでログイン'}
+          </LoginButtonText>
         </LoginButton>
 
         <LoginButton onClick={handleLoginMicrosoft} isLogging={loginMsEnable}>
-          {loginMsEnable ? (
-            <Logging>
-              <LoginButtonText>ログインしています...</LoginButtonText>
-            </Logging>
-          ) : (
-            <>
-              <LoginButtonLogo>
-                <Icon.LogoMs size={19} />
-              </LoginButtonLogo>
-              <LoginButtonText>
-                Microsoft アカウントでサインイン
-              </LoginButtonText>
-            </>
-          )}
+          <LoginButtonLogo>
+            <Icon.LogoMs size={19} />
+          </LoginButtonLogo>
+          <LoginButtonText>
+            {loginMsEnable
+              ? 'ログインしています...'
+              : 'Microsoft アカウントでサインイン'}
+          </LoginButtonText>
         </LoginButton>
+
+        {process.env.NEXT_PUBLIC_OKTA_ENABLED === 'true' && (
+          <LoginButton onClick={handleLoginOkta} isLogging={loginOktaEnable}>
+            <LoginButtonLogo>
+              <Image src={'/logo_okta.png'} width={24} height={24} />
+            </LoginButtonLogo>
+            <LoginButtonText>
+              {loginOktaEnable
+                ? 'ログインしています...'
+                : 'Okta アカウントでサインイン'}
+            </LoginButtonText>
+          </LoginButton>
+        )}
       </LoginButtonWrap>
     </Wrap>
   )

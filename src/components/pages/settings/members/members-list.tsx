@@ -99,6 +99,8 @@ const MembersList: React.FC<Props> = (props) => {
         const name = `${lastname} ${firstname}`
         return {
           ...data,
+          lastname: lastname,
+          firstname: firstname,
           name: name,
           role: role ? 2 : 0,
         }

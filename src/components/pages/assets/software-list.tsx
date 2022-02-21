@@ -68,15 +68,6 @@ const SoftwareList: NextPage<Props> = (props) => {
                 >
                   個別登録
                 </Button>
-                <Button
-                  type={'button'}
-                  label={'CSV一括登録'}
-                  beforeIcon={<Icon.DownLoad />}
-                  small
-                  handleClick={() => {}}
-                >
-                  個別登録
-                </Button>
               </WrapRight>
             </CardHeader>
             <CardContents isOpen={true}>
@@ -92,9 +83,6 @@ const SoftwareList: NextPage<Props> = (props) => {
                     <SoftwareVersion>{data.version}</SoftwareVersion>
                     <SoftwareVendor>{data.vendor_name}</SoftwareVendor>
                     <SoftwareAction>
-                      <IconButton handleClick={() => {}}>
-                        <Icon.Pen />
-                      </IconButton>
                       <IconButton
                         handleClick={() => {
                           setTarget({
@@ -171,18 +159,6 @@ const SoftwareList: NextPage<Props> = (props) => {
               beforeIcon={<Icon.Plus />}
               small={true}
               label={'ソフトウェア個別登録'}
-              handleClick={() => {
-                router.push({
-                  pathname: `/assets/servers/${props.server}/software/register`,
-                  query: {},
-                })
-              }}
-            />
-            <Button
-              buttonType={'secondary'}
-              beforeIcon={<Icon.Plus />}
-              small={true}
-              label={'ソフトウェアCSV一括登録'}
               handleClick={() => {
                 router.push({
                   pathname: `/assets/servers/${props.server}/software/register`,

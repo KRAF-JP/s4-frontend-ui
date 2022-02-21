@@ -9,8 +9,7 @@ export default {
   title: 'Components/Atoms/Icon',
 } as Meta
 
-// @ts-ignore
-export const Icons: Story<any> = (args) => (
+export const Icons: Story = (args) => (
   <Wrap>
     {Object.keys(Icon).map((key, index) => {
       const IconComponent = Icon[key]

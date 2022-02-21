@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { apiClient } from './api-client'
 import GlobalContext from '../store/context'
+import { useErrorHandle } from './use-error-handle'
 
 export const useNotification = () => {
   const [putHistoryTrigger, setPutHistoryTrigger] = useState<boolean>(false)
   const { dispatch, state } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     apiClient
@@ -24,7 +26,7 @@ export const useNotification = () => {
         fetchNewlyCount()
       })
       .catch((error) => {
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -38,7 +40,7 @@ export const useNotification = () => {
         })
       })
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 
@@ -64,7 +66,7 @@ export const useNotification = () => {
         })
       })
       .catch((error) => {
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 

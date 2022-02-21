@@ -14,6 +14,15 @@ import { Button } from '../../atoms/button'
 
 type Props = {
   data: any[]
+  setOsFamily: any
+  setSelectedWindowsOs: any
+  setPutServerTrigger: any
+  setServerId: any
+  setServerData: any
+  setFetchServerTrigger: any
+  projectName: string
+  setProjectName: any
+  setIsShowModalEditServer: any
 }
 
 const ServerList: NextPage<Props> = (props) => {
@@ -70,7 +79,18 @@ const ServerList: NextPage<Props> = (props) => {
                         </ServerInfo>
                       </WrapLeft>
                       <WrapRight>
-                        <IconButton>
+                        <IconButton
+                          handleClick={() => {
+                            props.setProjectName(props.projectName)
+                            props.setServerId(data.id)
+                            props.setSelectedWindowsOs(
+                              data.os_family === 'windows' ? data.os_name : null
+                            )
+                            props.setOsFamily({ os_family: data.os_family })
+                            props.setFetchServerTrigger(true)
+                            props.setIsShowModalEditServer(true)
+                          }}
+                        >
                           <Icon.Pen />
                         </IconButton>
                         <IconButton
@@ -129,28 +149,6 @@ const ServerList: NextPage<Props> = (props) => {
                   )}
                   <SoftwareList data={data.software} server={data.id} />
                 </CardContents>
-                <Modal
-                  isShow={isShowModal}
-                  setIsShow={setIsShowModal}
-                  submit={{
-                    label: '削除',
-                    buttonType: 'danger',
-                    disabled: false,
-                  }}
-                  title={'サーバを削除'}
-                  handleClickSubmit={() => {
-                    handleSubmitDelete()
-                  }}
-                  handleClickCancel={() => {
-                    handleSubmitCancel()
-                  }}
-                >
-                  <>
-                    「{target.name}」を削除しますか？
-                    <br />
-                    （該当の資産で検出された脆弱性も削除されます）
-                  </>
-                </Modal>
               </CardInner>
             ))}
           </>
@@ -158,6 +156,28 @@ const ServerList: NextPage<Props> = (props) => {
           <></>
         )}
       </StyledList>
+      <Modal
+        isShow={isShowModal}
+        setIsShow={setIsShowModal}
+        submit={{
+          label: '削除',
+          buttonType: 'danger',
+          disabled: false,
+        }}
+        title={'サーバを削除'}
+        handleClickSubmit={() => {
+          handleSubmitDelete()
+        }}
+        handleClickCancel={() => {
+          handleSubmitCancel()
+        }}
+      >
+        <>
+          「{target.name}」を削除しますか？
+          <br />
+          （該当の資産で検出された脆弱性も削除されます）
+        </>
+      </Modal>
     </Wrap>
   )
 }
@@ -265,6 +285,20 @@ const ServerLabel = styled.div`
 const ServerOptionButton = styled(Button)`
   background: none;
   border: none;
+`
+const ModalHeader = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  padding-bottom: 24px;
+  + div {
+    display: none;
+  }
+`
+const ModalHeaderSmall = styled.div`
+  font-size: 12px;
+  font-weight: normal;
+  color: ${Color.TEXT.GRAY};
 `
 
 export default ServerList

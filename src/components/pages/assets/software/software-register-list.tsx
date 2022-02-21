@@ -69,6 +69,9 @@ const SoftwareRegisterList: NextPage<Props> = (props) => {
   const handleRegister = () => {
     if (!target) return
     setPostTrigger(true)
+    router.push({
+      pathname: `/assets/`,
+    })
   }
 
   const handleClear = () => {

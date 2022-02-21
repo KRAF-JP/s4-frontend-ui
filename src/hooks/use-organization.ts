@@ -1,6 +1,7 @@
 import { useEffect, useState, useReducer, useContext } from 'react'
 import { apiClient } from './api-client'
 import GlobalContext from '../store/context'
+import { useErrorHandle } from './use-error-handle'
 
 export const useOrganization = () => {
   const [organization, setOrganization] = useState<any>([])
@@ -12,8 +13,8 @@ export const useOrganization = () => {
     useState<boolean>()
   const [emailVerificationTrigger, setEmailVerificationTrigger] =
     useState<boolean>(false)
-  const [errorMessage, setErrorMessage] = useState<string>('')
-  const { state, dispatch } = useContext(GlobalContext)
+  const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     apiClient
@@ -23,7 +24,7 @@ export const useOrganization = () => {
         dispatch({ type: 'update_organization', payload: res.data })
       })
       .catch((error) => {
-        setErrorMessage(error)
+        errorHandle(error)
       })
   }
 
@@ -48,7 +49,7 @@ export const useOrganization = () => {
         }
       })
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 
@@ -57,7 +58,7 @@ export const useOrganization = () => {
       .post('/org/slack/test', target)
       .then((res) => {})
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 
@@ -75,7 +76,7 @@ export const useOrganization = () => {
         })
       })
       .catch((error) => {
-        // #TODO sentry
+        errorHandle(error)
       })
   }
 
@@ -110,14 +111,7 @@ export const useOrganization = () => {
         })
       })
       .catch((error) => {
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: '認証できませんでした',
-            type: 'error',
-          },
-        })
+        errorHandle(error, '認証ができませんでした')
       })
   }
 
@@ -157,7 +151,6 @@ export const useOrganization = () => {
 
   return {
     organization,
-    errorMessage,
     setTarget,
     setPutTrigger,
     setSlackSendTrigger,

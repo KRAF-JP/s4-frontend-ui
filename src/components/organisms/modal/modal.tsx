@@ -14,6 +14,7 @@ type Props = {
   isShow?: boolean
   setIsShow?: any
   children?: React.ReactNode
+  noFooter?: boolean
   handleClickCancel?(e: React.MouseEvent<HTMLElement>): void
   handleClickSubmit?(e: React.MouseEvent<HTMLElement>): void
 }
@@ -24,26 +25,28 @@ const Modal: React.FC<Props> = (props) => {
       <Block isShow={props.isShow}>
         {props.title && <Header>{props.title}</Header>}
         {props.children && <Content>{props.children}</Content>}
-        <Footer>
-          <Button
-            type={'button'}
-            label={'キャンセル'}
-            buttonType={'secondary'}
-            handleClick={props.handleClickCancel}
-            small={true}
-          />
-          {props.submit && (
+        {!props.noFooter && (
+          <Footer>
             <Button
               type={'button'}
-              form={props.submit.form}
-              label={props.submit.label}
-              buttonType={props.submit.buttonType}
-              disabled={props.submit.disabled}
-              handleClick={props.handleClickSubmit}
+              label={'キャンセル'}
+              buttonType={'secondary'}
+              handleClick={props.handleClickCancel}
               small={true}
             />
-          )}
-        </Footer>
+            {props.submit && (
+              <Button
+                type={'button'}
+                form={props.submit.form}
+                label={props.submit.label}
+                buttonType={props.submit.buttonType}
+                disabled={props.submit.disabled}
+                handleClick={props.handleClickSubmit}
+                small={true}
+              />
+            )}
+          </Footer>
+        )}
       </Block>
       <Overlay isShow={props.isShow} onClick={() => props.setIsShow(false)} />
     </>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Color from '../../../const/color'
 import { Button } from '../../atoms/button'
@@ -23,6 +23,10 @@ type Props = {
   handleClickModify?(e: React.MouseEvent<HTMLElement>): void
   handleClickDelete?(e: React.MouseEvent<HTMLElement>): void
   data: any
+  setTarget: any
+  setPutTrigger: any
+  setPostTrigger: any
+  setDeleteTrigger: any
 }
 
 const AccessFilterCard: React.FC<Props> = (props) => {
@@ -37,51 +41,10 @@ const AccessFilterCard: React.FC<Props> = (props) => {
   const [addList, setAddList] = useState<any>([])
   const [addValue, setAddValue] = useState<string>('')
   const addElement = useRef<any>()
-  const {
-    setTarget,
-    setPutTrigger,
-    setPostTrigger,
-    setDeleteTrigger,
-    setAllowEmail,
-  } = useAccessFilter()
 
   const handleDataSet = (data, setState) => {
     setModalData(data)
     setState(true)
-  }
-
-  const validateEmail = (value) => {
-    value = value || ''
-    if (value === '') {
-      return undefined
-    }
-
-    const matches = value.match(
-      /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i
-    )
-    if (matches !== null) {
-      return setInvalidMessage('')
-    } else {
-      setSubmitDisable(true)
-      return setInvalidMessage('正しいメールアドレスを入力してください')
-    }
-  }
-
-  const validateIp = (value) => {
-    value = value || ''
-    if (value === '') {
-      return undefined
-    }
-
-    const matches = value.match(
-      /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
-    )
-    if (matches !== null) {
-      return setInvalidMessage('')
-    } else {
-      setSubmitDisable(true)
-      return setInvalidMessage('正しいIPアドレスを入力してください')
-    }
   }
 
   const handleClickModalCancel = () => {
@@ -97,18 +60,9 @@ const AccessFilterCard: React.FC<Props> = (props) => {
   const handleClickModify = (id: number, type: string, value: string) => {
     if (value) {
       const putData = { id: id, filter_type: type, filter_value: value }
-      setTarget(putData)
-      setPutTrigger(true)
+      props.setTarget(putData)
+      props.setPutTrigger(true)
       setIsShowModifyModal(false)
-
-      props.data.filter((data) => {
-        if (data.id === id) {
-          data.filter_value = putData.filter_value
-        }
-        return data.id === id
-      })
-
-      props.dataDispatch(props.data)
       setEmailValue('')
     }
   }
@@ -119,15 +73,9 @@ const AccessFilterCard: React.FC<Props> = (props) => {
     filter_value: string
   ) => {
     const deleteData = { id: id, type: type, filter_value: filter_value }
-    setTarget(deleteData)
-    setDeleteTrigger(true)
+    props.setTarget(deleteData)
+    props.setDeleteTrigger(true)
     setIsShowDeleteModal(false)
-
-    const data = props.data.filter((data) => {
-      return data.id !== deleteData.id
-    })
-
-    props.dataDispatch(data)
   }
 
   const handleClickAdd = (data: any) => {
@@ -140,11 +88,10 @@ const AccessFilterCard: React.FC<Props> = (props) => {
       filter_value: addData,
     }
 
-    setTarget(setData)
-    setPostTrigger(true)
+    props.setTarget(setData)
+    props.setPostTrigger(true)
     setIsShowAddModal(false)
-
-    props.dataDispatch([...props.data, ...data])
+    setAddList([])
   }
 
   const handleClickAddValue = (label: string) => {
@@ -183,77 +130,81 @@ const AccessFilterCard: React.FC<Props> = (props) => {
         />
       </CardHeader>
 
-      <CardContents isMore={isShowAccordion}>
-        {props.data.map((data, i) => (
-          <ListItem key={i}>
+      {props.data.length !== 0 && (
+        <>
+          <CardContents isMore={isShowAccordion}>
+            {props.data.map((data, i) => (
+              <ListItem key={i} size={48}>
+                <div>
+                  <IconWrap>
+                    {data.filter_type === 'deny_email' ? (
+                      <Icon.CircleCross color={Color.COMPONENT.DANGER} />
+                    ) : (
+                      <Icon.CircleCheck color={Color.PRIMARY._500} />
+                    )}
+                  </IconWrap>
+                  <Text>{data.filter_value}</Text>
+                </div>
+                <ActionArea>
+                  <IconButton
+                    handleClick={() => {
+                      handleDataSet(
+                        {
+                          id: data.id,
+                          type: data.filter_type,
+                          value: data.filter_value,
+                        },
+                        setIsShowModifyModal
+                      )
+                    }}
+                  >
+                    <Icon.Pen />
+                  </IconButton>
+
+                  <IconButton
+                    handleClick={() => {
+                      handleDataSet(
+                        {
+                          id: data.id,
+                          type: data.filter_type,
+                          value: data.filter_value,
+                        },
+                        setIsShowDeleteModal
+                      )
+                    }}
+                  >
+                    <Icon.Trash size={16} />
+                  </IconButton>
+                </ActionArea>
+              </ListItem>
+            ))}
+          </CardContents>
+
+          <CardFooter>
             <div>
-              <IconWrap>
-                {data.filter_type === 'deny_email' ? (
-                  <Icon.CircleCross color={Color.COMPONENT.DANGER} />
-                ) : (
-                  <Icon.CircleCheck color={Color.PRIMARY._500} />
-                )}
-              </IconWrap>
-              <Text>{data.filter_value}</Text>
+              {props.data.length > 3 && (
+                <MoreButton>
+                  <MoreIcon>
+                    {isShowAccordion ? (
+                      <Icon.ChevronUp color={Color.TEXT.GRAY} />
+                    ) : (
+                      <Icon.ChevronDown color={Color.TEXT.GRAY} />
+                    )}
+                  </MoreIcon>
+                  <MoreText
+                    onClick={() => {
+                      setIsShowAccordion(!isShowAccordion)
+                    }}
+                  >
+                    もっと見る
+                  </MoreText>
+                </MoreButton>
+              )}
             </div>
-            <ActionArea>
-              <IconButton
-                handleClick={() => {
-                  handleDataSet(
-                    {
-                      id: data.id,
-                      type: data.filter_type,
-                      value: data.filter_value,
-                    },
-                    setIsShowModifyModal
-                  )
-                }}
-              >
-                <Icon.Pen />
-              </IconButton>
-
-              <IconButton
-                handleClick={() => {
-                  handleDataSet(
-                    {
-                      id: data.id,
-                      type: data.filter_type,
-                      value: data.filter_value,
-                    },
-                    setIsShowDeleteModal
-                  )
-                }}
-              >
-                <Icon.Trash size={16} />
-              </IconButton>
-            </ActionArea>
-          </ListItem>
-        ))}
-      </CardContents>
-
-      <CardFooter>
-        <div>
-          {props.data.length > 3 && (
-            <MoreButton>
-              <MoreIcon>
-                {isShowAccordion ? (
-                  <Icon.ChevronUp color={Color.TEXT.GRAY} />
-                ) : (
-                  <Icon.ChevronDown color={Color.TEXT.GRAY} />
-                )}
-              </MoreIcon>
-              <MoreText
-                onClick={() => {
-                  setIsShowAccordion(!isShowAccordion)
-                }}
-              >
-                もっと見る
-              </MoreText>
-            </MoreButton>
-          )}
-        </div>
-        <Length>全 {props.data.length} 件</Length>
-      </CardFooter>
+            <Length>全 {props.data.length} 件</Length>
+          </CardFooter>
+        </>
+      )}
 
       <Modal
         isShow={isShowDeleteModal}
@@ -298,11 +249,6 @@ const AccessFilterCard: React.FC<Props> = (props) => {
                 setSubmitDisable(false)
               } else {
                 setSubmitDisable(true)
-              }
-              if (props.title === 'IPアドレス') {
-                validateIp(e.target.value)
-              } else {
-                validateEmail(e.target.value)
               }
               setEmailValue(e.target.value)
             }}
@@ -392,8 +338,9 @@ const CardHeaderTitle = styled.h3`
   line-height: 1.5;
 `
 const CardContents = styled.div<{ isMore?: boolean }>`
-  max-height: ${({ isMore }) => (isMore ? 'auto' : '190px')};
-  margin-top: 16px;
+  max-height: ${({ isMore }) => (isMore ? 'auto' : '166px')};
+  margin: 16px -10px 0 -10px;
+  padding: 10px;
   overflow: hidden;
 `
 const CardFooter = styled.div`

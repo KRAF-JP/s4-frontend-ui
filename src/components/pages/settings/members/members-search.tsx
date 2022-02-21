@@ -20,6 +20,7 @@ type Props = {
 
 const MembersSearch: React.FC<Props> = (props) => {
   const router = useRouter()
+  const [initialQuery, setInitialQuery] = useState<any>([])
 
   let timer = null
 
@@ -27,17 +28,25 @@ const MembersSearch: React.FC<Props> = (props) => {
     const { keyword } = formValues.values
     clearTimeout(timer)
     timer = setTimeout(() => {
+      delete router.query.offset
       if (!keyword) {
-        delete router.query.keyword
-        router.push({
-          pathname: '/settings/members',
-          query: { ...router.query },
-        })
+        router.push(
+          {
+            pathname: '/settings/members',
+            query: { ...router.query },
+          },
+          undefined,
+          { shallow: true }
+        )
       } else {
-        router.push({
-          pathname: '/settings/members',
-          query: { ...router.query, keyword: keyword },
-        })
+        router.push(
+          {
+            pathname: '/settings/members',
+            query: { ...router.query, keyword: keyword },
+          },
+          undefined,
+          { shallow: true }
+        )
       }
     }, 2000)
   }
@@ -48,29 +57,52 @@ const MembersSearch: React.FC<Props> = (props) => {
       return sum + x
     }, 0)
 
+    delete router.query.offset
     if (!searchDataActive) {
       delete router.query.active
-      router.push({
-        pathname: '/settings/members',
-        query: { ...router.query },
-      })
+      router.push(
+        {
+          pathname: '/settings/members',
+          query: { ...router.query },
+        },
+        undefined,
+        { shallow: true }
+      )
     } else {
-      router.push({
-        pathname: '/settings/members',
-        query: { ...router.query, active: searchDataActive },
-      })
+      router.push(
+        {
+          pathname: '/settings/members',
+          query: { ...router.query, active: searchDataActive },
+        },
+        undefined,
+        { shallow: true }
+      )
     }
   }
 
   const handleClear = () => {
     if (!Object.keys(router.query).length) return
 
-    router.push({
-      pathname: '/settings/members',
-    })
+    router.push(
+      {
+        pathname: '/settings/members',
+      },
+      undefined,
+      { shallow: true }
+    )
 
     props.setReset(true)
   }
+
+  useEffect(() => {
+    if (router.query.active === '3') {
+      setInitialQuery({ active: [1, 2] })
+    } else if (router.query.active === '1' || router.query.active === '2') {
+      setInitialQuery({ active: [Number(router.query.active)] })
+    } else {
+      setInitialQuery({ active: [] })
+    }
+  }, [router.isReady, router.query])
 
   return (
     <Wrap ref={props.searchRef}>
@@ -80,11 +112,15 @@ const MembersSearch: React.FC<Props> = (props) => {
         form={
           <Form
             onSubmit={handleActiveChange}
+            initialValues={{
+              keyword: router.query.keyword,
+              active: initialQuery.active,
+            }}
             render={({ handleSubmit, form }) => (
               <form onSubmit={handleSubmit}>
                 <FormWrap>
                   <InputWrap>
-                    <Field name={'keyword'} type={'text'} value={1}>
+                    <Field name={'keyword'} type={'text'}>
                       {({ input, meta }) => (
                         <FormField label={'キーワード'}>
                           <InputText
