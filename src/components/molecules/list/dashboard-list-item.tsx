@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import Color from '@const/color'
+import Color from '../../../const/color'
 import { NextPage } from 'next'
-import { ListItem } from '@components/molecules/list'
-import { IconImage } from '@components/atoms/icon-image'
-import { Icon } from '@components/atoms/icon'
+import { ListItem } from '../../molecules/list'
+import { IconImage } from '../../atoms/icon-image'
+import { Icon } from '../../atoms/icon'
 import { useRouter } from 'next/router'
 
 type Props = {
