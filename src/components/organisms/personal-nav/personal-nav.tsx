@@ -74,7 +74,6 @@ const PersonalNav: React.FC<Props> = (props) => {
   const handleSubmit = async (formValues: any) => {
     const { firstname, lastname } = formValues
     const target = { firstname: firstname, lastname: lastname }
-    setIsPersonalSetting(false)
     setIsShow(false)
     const name = state.user.name.replace(/\s/g, '')
 
@@ -188,7 +187,7 @@ const PersonalNav: React.FC<Props> = (props) => {
           <PopupCard
             isShow={isPersonalSetting}
             title={'ユーザー情報'}
-            width={332}
+            width={334}
           >
             <PopupWrap ref={PopupElement}>
               <ProfileImageBox
@@ -229,23 +228,24 @@ const PersonalNav: React.FC<Props> = (props) => {
               validate={(values: any) => {
                 const errors: any = {}
 
-                errors.lastname = composeValidators(
-                  required('姓を入力してください')
-                )(values.lastname)
+                errors.lastname = composeValidators(required('姓が未入力です'))(
+                  values.lastname
+                )
 
                 errors.firstname = composeValidators(
-                  required('名を入力してください')
+                  required('名が未入力です')
                 )(values.firstname)
 
                 return errors
               }}
               render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
-                  <FieldLabel isShow={isShow}>姓名</FieldLabel>
-                  <StyledFormFieldMask
+                  <FieldLabel isShow={isShow}>名前</FieldLabel>
+                  <FormFieldMask
                     value={state.user.name}
                     isShow={isShow}
                     handleClick={handleIsShowName}
+                    margin={10}
                   >
                     <FormFlex>
                       <FormField label={'姓'}>
@@ -274,9 +274,13 @@ const PersonalNav: React.FC<Props> = (props) => {
                           )}
                         </Field>
                       </FormField>
-                      <Button label={'保存'} buttonType={'primary'} small />
+                      <ProfileButton
+                        label={'保存'}
+                        buttonType={'primary'}
+                        small
+                      />
                     </FormFlex>
-                  </StyledFormFieldMask>
+                  </FormFieldMask>
                 </form>
               )}
             />
@@ -288,7 +292,7 @@ const PersonalNav: React.FC<Props> = (props) => {
               {state.user.role === 1
                 ? 'スーパーユーザー'
                 : state.user.role === 2
-                ? '管理者'
+                ? 'プロジェクト管理者'
                 : '一般'}
             </FormField>
 
@@ -336,7 +340,7 @@ const ProfileImageBox = styled.div`
 `
 const FormFlex = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
 
   > div {
     margin-right: 8px;
@@ -346,15 +350,15 @@ const ButtonGroup = styled.div`
   display: flex;
   justify-content: flex-end;
 `
+const ProfileButton = styled(Button)`
+  margin-top: 27px;
+`
 const FieldLabel = styled.p<{ isShow: boolean }>`
   font-size: 14px;
   color: ${Color.TEXT.GRAY};
   line-height: 1.43;
   display: ${({ isShow }) => (isShow ? 'none' : 'block')};
   width: 100%;
-`
-const StyledFormFieldMask = styled(FormFieldMask)`
-  margin-bottom: 10px;
 `
 const Newly = styled.div`
   display: flex;

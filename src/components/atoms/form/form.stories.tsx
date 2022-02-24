@@ -109,7 +109,7 @@ storiesOf('Components/Atoms/From', module)
         <FieldGroupTitle>Standard</FieldGroupTitle>
         <Field>
           <FieldTitle>datepicker</FieldTitle>
-          <InputDate onChange={() => null} placeholder={'0000/00/00'} />
+          <InputDate placeholder={'0000/00/00'} />
         </Field>
       </FieldGroup>
     </Wrap>

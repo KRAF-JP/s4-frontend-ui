@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { apiClient } from '../../api-client'
 import { useRouter } from 'next/router'
 import GlobalContext from '../../../store/context'
+import { useErrorHandle } from '../../../hooks/use-error-handle'
 
 export const useAutoPackageRegister = () => {
   const router = useRouter()
@@ -11,6 +12,7 @@ export const useAutoPackageRegister = () => {
   const [serverDetail, setServerDetail] = useState<any>()
   const [projectDetail, setProjectDetail] = useState<any>()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     setIsLoading(false)
@@ -18,35 +20,29 @@ export const useAutoPackageRegister = () => {
     apiClient
       .get(`/servers/${Number(server)}`, {})
       .then((res) => {
-        console.log(res.data)
         setServerDetail(res.data)
 
         apiClient
           .get(`/projects/${Number(res.data.project_id)}`, {})
           .then((res) => {
-            console.log(res.data)
             setProjectDetail(res.data)
           })
           .catch((error) => {
-            // #TODO sentry
-            console.log(error)
+            errorHandle(error)
           })
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
 
     apiClient
       .post(`/servers/${Number(server)}/package_curls`, {})
       .then((res) => {
-        console.log(res.data)
         setCommand(res.data)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -72,6 +68,7 @@ export const useAutoPackageRegisterResult = () => {
   const [waitFetch, setWaitFetch] = useState<boolean>(false)
   const [target, setTarget] = useState<any>()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     setIsLoading(false)
@@ -79,13 +76,11 @@ export const useAutoPackageRegisterResult = () => {
     apiClient
       .get(`/package_curls/${Number(target)}`, {})
       .then((res) => {
-        console.log(res.data)
         setResult(res.data)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -95,7 +90,6 @@ export const useAutoPackageRegisterResult = () => {
     apiClient
       .post(`/package_curls/${Number(target)}/register_packages`, {})
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -107,16 +101,7 @@ export const useAutoPackageRegisterResult = () => {
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `パッケージを登録できませんでした。`,
-            type: 'error',
-          },
-        })
+        errorHandle(error, 'パッケージを登録できませんでした。')
       })
   }
 
@@ -151,6 +136,7 @@ export const useManualPackageRegister = () => {
   const [serverDetail, setServerDetail] = useState<any>()
   const [projectDetail, setProjectDetail] = useState<any>()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     setIsLoading(false)
@@ -158,35 +144,29 @@ export const useManualPackageRegister = () => {
     apiClient
       .get(`/servers/${Number(server)}`, {})
       .then((res) => {
-        console.log(res.data)
         setServerDetail(res.data)
 
         apiClient
           .get(`/projects/${Number(res.data.project_id)}`, {})
           .then((res) => {
-            console.log(res.data)
             setProjectDetail(res.data)
           })
           .catch((error) => {
-            // #TODO sentry
-            console.log(error)
+            errorHandle(error)
           })
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
 
     apiClient
       .get(`/servers/${Number(server)}/packages/get_manual_command`, {})
       .then((res) => {
-        console.log(res.data)
         setCommand(res.data)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -213,6 +193,7 @@ export const useManualPackageRegisterJson = () => {
   const [jsonTrigger, setJsonTrigger] = useState<boolean>(false)
   const [postTrigger, setPostTrigger] = useState<boolean>(false)
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const jsonRequest = async () => {
     setIsLoading(false)
@@ -223,13 +204,11 @@ export const useManualPackageRegisterJson = () => {
         packages: target.packages,
       })
       .then((res) => {
-        console.log(res.data)
         setJson(res.data)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -241,7 +220,6 @@ export const useManualPackageRegisterJson = () => {
         packages: target.packages,
       })
       .then((res) => {
-        console.log(res.data)
         setJson(res.data)
         dispatch({
           type: 'update_toaster',
@@ -254,16 +232,7 @@ export const useManualPackageRegisterJson = () => {
         setIsLoading(true)
       })
       .catch((error) => {
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `パッケージを手動登録できませんでした。`,
-            type: 'danger',
-          },
-        })
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error, 'パッケージを手動登録できませんでした。')
       })
   }
 
@@ -296,6 +265,7 @@ export const usePackagesList = () => {
   const [target, setTarget] = useState<any>()
   const [fetchTrigger, setFetchTrigger] = useState<boolean>(false)
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     setIsLoading(false)
@@ -303,13 +273,11 @@ export const usePackagesList = () => {
     apiClient
       .get(`/servers/${Number(target)}/packages`, {})
       .then((res) => {
-        console.log(res.data)
         setPackages(res.data)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 

@@ -164,7 +164,7 @@ const ServerList: NextPage<Props> = (props) => {
           buttonType: 'danger',
           disabled: false,
         }}
-        title={'サーバを削除'}
+        title={'サーバーを削除'}
         handleClickSubmit={() => {
           handleSubmitDelete()
         }}

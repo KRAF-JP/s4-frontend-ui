@@ -273,7 +273,7 @@ const UserLogsSearch: React.FC<Props> = (props) => {
                       </FormField>
                     </InputWrap>
                     <InputWrap>
-                      <StyledFormField label={'担当者'}>
+                      <StyledFormField label={'ユーザー'}>
                         <Select
                           data={userList}
                           defaultData={userListData}

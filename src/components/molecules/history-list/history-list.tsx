@@ -86,24 +86,26 @@ const HistoryList: React.FC<Props> = (props) => {
                     </>
                   )}
 
-                  <>
-                    {item.user_id ? (
-                      <>
-                        <HistoryName>{item.user.name}</HistoryName>さん
-                      </>
-                    ) : (
-                      <HistoryName>システム</HistoryName>
-                    )}
-                    が、
-                    {item.update_contents_front.map((data, i) => (
-                      <span key={i}>
-                        {i >= 1 && '、'}
-                        {data.property}を「
-                        {data.new_value}」に
-                      </span>
-                    ))}
-                    変更しました。
-                  </>
+                  {item.update_contents && (
+                    <>
+                      {item.user_id ? (
+                        <>
+                          <HistoryName>{item.user.name}</HistoryName>さん
+                        </>
+                      ) : (
+                        <HistoryName>システム</HistoryName>
+                      )}
+                      が、
+                      {item.update_contents_front.map((data, i) => (
+                        <span key={i}>
+                          {i >= 1 && '、'}
+                          {data.property}を「
+                          {data.new_value}」に
+                        </span>
+                      ))}
+                      変更しました。
+                    </>
+                  )}
                 </Content>
                 <Date>{item.created_at.replaceAll('-', '/')}</Date>
               </Right>

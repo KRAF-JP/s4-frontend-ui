@@ -1,5 +1,3 @@
-import { data } from 'browserslist'
-
 export const globalStateReducer = (dataState, action) => {
   switch (action.type) {
     case 'is_loading_user':

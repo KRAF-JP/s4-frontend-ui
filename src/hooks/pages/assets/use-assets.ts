@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 import { apiClient } from '../../api-client'
 import { useRouter } from 'next/router'
 import GlobalContext from '../../../store/context'
+import { useErrorHandle } from '../../use-error-handle'
 
 export const useProjects = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [projects, setProjects] = useState<any>([])
   const [defaultData, setDefaultData] = useState<any>([])
   const [fetchRequestTrigger, setFetchRequestTrigger] = useState<boolean>(false)
-
   const [serverId, setServerId] = useState<number>()
   const [osFamily, setOsFamily] = useState<any>({ os_family: 'amazon' })
   const [windowsOsList, setWindowsOsList] = useState<any>([{}])
@@ -32,8 +32,8 @@ export const useProjects = () => {
   const [putServerTrigger, setPutServerTrigger] = useState<boolean>(false)
   const [fetchServerTrigger, setFetchServerTrigger] = useState<boolean>(false)
   const [fetchOtherOsTrigger, setFetchOtherOsTrigger] = useState<boolean>(false)
-
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     setIsLoading(false)
@@ -41,14 +41,12 @@ export const useProjects = () => {
     apiClient
       .get('/projects', {})
       .then((res) => {
-        console.log(res.data)
         setDefaultData(res.data)
         setProjects(res.data)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -56,12 +54,10 @@ export const useProjects = () => {
     apiClient
       .get('/projects', {})
       .then((res) => {
-        console.log(res.data)
         setProjects(res.data)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -74,7 +70,6 @@ export const useProjects = () => {
           params: { vendor: 'microsoft', product: selectedWindowsOs },
         })
         .then((res) => {
-          console.log(res.data)
           const data = res.data.map((data) => {
             return {
               label: data,
@@ -84,7 +79,7 @@ export const useProjects = () => {
           setVersionListData(data)
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else if (osFamily.os_family === 'other') {
       return
@@ -101,7 +96,7 @@ export const useProjects = () => {
           setVersionListData(data)
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     }
   }
@@ -110,11 +105,10 @@ export const useProjects = () => {
     apiClient
       .get(`/servers/${serverId}`)
       .then((res) => {
-        console.log(res.data)
         setServerData(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -125,7 +119,7 @@ export const useProjects = () => {
         setWindowsOsList(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -136,13 +130,12 @@ export const useProjects = () => {
         params: { limit: 100, keyword: otherOsSearchKeyword },
       })
       .then((res) => {
-        console.log(res.data)
         setIsLoading(true)
         setOtherOsList(res.data)
       })
       .catch((error) => {
         setIsLoading(true)
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -161,7 +154,7 @@ export const useProjects = () => {
         setVersionListData(data)
       })
       .catch((error) => {
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -177,7 +170,6 @@ export const useProjects = () => {
       apiClient
         .put(`/servers/${serverId}/windows`, data)
         .then((res) => {
-          console.log(res.data)
           dispatch({
             type: 'update_toaster',
             payload: {
@@ -188,7 +180,7 @@ export const useProjects = () => {
           })
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else if (osFamily.os_family === 'other') {
       let data = {
@@ -201,7 +193,6 @@ export const useProjects = () => {
       apiClient
         .put(`/servers/${serverId}/other`, data)
         .then((res) => {
-          console.log(res.data)
           dispatch({
             type: 'update_toaster',
             payload: {
@@ -212,7 +203,7 @@ export const useProjects = () => {
           })
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else {
       let data = {
@@ -224,7 +215,6 @@ export const useProjects = () => {
       apiClient
         .put(`/servers/${serverId}`, data)
         .then((res) => {
-          console.log(res.data)
           dispatch({
             type: 'update_toaster',
             payload: {
@@ -235,7 +225,7 @@ export const useProjects = () => {
           })
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     }
   }
@@ -309,6 +299,7 @@ export const useProjects = () => {
 
 export const useProjectRegister = () => {
   const router = useRouter()
+  const errorHandle = useErrorHandle()
   const [projectId, setProjectId] = useState<number>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [osFamily, setOsFamily] = useState<any>({ os_family: 'amazon' })
@@ -354,7 +345,7 @@ export const useProjectRegister = () => {
           setVersionListData(data)
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else if (osFamily.os_family === 'other') {
       return
@@ -371,7 +362,7 @@ export const useProjectRegister = () => {
           setVersionListData(data)
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     }
   }
@@ -383,7 +374,7 @@ export const useProjectRegister = () => {
         setWindowsOsList(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -394,13 +385,12 @@ export const useProjectRegister = () => {
         params: { limit: 100, keyword: otherOsSearchKeyword },
       })
       .then((res) => {
-        console.log(res.data)
         setIsLoading(true)
         setOtherOsList(res.data)
       })
       .catch((error) => {
         setIsLoading(true)
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -419,7 +409,7 @@ export const useProjectRegister = () => {
         setVersionListData(data)
       })
       .catch((error) => {
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -431,7 +421,7 @@ export const useProjectRegister = () => {
         setRegisterServerTrigger(true)
       })
       .catch((error) => {
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -443,7 +433,7 @@ export const useProjectRegister = () => {
           router.push('/assets')
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else if (osFamily.os_family === 'other') {
       apiClient
@@ -452,7 +442,7 @@ export const useProjectRegister = () => {
           router.push('/assets')
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else {
       apiClient
@@ -461,7 +451,7 @@ export const useProjectRegister = () => {
           router.push('/assets')
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     }
   }
@@ -536,25 +526,23 @@ export const useProjectEdit = () => {
     platform: null,
   })
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchProjectRequest = async () => {
     apiClient
       .get(`/projects/${projectId}`)
       .then((res) => {
-        console.log(res.data)
         setProjectData(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        errorHandle(error)
       })
   }
 
   const putProjectRequest = async () => {
-    console.log(projectData)
     apiClient
       .put(`/projects/${projectId}`, projectData)
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -566,7 +554,7 @@ export const useProjectEdit = () => {
         setProjectData(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -592,6 +580,7 @@ export const useProjectEdit = () => {
 }
 
 export const useServerEdit = () => {
+  const errorHandle = useErrorHandle()
   const [serverId, setServerId] = useState<number>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [osFamily, setOsFamily] = useState<any>({ os_family: 'amazon' })
@@ -627,7 +616,6 @@ export const useServerEdit = () => {
           params: { vendor: 'microsoft', product: selectedWindowsOs },
         })
         .then((res) => {
-          console.log(res.data)
           const data = res.data.map((data) => {
             return {
               label: data,
@@ -637,7 +625,7 @@ export const useServerEdit = () => {
           setVersionListData(data)
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else if (osFamily.os_family === 'other') {
       return
@@ -654,7 +642,7 @@ export const useServerEdit = () => {
           setVersionListData(data)
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     }
   }
@@ -663,11 +651,10 @@ export const useServerEdit = () => {
     apiClient
       .get(`/servers/${serverId}`)
       .then((res) => {
-        console.log(res.data)
         setServerData(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -678,7 +665,7 @@ export const useServerEdit = () => {
         setWindowsOsList(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -689,13 +676,12 @@ export const useServerEdit = () => {
         params: { limit: 100, keyword: otherOsSearchKeyword },
       })
       .then((res) => {
-        console.log(res.data)
         setIsLoading(true)
         setOtherOsList(res.data)
       })
       .catch((error) => {
         setIsLoading(true)
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -714,7 +700,7 @@ export const useServerEdit = () => {
         setVersionListData(data)
       })
       .catch((error) => {
-        console.log(error.response)
+        errorHandle(error)
       })
   }
 
@@ -730,7 +716,6 @@ export const useServerEdit = () => {
       apiClient
         .put(`/servers/${serverId}/windows`, data)
         .then((res) => {
-          console.log(res.data)
           dispatch({
             type: 'update_toaster',
             payload: {
@@ -741,7 +726,7 @@ export const useServerEdit = () => {
           })
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else if (osFamily.os_family === 'other') {
       let data = {
@@ -754,7 +739,6 @@ export const useServerEdit = () => {
       apiClient
         .put(`/servers/${serverId}/other`, data)
         .then((res) => {
-          console.log(res.data)
           dispatch({
             type: 'update_toaster',
             payload: {
@@ -765,7 +749,7 @@ export const useServerEdit = () => {
           })
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     } else {
       let data = {
@@ -777,7 +761,6 @@ export const useServerEdit = () => {
       apiClient
         .put(`/servers/${serverId}`, data)
         .then((res) => {
-          console.log(res.data)
           dispatch({
             type: 'update_toaster',
             payload: {
@@ -788,7 +771,7 @@ export const useServerEdit = () => {
           })
         })
         .catch((error) => {
-          console.log(error.response)
+          errorHandle(error)
         })
     }
   }
@@ -796,10 +779,6 @@ export const useServerEdit = () => {
   useEffect(() => {
     fetchVersionRequest()
   }, [osFamily])
-  //
-  // useEffect(() => {
-  //   fetchWindowsOsRequest()
-  // }, [])
 
   useEffect(() => {
     if (osFamily.os_family !== 'windows') return

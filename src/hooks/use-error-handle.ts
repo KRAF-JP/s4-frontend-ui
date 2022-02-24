@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import GlobalContext from '../store/context'
 import { useRouter } from 'next/router'
+import * as Sentry from '@sentry/nextjs'
 
 export const useErrorHandle = () => {
   const router = useRouter()
@@ -8,9 +9,10 @@ export const useErrorHandle = () => {
 
   const errorHandle = (
     error: any,
-    message: string = '',
+    message: string = null,
     redirectUrl: string = '/login'
   ) => {
+    Sentry.captureException(error)
     switch (error.response.status) {
       case 401:
         toaster('セッションが無効になりました。')

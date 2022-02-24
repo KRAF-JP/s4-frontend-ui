@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Color from '../../../../const/color'
 import { Icon } from '../../../atoms/icon'
@@ -13,7 +14,6 @@ import { List, ListItem } from '../../../molecules/list'
 import AuthorityName from '../../../../const/authority-name'
 import { IconButton } from '../../../atoms/icon-button'
 import ReactPaginate from 'react-paginate'
-import { useUsers } from '../../../../hooks/pages/settings/members/use-users'
 import Modal from '../../../organisms/modal'
 import FormField from '../../../molecules/form-field'
 import { composeValidators, required } from '../../../utils/varidator'
@@ -27,35 +27,15 @@ type Props = {
   searchHeight?: number
   isLoading?: boolean
   setIsLoading: any
+  setTarget: any
+  setDeleteTrigger: any
+  setRestoreTrigger: any
+  setPutTrigger: any
 }
-
-const perPageSelectData = [
-  {
-    value: '10',
-    label: '10件',
-  },
-  {
-    value: '20',
-    label: '20件',
-  },
-  {
-    value: '50',
-    label: '50件',
-  },
-  {
-    value: '100',
-    label: '100件',
-  },
-]
 
 const MembersList: React.FC<Props> = (props) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false)
   const [isActiveUsers, setIsActiveUsers] = useState({})
-
-  const [offset, setOffset] = useState<number>(0)
-  const [perPage, setPerPage] = useState<number>(20)
-  const [pageCount, setPageCount] = useState<number>(0)
-  const [items, setItems] = useState([])
   const [editUser, setEditUser] = useState<any>({
     id: null,
     lastName: null,
@@ -63,18 +43,6 @@ const MembersList: React.FC<Props> = (props) => {
     email: null,
     role: null,
   })
-  const { setTarget, setDeleteTrigger, setRestoreTrigger, setPutTrigger } =
-    useUsers()
-
-  const handlePageChange = (e) => {
-    let pageNumber = e.selected
-
-    setOffset(pageNumber * perPage)
-  }
-
-  const handleChangePerPage = (e) => {
-    setPerPage(Number(e.target.value))
-  }
 
   const handleUserEditCancel = () => {
     setIsShowModal(false)
@@ -91,27 +59,8 @@ const MembersList: React.FC<Props> = (props) => {
       },
     }
     setIsShowModal(false)
-    setTarget(target)
-    setPutTrigger(true)
-
-    const data = props.data.map((data) => {
-      if (editUser.id === data.id) {
-        const name = `${lastname} ${firstname}`
-        return {
-          ...data,
-          lastname: lastname,
-          firstname: firstname,
-          name: name,
-          role: role ? 2 : 0,
-        }
-      } else {
-        return {
-          ...data,
-        }
-      }
-    })
-
-    setItems(data)
+    props.setTarget(target)
+    props.setPutTrigger(true)
   }
 
   const handleClickEdit = (
@@ -136,29 +85,27 @@ const MembersList: React.FC<Props> = (props) => {
       ...isActiveUsers,
       [e.target.id]: e.target.checked,
     })
-    setTarget(e.target)
+    props.setTarget(e.target)
     if (e.target.checked) {
-      setRestoreTrigger(e.target)
+      props.setRestoreTrigger(e.target)
     } else {
-      setDeleteTrigger(e.target)
+      props.setDeleteTrigger(e.target)
     }
   }
-
-  useEffect(() => {
-    const endOffset = offset + perPage
-    setItems(props.data.slice(offset, endOffset))
-    setPageCount(Math.ceil(props.data.length / perPage))
-  }, [offset, perPage, props.data])
 
   return (
     <Wrap>
       <StyledList height={props.searchHeight}>
         {props.isLoading ? (
           <>
-            {items.length ? (
+            {props.data.length ? (
               <>
-                {items.map((data, i) => (
-                  <StyledListItem key={i} size={56}>
+                {props.data.map((data, i) => (
+                  <StyledListItem
+                    key={i}
+                    size={56}
+                    disabled={data.deleted_at && true}
+                  >
                     <DataName>
                       <IconImage src={data.profile_image} size={32} />
                       <IconLabel>{data.name}</IconLabel>
@@ -316,38 +263,8 @@ const MembersList: React.FC<Props> = (props) => {
 
       <ListFooter>
         <PerPageList>
-          <PerPageListShow>
-            全 {props.data.length} 件中
-            <PageCurrentNumber>
-              {props.data.length ? Number(offset) + 1 : 0}
-            </PageCurrentNumber>
-            〜
-            {props.data.length > Number(offset) + Number(perPage) ? (
-              <PageCurrentNumber>
-                {Number(offset) + Number(perPage)}
-              </PageCurrentNumber>
-            ) : (
-              <PageCurrentNumber>{props.data.length}</PageCurrentNumber>
-            )}
-            件を表示
-          </PerPageListShow>
-          <StyledSelect
-            defaultData={perPageSelectData[1]}
-            data={perPageSelectData}
-            top
-            handleClick={handleChangePerPage}
-          />
+          <PerPageListShow>全 {props.data.length} 件</PerPageListShow>
         </PerPageList>
-
-        <StyledReactPaginate
-          previousLabel={<Icon.ChevronLeft color={Color.TEXT.GRAY} />}
-          nextLabel={<Icon.ChevronRight color={Color.TEXT.GRAY} />}
-          breakLabel={'...'}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={2}
-          onPageChange={handlePageChange}
-        />
       </ListFooter>
     </Wrap>
   )

@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { apiClient } from '../../../api-client'
-import GlobalContext from '../../../../store/context'
 import { useRouter } from 'next/router'
 import { useErrorHandle } from '../../../use-error-handle'
 

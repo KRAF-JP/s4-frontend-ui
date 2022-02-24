@@ -13,7 +13,6 @@ import { useRouter } from 'next/router'
 import { useProjects } from '../../../hooks/pages/assets/use-projects'
 import Modal from '../../organisms/modal'
 import { Button } from '../../atoms/button'
-
 import { InputText } from '../../atoms/form'
 import { IconImage } from '../../atoms/icon-image'
 import { useProjectMembers } from '../../../hooks/pages/assets/use-project-members'
@@ -70,7 +69,6 @@ const ProjectList: NextPage<Props> = (props) => {
     setFetchTrigger,
     setTargetProject,
     setPostTrigger,
-    targetProject,
     isLoadingMember,
     setTargetKeyword,
     targetKeyword,
@@ -122,7 +120,6 @@ const ProjectList: NextPage<Props> = (props) => {
   let timer = null
   const handleKeywordChange = (formValues: any) => {
     const { keyword } = formValues.values
-    console.log(keyword)
     clearTimeout(timer)
     timer = setTimeout(() => {
       setTargetKeyword(keyword)
@@ -131,7 +128,6 @@ const ProjectList: NextPage<Props> = (props) => {
 
   const handleKeywordChangeMemberList = (formValues: any) => {
     const { keywordNonMember } = formValues.values
-    console.log(keywordNonMember)
     clearTimeout(timer)
     timer = setTimeout(() => {
       setTargetKeywordNonMember(keywordNonMember)
@@ -208,7 +204,6 @@ const ProjectList: NextPage<Props> = (props) => {
   }, [projectNonMembers])
 
   useEffect(() => {
-    console.log(props.serverData)
     if (props.serverData.name) {
       if (props.osFamily.os_family === 'windows') {
         if (props.serverData.os_name && props.serverData.os_version) {
@@ -291,9 +286,7 @@ const ProjectList: NextPage<Props> = (props) => {
                             setProjectData({
                               id: data.id,
                               name: data.name,
-                              platform: data.platform_display
-                                ? data.platform_display
-                                : '',
+                              platform: data.platform ? data.platform : '',
                             })
                             setProjectId(data.id)
                             setModalEditProjectName(data.name)
@@ -347,7 +340,26 @@ const ProjectList: NextPage<Props> = (props) => {
               </>
             ) : (
               <NothingText>
-                検索条件に合うプロジェクトはありませんでした。
+                {state.user.role !== 0 ? (
+                  <>
+                    登録されている資産はありません。
+                    <br />
+                    まずは、資産を登録してください。
+                    <Button
+                      label={'資産登録'}
+                      buttonType={'primary'}
+                      beforeIcon={<Icon.Plus />}
+                      handleClick={() => {
+                        router.push({
+                          pathname: '/assets/projects/register',
+                          query: {},
+                        })
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>登録されている資産はありません。</>
+                )}
               </NothingText>
             )}
             <Modal
@@ -621,18 +633,12 @@ const Wrap = styled.div`
   font-size: 14px;
 `
 const LoadingWrap = styled.div`
-  height: calc(100vh - 106px);
+  height: calc(100vh - 200px);
 `
 const StyledList = styled(List)<{ height?: number }>`
-  height: calc(100vh - ${({ height }) => height && height}px);
   margin: 0 0 0 -16px;
   padding: 4px 16px;
-  overflow-y: scroll;
   transition: height 0.3s ease-in-out;
-
-  &::-webkit-scrollbar {
-    //display: none;
-  }
 `
 const WrapLeft = styled.div`
   > * {
@@ -699,12 +705,19 @@ const OpenWrap = styled.div<{ isOpen: any }>`
 `
 const NothingText = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 250px);
   line-height: 1.71;
+  font-size: 16px;
+  font-weight: 700;
   text-align: center;
+
+  > button {
+    margin-top: 24px;
+  }
 `
 const SubTitle = styled.div`
   font-size: 12px;

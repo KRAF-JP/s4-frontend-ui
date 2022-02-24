@@ -34,6 +34,15 @@ export const useUsers = () => {
     apiClient
       .put(`/users/${target.id}`, target.data)
       .then((res) => {
+        const resData = users.map((data) => {
+          if (res.data.id === data.id) {
+            return res.data
+          } else {
+            return data
+          }
+        })
+
+        setUsers(resData)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -52,6 +61,19 @@ export const useUsers = () => {
     apiClient
       .delete(`/users/${target.id}`)
       .then((res) => {
+        const resData = users.map((data) => {
+          if (Number(target.id) === data.id) {
+            return {
+              ...data,
+              deleted_at: 'delete',
+            }
+          } else {
+            return data
+          }
+        })
+
+        setUsers(resData)
+
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -70,6 +92,19 @@ export const useUsers = () => {
     apiClient
       .put(`/users/${target.id}/restore`)
       .then((res) => {
+        const resData = users.map((data) => {
+          if (Number(target.id) === data.id) {
+            return {
+              ...data,
+              deleted_at: null,
+            }
+          } else {
+            return data
+          }
+        })
+
+        setUsers(resData)
+
         dispatch({
           type: 'update_toaster',
           payload: {

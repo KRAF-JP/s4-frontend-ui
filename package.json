@@ -17,6 +17,7 @@
   "dependencies": {
     "@nivo/bar": "^0.79.1",
     "@nivo/core": "^0.79.0",
+    "@sentry/nextjs": "^6.17.9",
     "@types/styled-components": "^5.1.14",
     "axios": "^0.24.0",
     "babel-plugin-styled-components": "^1.13.2",

@@ -21,7 +21,7 @@ const SearchCheckbox: React.FC<Props> = (props) => {
         name={props.name}
         value={props.value}
         checked={props.checked ?? props.checked}
-        onChange={props.onChange}
+        onChange={props.onChange && props.onChange}
       />
       <Text onClick={props.handleClick}>
         {props.color && <UrgencyBar color={props.color} />}

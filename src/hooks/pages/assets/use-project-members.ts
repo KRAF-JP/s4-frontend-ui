@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { apiClient } from '../../api-client'
 import GlobalContext from '../../../store/context'
 import { useRouter } from 'next/router'
+import { useErrorHandle } from '../../use-error-handle'
 
 export const useProjectMembers = () => {
   const router = useRouter()
@@ -18,6 +19,7 @@ export const useProjectMembers = () => {
   const [targetKeyword, setTargetKeyword] = useState<string>()
   const [targetKeywordNonMember, setTargetKeywordNonMember] = useState<string>()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     apiClient
@@ -27,13 +29,11 @@ export const useProjectMembers = () => {
         },
       })
       .then((res) => {
-        console.log(res.data)
         setProjectMembers(res.data)
         setIsLoadingMember(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -46,12 +46,10 @@ export const useProjectMembers = () => {
         },
       })
       .then((res) => {
-        console.log(res.data)
         setProjectNonMembers(res.data)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -62,7 +60,6 @@ export const useProjectMembers = () => {
         user_ids: targetMember,
       })
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -74,26 +71,15 @@ export const useProjectMembers = () => {
         setIsLoadingMember(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error.response)
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `追加できませんでした。`,
-            type: 'error',
-          },
-        })
+        errorHandle(error, '追加できませんでした。')
       })
   }
 
   const deleteRequest = async () => {
     setIsLoadingMember(false)
-    console.log(targetProject)
     apiClient
       .delete(`/projects/${Number(targetProject)}/members/${targetMember[0]}`)
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -105,16 +91,7 @@ export const useProjectMembers = () => {
         setIsLoadingMember(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error.response)
-        dispatch({
-          type: 'update_toaster',
-          payload: {
-            isShow: true,
-            text: `削除できませんでした。`,
-            type: 'error',
-          },
-        })
+        errorHandle(error, '削除できませんでした。')
       })
   }
 

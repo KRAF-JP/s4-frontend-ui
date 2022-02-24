@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { apiClient } from '../../api-client'
 import GlobalContext from '../../../store/context'
+import { useErrorHandle } from '../../use-error-handle'
 
 export const useProjects = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -11,6 +12,7 @@ export const useProjects = () => {
     name: undefined,
   })
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const deleteRequest = async () => {
     setIsLoading(false)
@@ -18,8 +20,6 @@ export const useProjects = () => {
     apiClient
       .delete(`/projects/${Number(target.id)}`, {})
       .then((res) => {
-        console.log(res.data)
-        // setServers(res.data)
         setIsLoading(true)
         dispatch({
           type: 'update_toaster',
@@ -31,8 +31,7 @@ export const useProjects = () => {
         })
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 

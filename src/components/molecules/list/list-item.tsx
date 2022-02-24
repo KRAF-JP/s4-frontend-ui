@@ -38,7 +38,6 @@ const Wrap = styled.li<Props>`
     disabled &&
     `
       opacity: 0.5;
-      pointer-events: none;
     `}
   ${({ onClick }) =>
     onClick &&

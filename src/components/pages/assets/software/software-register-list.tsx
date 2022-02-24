@@ -62,8 +62,6 @@ const SoftwareRegisterList: NextPage<Props> = (props) => {
     }
     setSelectItem(i)
     setTarget(data)
-    console.log(selectItem)
-    console.log(data)
   }
 
   const handleRegister = () => {
@@ -263,6 +261,13 @@ const StyledListItem = styled(ListItem)<{ select?: boolean }>`
   grid-template-columns: 320px 160px 1fr;
   box-shadow: none;
   cursor: pointer;
+
+  > div {
+    display: block;
+    overflow: hidden;
+    margin-right: 16px;
+    word-break: break-word;
+  }
 
   ${({ select }) =>
     select &&

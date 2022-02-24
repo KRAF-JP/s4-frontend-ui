@@ -12,10 +12,6 @@ type Props = {
 
 const SearchToggle: React.FC<Props> = (props) => {
   const [isShow, setIsShow] = useState(false)
-  let checkedSearchCheckbox = true
-  if (!isShow) {
-    checkedSearchCheckbox = false
-  }
 
   const handleClick = (e) => {
     setIsShow(!isShow)
@@ -29,8 +25,8 @@ const SearchToggle: React.FC<Props> = (props) => {
           name={'toggle'}
           value={'toggle'}
           icon={isShow ? <Icon.ChevronUp /> : <Icon.ChevronDown />}
-          checked={checkedSearchCheckbox}
-          handleClick={handleClick}
+          checked={isShow}
+          onChange={handleClick}
         >
           絞り込み検索
         </SearchCheckbox>

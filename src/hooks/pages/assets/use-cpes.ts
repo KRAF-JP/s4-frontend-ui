@@ -3,6 +3,7 @@ import { apiClient } from '../../api-client'
 import { useRouter } from 'next/router'
 import GlobalContext from '../../../store/context'
 import { useSoftwaresList } from './use-softwares'
+import { useErrorHandle } from '../../use-error-handle'
 
 export const useCpesSearch = () => {
   const router = useRouter()
@@ -14,6 +15,7 @@ export const useCpesSearch = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const { softwares } = useSoftwaresList()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     setIsLoading(false)
@@ -21,23 +23,19 @@ export const useCpesSearch = () => {
     apiClient
       .get(`/servers/${Number(server)}`, {})
       .then((res) => {
-        console.log(res.data)
         setServerDetail(res.data)
 
         apiClient
           .get(`/projects/${Number(res.data.project_id)}`, {})
           .then((res) => {
-            console.log(res.data)
             setProjectDetail(res.data)
           })
           .catch((error) => {
-            // #TODO sentry
-            console.log(error)
+            errorHandle(error)
           })
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
 
     apiClient
@@ -47,8 +45,6 @@ export const useCpesSearch = () => {
         },
       })
       .then((res) => {
-        console.log(res.data)
-
         const data = res.data.data.map((data) => {
           let disabled = false
           softwares.map((software) => {
@@ -66,14 +62,12 @@ export const useCpesSearch = () => {
           }
         })
 
-        console.log(data)
         setCpes(data)
         setTotalCount(res.data.count)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 

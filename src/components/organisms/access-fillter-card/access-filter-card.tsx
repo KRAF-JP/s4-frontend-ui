@@ -196,7 +196,7 @@ const AccessFilterCard: React.FC<Props> = (props) => {
                       setIsShowAccordion(!isShowAccordion)
                     }}
                   >
-                    もっと見る
+                    {isShowAccordion ? '閉じる' : 'もっと見る'}
                   </MoreText>
                 </MoreButton>
               )}
@@ -357,10 +357,11 @@ const IconWrap = styled.div`
 const Text = styled.div``
 const MoreButton = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 126px;
   height: 40px;
+  padding-left: 8px;
   border-radius: 8px;
   cursor: pointer;
 `

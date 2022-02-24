@@ -12,7 +12,7 @@ storiesOf('Components/Molecules/HistoryList', module).add('HistoryList', () => (
         {
           src: '/sample.jpg',
           name: '山田',
-          text: 'が対応状態を「対応中」に変更しました',
+          text: 'が対応状況を「対応中」に変更しました',
           date: '数時間前',
         },
         {

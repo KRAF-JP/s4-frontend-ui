@@ -8,6 +8,7 @@ import { Card } from '../../../atoms/card'
 import Button from '../../../atoms/button/button'
 import { useManualPackageRegisterJson } from '../../../../hooks/pages/assets/use-packages'
 import GlobalContext from '../../../../store/context'
+import { useErrorHandle } from '../../../../hooks/use-error-handle'
 
 type Props = {
   command: any
@@ -27,11 +28,11 @@ const PackageManualRegister: NextPage<Props> = (props) => {
   const { json, setPostTrigger, setJsonTrigger, setTarget } =
     useManualPackageRegisterJson()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const copyTextToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(
       function () {
-        console.log('Async: Copying to clipboard was successful!')
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -42,7 +43,7 @@ const PackageManualRegister: NextPage<Props> = (props) => {
         })
       },
       function (err) {
-        console.error('Async: Could not copy text: ', err)
+        errorHandle(err)
       }
     )
   }
@@ -54,7 +55,6 @@ const PackageManualRegister: NextPage<Props> = (props) => {
         return s !== ''
       }),
     }
-    console.log(data)
     setTarget(data)
     setPostTrigger(true)
     router.push({
@@ -86,7 +86,6 @@ const PackageManualRegister: NextPage<Props> = (props) => {
   }, [json])
 
   useEffect(() => {
-    console.log(pasteResult)
     if (pasteResult == '' || !pasteResult) return
     const data = {
       os_family: serverDetail.os_family,
@@ -94,7 +93,6 @@ const PackageManualRegister: NextPage<Props> = (props) => {
         return s !== ''
       }),
     }
-    console.log(data)
     setTarget(data)
     setJsonTrigger(true)
   }, [pasteResult])

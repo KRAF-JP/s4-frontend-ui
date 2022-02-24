@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { apiClient } from '../../api-client'
 import { useRouter } from 'next/router'
 import GlobalContext from '../../../store/context'
+import { useErrorHandle } from '../../use-error-handle'
 
 export const useSoftwares = () => {
   const router = useRouter()
@@ -11,6 +12,7 @@ export const useSoftwares = () => {
   const [response, setResponse] = useState<any>()
   const [postTrigger, setPostTrigger] = useState<boolean>(false)
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const postRequest = async () => {
     setIsLoading(false)
@@ -23,7 +25,6 @@ export const useSoftwares = () => {
     apiClient
       .post(`/servers/${Number(server)}/softwares`, data)
       .then((res) => {
-        console.log(res.data)
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -39,13 +40,11 @@ export const useSoftwares = () => {
           version: res.data.version,
           disabled: true,
         }
-        console.log(data)
         setResponse(data)
         setIsLoading(true)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -70,12 +69,12 @@ export const useSoftwaresList = () => {
   const { server } = router.query
   const [softwares, setSoftwares] = useState<any>()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const fetchRequest = async () => {
     apiClient
       .get(`/servers/${Number(server)}/softwares`)
       .then((res) => {
-        console.log(res.data)
         const data = res.data.map((data) => {
           return {
             product: data.product_name,
@@ -83,13 +82,10 @@ export const useSoftwaresList = () => {
             version: data.version,
           }
         })
-        console.log('-----software-----')
-        console.log(data)
         setSoftwares(data)
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 
@@ -111,6 +107,7 @@ export const useSoftwareDelete = () => {
     name: undefined,
   })
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const deleteRequest = async () => {
     setIsLoading(false)
@@ -118,7 +115,6 @@ export const useSoftwareDelete = () => {
     apiClient
       .delete(`/softwares/${Number(target.id)}`, {})
       .then((res) => {
-        console.log(res.data)
         setIsLoading(true)
         dispatch({
           type: 'update_toaster',
@@ -130,8 +126,7 @@ export const useSoftwareDelete = () => {
         })
       })
       .catch((error) => {
-        // #TODO sentry
-        console.log(error)
+        errorHandle(error)
       })
   }
 

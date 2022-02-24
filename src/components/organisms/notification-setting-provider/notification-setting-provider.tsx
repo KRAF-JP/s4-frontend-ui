@@ -160,7 +160,7 @@ const NotificationSettingProvider: React.FC<Props> = (props) => {
               <Content isShow={isActiveSlack}>
                 <Field name={'url'} type={'text'}>
                   {({ input, meta }) => (
-                    <FormField label={'Slack通知URL（Webhhook URL）'}>
+                    <FormField label={'Slack通知URL（Webhook URL）'}>
                       <FormFieldMask
                         value={input.value}
                         isShow={isShowSlack}

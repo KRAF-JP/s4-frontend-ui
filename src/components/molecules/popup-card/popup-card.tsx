@@ -58,6 +58,7 @@ const Contents = styled.div`
   position: sticky;
   max-height: calc(100vh - 192px);
   -ms-overflow-style: none;
+  overflow: scroll;
 
   &::-webkit-scrollbar {
     display: none;

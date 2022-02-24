@@ -8,6 +8,7 @@ import { Card } from '../../../atoms/card'
 import Button from '../../../atoms/button/button'
 import GlobalContext from '../../../../store/context'
 import { useAutoPackageRegisterResult } from '../../../../hooks/pages/assets/use-packages'
+import { useErrorHandle } from '../../../../hooks/use-error-handle'
 
 type Props = {
   command: any
@@ -29,11 +30,11 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
   const { result, setResultTrigger, setTarget, setPostTrigger, setWaitFetch } =
     useAutoPackageRegisterResult()
   const { dispatch } = useContext(GlobalContext)
+  const errorHandle = useErrorHandle()
 
   const copyTextToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(
       function () {
-        console.log('Async: Copying to clipboard was successful!')
         dispatch({
           type: 'update_toaster',
           payload: {
@@ -44,7 +45,7 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
         })
       },
       function (err) {
-        console.error('Async: Could not copy text: ', err)
+        errorHandle(err)
       }
     )
   }
@@ -58,7 +59,6 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
   }
 
   const handleClear = () => {
-    console.log('aaa')
     router.push({
       pathname: `/assets/`,
       query: {},
@@ -75,7 +75,6 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
   }, [packageCurl])
 
   useEffect(() => {
-    console.log(result)
     if (result) {
       setItems(result)
       setDisabled(!result.is_curl_received)
@@ -103,7 +102,6 @@ const PackageAutoRegister: NextPage<Props> = (props) => {
     const timer = setInterval(() => {
       setSecCount((preSecCount) => preSecCount - 1)
       cnt = cnt - 1
-      console.log(cnt)
       if (cnt < 0) {
         setWaitFetch(true)
         setResultTrigger(true)

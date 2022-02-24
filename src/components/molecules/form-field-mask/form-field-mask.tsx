@@ -7,13 +7,14 @@ type Props = {
   value?: string
   isShow: boolean
   children: React.ReactNode
+  margin?: number
   handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
 
 const FormFieldMask: React.FC<Props> = (props) => {
   return (
     <Wrap>
-      <Mask isShow={props.isShow}>
+      <Mask isShow={props.isShow} margin={props.margin}>
         {props.value && <Text>{props.value}</Text>}
         <IconButton handleClick={props.handleClick}>
           <Icon.Pen />
@@ -24,9 +25,10 @@ const FormFieldMask: React.FC<Props> = (props) => {
   )
 }
 const Wrap = styled.div``
-const Mask = styled.div<{ isShow: boolean }>`
+const Mask = styled.div<Props>`
   display: ${({ isShow }) => (isShow ? 'none' : 'flex')};
   align-items: center;
+  margin-bottom: ${({ margin }) => (margin ? `${margin}px` : '0')};
 `
 const Text = styled.div`
   max-width: 320px;
