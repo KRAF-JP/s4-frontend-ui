@@ -56,8 +56,6 @@ export { default as NotificationSettingDate } from './components/organisms/notif
 export { default as NotificationSettingProvider } from './components/organisms/notification-setting-provider'
 export { default as PackagesTab } from './components/organisms/packages-tab'
 export { default as PersonalNav } from './components/organisms/personal-nav'
-export { default as SearchMember } from './components/organisms/search-member'
-export { default as SearchVuln } from './components/organisms/search-vuln'
 export { FileUpload } from './components/organisms/settings'
 export { default as SettingsTab } from './components/organisms/settings-tab'
 export { default as Toaster } from './components/organisms/toaster'
