@@ -20,7 +20,7 @@ const SearchCheckbox: React.FC<Props> = (props) => {
         type="checkbox"
         name={props.name}
         value={props.value}
-        checked={props.checked ?? props.checked}
+        defaultChecked={props.checked ?? props.checked}
         onChange={props.onChange && props.onChange}
       />
       <Text onClick={props.handleClick}>
