@@ -83,8 +83,9 @@ const StyledInput = styled.input<{
   appearance: none;
 
   &:focus {
-    outline: 2px solid ${Color.PRIMARY._500};
-    outline-offset: -2px;
+    padding: 15px;
+    border: 2px solid ${Color.PRIMARY._500};
+    outline: none;
   }
 
   &:disabled {
@@ -102,12 +103,10 @@ const StyledInput = styled.input<{
     isInvalid &&
     `
       padding-right: 40px;
-      outline: 2px solid ${Color.COMPONENT.DANGER};
-      outline-offset: -2px;
+      border: 2px solid ${Color.COMPONENT.DANGER};
       
       &:focus {
-        outline: 2px solid ${Color.COMPONENT.DANGER};
-        outline-offset: -2px;
+        border: 2px solid ${Color.COMPONENT.DANGER};
       }
   `}
 `

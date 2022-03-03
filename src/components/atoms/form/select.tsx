@@ -131,16 +131,16 @@ const SelectedItem = styled.div<{ focus: boolean }>`
   position: relative;
   width: 240px;
   height: 40px;
-  padding: 0 16px;
-  border: 1px solid ${Color.COMPONENT.FORM_BORDER};
+  padding: ${({ focus }) => (focus ? `0 15px` : `0 16px`)};
+  border: ${({ focus }) =>
+    focus
+      ? `2px solid ${Color.PRIMARY._500}`
+      : `1px solid ${Color.COMPONENT.FORM_BORDER}`};
   border-radius: 8px;
   background: ${Color.COMPONENT.SURFACE};
   font-size: 14px;
   overflow: hidden;
   cursor: pointer;
-  outline: ${({ focus }) =>
-    focus ? `2px solid ${Color.PRIMARY._500}` : 'none'};
-  outline-offset: -2px;
 `
 const SelectedItemLabel = styled.div`
   display: flex;

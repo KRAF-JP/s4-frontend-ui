@@ -20,7 +20,7 @@ const SearchCheckbox: React.FC<Props> = (props) => {
         type="checkbox"
         name={props.name}
         value={props.value}
-        defaultChecked={props.checked ?? props.checked}
+        checked={props.checked ?? props.checked}
         onChange={props.onChange && props.onChange}
       />
       <Text onClick={props.handleClick}>
@@ -42,9 +42,9 @@ const Wrap = styled.label`
     display: none;
 
     &:checked + span {
-      outline: 2px solid ${Color.PRIMARY._500};
+      padding: 0 15px;
+      border: 2px solid ${Color.PRIMARY._500};
       background: ${Color.COMPONENT.WHITE_HOVER};
-      outline-offset: -2px;
     }
   }
 `
