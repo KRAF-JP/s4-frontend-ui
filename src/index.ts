@@ -21,6 +21,7 @@ export {
   LabelSeverity,
   LabelIcon,
 } from './components/atoms/label'
+export { LinkBack } from './components/atoms/link-back'
 export { LinkButton } from './components/atoms/link-button'
 export { LoadingIcon } from './components/atoms/loading-icon'
 export { NewArrival } from './components/atoms/new-arrival'
