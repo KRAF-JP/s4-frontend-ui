@@ -1,4 +1,4 @@
-FROM node:14.15.1-alpine
+FROM node:16-alpine
 
 ENV HOME=/root \
     LANG=C.UTF-8 \
@@ -7,7 +7,7 @@ ENV HOME=/root \
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache make gcc g++ python coreutils git vim bash openssh tree
+    apk add --no-cache make gcc g++ python3 coreutils git vim bash openssh tree
 
 COPY .bashrc /root/
 WORKDIR /root

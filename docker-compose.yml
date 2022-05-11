@@ -9,11 +9,13 @@ services:
       - "3001:3001"
       - "6006:6006"
     expose:
-      - 3000
+      - 3001
     volumes:
-      - ./:/var/www
+      - .:/var/www
+      - node_modules_volume:/var/www/node_modules
     stdin_open: true
     tty: true
     restart: always
 
-
+volumes:
+  node_modules_volume:
