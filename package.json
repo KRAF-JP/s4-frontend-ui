@@ -43,11 +43,11 @@
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@storybook/addon-actions": "^6.3.12",
-    "@storybook/addon-essentials": "^6.4.12",
+    "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-links": "^6.4.12",
     "@storybook/builder-webpack5": "^6.4.12",
     "@storybook/manager-webpack5": "^6.4.12",
-    "@storybook/react": "^6.4.12",
+    "@storybook/react": "^6.4.22",
     "@svgr/cli": "^6.2.1",
     "@types/node": "^16.3.2",
     "@types/react": "^17.0.14",
