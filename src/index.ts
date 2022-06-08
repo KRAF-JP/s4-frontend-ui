@@ -48,6 +48,7 @@ export { default as ProfileImage } from './components/molecules/profile-image'
 export { default as SearchToggle } from './components/molecules/search-toggle'
 export { Tab, TabItem } from './components/molecules/tab'
 export { default as ToggleTabList } from './components/molecules/toggle-tab-list/toggle-tab-list'
+export { default as Modal } from './components/molecules/modal'
 
 
 // components/utils
