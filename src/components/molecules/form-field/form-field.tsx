@@ -12,7 +12,11 @@ type Props = {
 
 const FormField: React.FC<Props> = (props) => {
   return (
-    <Wrap className={props.className} marginBottom={props.marginBottom}>
+    <Wrap
+      data-testid="molecules-form-field"
+      className={props.className}
+      marginBottom={props.marginBottom}
+    >
       {props.label && (
         <Label>
           {props.label}
