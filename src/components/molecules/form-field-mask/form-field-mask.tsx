@@ -13,14 +13,20 @@ type Props = {
 
 const FormFieldMask: React.FC<Props> = (props) => {
   return (
-    <Wrap>
-      <Mask isShow={props.isShow} margin={props.margin}>
+    <Wrap data-testid="molecules-ffm-wrap">
+      <Mask
+        data-testid="molecules-ffm-mask"
+        isShow={props.isShow}
+        margin={props.margin}
+      >
         {props.value && <Text>{props.value}</Text>}
         <IconButton handleClick={props.handleClick}>
           <Icon.Pen />
         </IconButton>
       </Mask>
-      <Form isShow={props.isShow}>{props.children}</Form>
+      <Form data-testid="molecules-ffm-form" isShow={props.isShow}>
+        {props.children}
+      </Form>
     </Wrap>
   )
 }
