@@ -97,7 +97,7 @@ const StyledInput = styled.input<{
     color: ${Color.TEXT.GRAY};
   }
 
-  ${({ icon }) => icon && `padding-left: 40px;`}
+  ${({ icon }) => icon && `padding-left: 40px !important;`}
 
   ${({ isInvalid }) =>
     isInvalid &&

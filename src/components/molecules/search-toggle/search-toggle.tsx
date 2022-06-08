@@ -47,6 +47,7 @@ const Wrap = styled.div`
 `
 const ButtonWrap = styled.div``
 const SearchForm = styled.div<{ isShow: boolean; height?: number }>`
+  position: relative;
   display: block;
   width: 100%;
   height: ${({ isShow, height }) => (isShow ? `${height}px` : '0')};

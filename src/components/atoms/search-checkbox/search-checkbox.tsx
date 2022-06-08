@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Color from '../../../const/color'
+import { Icon } from '../icon'
 
 type Props = {
   name: string
@@ -9,8 +10,22 @@ type Props = {
   icon?: React.ReactNode
   children?: React.ReactNode
   checked?: boolean
+  statusValue?: number
   onChange?(e: React.ChangeEvent<HTMLInputElement>): void
   handleClick?(e: React.MouseEvent<HTMLElement>): void
+}
+
+const statusIcon = (value) => {
+  switch (value) {
+    case 1:
+      return <Icon.StatusBacklog />
+    case 2:
+      return <Icon.StatusProgress />
+    case 9:
+      return <Icon.StatusDone />
+    case 3:
+      return <Icon.StatusClosed />
+  }
 }
 
 const SearchCheckbox: React.FC<Props> = (props) => {
@@ -26,6 +41,9 @@ const SearchCheckbox: React.FC<Props> = (props) => {
       <Text onClick={props.handleClick}>
         {props.color && <UrgencyBar color={props.color} />}
         {props.icon && <IconWrap>{props.icon}</IconWrap>}
+        {props.statusValue && (
+          <IconWrap>{statusIcon(props.statusValue)}</IconWrap>
+        )}
         {props.children}
       </Text>
     </Wrap>

@@ -31,18 +31,18 @@ const Mask = styled.div<Props>`
   margin-bottom: ${({ margin }) => (margin ? `${margin}px` : '0')};
 `
 const Text = styled.div`
-  max-width: 320px;
-  height: 20px;
+  max-width: 100%;
   margin-right: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14px;
+  line-height: 1.71;
 `
 const Form = styled.div<{ isShow: boolean }>`
   display: ${({ isShow }) => (isShow ? 'flex' : 'none')};
 
   > div {
-    margin: 0 8px 24px 0;
+    margin: 0 8px 0 0;
   }
 `
 

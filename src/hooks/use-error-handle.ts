@@ -36,7 +36,7 @@ export const useErrorHandle = () => {
       case 429:
         toaster(
           message ??
-            'リクエストが集中しています。しばらく待ってからお試しください。'
+          'リクエストが集中しています。しばらく待ってからお試しください。'
         )
         break
       case 500:
@@ -45,13 +45,13 @@ export const useErrorHandle = () => {
       case 503:
         toaster(
           message ??
-            '現在メンテナンス中です。しばらく待ってからお試しください。'
+          '現在メンテナンス中です。しばらく待ってからお試しください。'
         )
         break
       default:
         toaster(
           message ??
-            `エラーが発生しました。[${error.response.status}:${error.message}]`
+          `エラーが発生しました。[${error.response.status}:${error.message}]`
         )
         break
     }

@@ -27,17 +27,27 @@ type Props = {
 
 const InputTime: React.FC<Props> = (props) => {
   const [onFocus, setOnFocus] = useState(false)
+  const documentClickHandler = useRef(null)
+  const selectedItemElement = useRef(null)
 
   const handleClick = () => {
     setOnFocus(!onFocus)
+    document.addEventListener('click', documentClickHandler.current)
   }
 
   const selectedTime = () => {
     setOnFocus(false)
   }
 
+  useEffect(() => {
+    documentClickHandler.current = (e) => {
+      if (selectedItemElement.current.contains(e.target)) return
+      setOnFocus(false)
+    }
+  }, [])
+
   return (
-    <Wrap>
+    <Wrap ref={selectedItemElement}>
       <StyledInputText
         name={props.name}
         type={props.type}

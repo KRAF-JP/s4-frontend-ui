@@ -42,33 +42,7 @@
 - Tab
 - TabItem
 
-### components/organisms
-- AccessFilterCard
-- GlobalNav
-- Modal
-- NotificationSettingDate
-- NotificationSettingProvider
-- PersonalNav
-- SearchMember
-- SearchVuln
-- FileUpload
-- SettingsTab
-- Toaster
 
-### components/pages
-
-- MembersList
-- MembersSortable
-- MembersSearch
-- UserLogsList
-- UserLogsSortable
-- UserLogsSearch
-- VulnerabilityList
-- VulnerabilitySortable
-- VulnerabilitySearch
-
-### components/pages
-- DefaultTemplate
 
 ### components/utils
 - Auth

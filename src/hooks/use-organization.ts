@@ -56,7 +56,17 @@ export const useOrganization = () => {
   const slackSendTest = async () => {
     apiClient
       .post('/org/slack/test', target)
-      .then((res) => {})
+      .then((res) => {
+        setSlackSendTrigger(false)
+        dispatch({
+          type: 'update_toaster',
+          payload: {
+            isShow: true,
+            text: 'テスト送信が完了しました',
+            type: 'success',
+          },
+        })
+      })
       .catch((error) => {
         errorHandle(error)
       })
@@ -151,6 +161,7 @@ export const useOrganization = () => {
 
   return {
     organization,
+    slackSendTrigger,
     setTarget,
     setPutTrigger,
     setSlackSendTrigger,

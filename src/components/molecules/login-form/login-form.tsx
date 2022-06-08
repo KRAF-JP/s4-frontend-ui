@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Color from '../../../const/color'
 import { Icon } from '../../atoms/icon'
+import { apiClient } from '../../../hooks/api-client'
+import { useErrorHandle } from '../../../hooks/use-error-handle'
 
 type Props = {}
 
@@ -10,6 +12,9 @@ const LoginForm: React.FC<Props> = (props) => {
   const [loginGoogleEnable, setLoginGoogleEnable] = useState(false)
   const [loginMsEnable, setLoginMsEnable] = useState(false)
   const [loginOktaEnable, setLoginOktaEnable] = useState(false)
+  const [loginOkta, setLoginOkta] = useState<boolean>(false)
+  const errorHandle = useErrorHandle()
+
   const handleLoginGoogle = () => {
     setLoginGoogleEnable(true)
 
@@ -36,6 +41,18 @@ const LoginForm: React.FC<Props> = (props) => {
     }, 2000)
     window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/okta`
   }
+
+  useEffect(() => {
+    apiClient
+      .get('/login/organization')
+      .then((res) => {
+        console.log(res)
+        setLoginOkta(res.data.okta_enabled)
+      })
+      .catch((error) => {
+        errorHandle(error)
+      })
+  }, [])
 
   return (
     <Wrap>
@@ -69,7 +86,7 @@ const LoginForm: React.FC<Props> = (props) => {
           </LoginButtonText>
         </LoginButton>
 
-        {process.env.NEXT_PUBLIC_OKTA_ENABLED === 'true' && (
+        {loginOkta && (
           <LoginButton onClick={handleLoginOkta} isLogging={loginOktaEnable}>
             <LoginButtonLogo>
               <Image src={'/logo_okta.png'} width={24} height={24} />
@@ -122,8 +139,8 @@ const LoginButton = styled.div<{ isLogging?: boolean }>`
   border: 1px solid ${Color.COMPONENT.FORM_BORDER};
   border-radius: 8px;
   cursor: pointer;
-  ${({ isLogging }) => isLogging && `pointer-events: none;`}
 
+  ${({ isLogging }) => isLogging && `pointer-events: none;`}
   &:last-child {
     margin: 0;
   }
