@@ -36,3 +36,15 @@ test('buttonType switch - danger', () => {
     `border: 1px solid ${Color.COMPONENT.DANGER};`
   )
 })
+
+test('small test', () => {
+  render(<Button label="small" small />)
+  expect(screen.getByRole('button')).toHaveStyle('height: 40px')
+})
+
+test('disabled test', () => {
+  render(<Button label="disabled" disabled />)
+  expect(screen.getByRole('button')).toHaveStyle(
+    'opacity: 0.5;pointer-events: none;'
+  )
+})
