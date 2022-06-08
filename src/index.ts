@@ -2,7 +2,7 @@
 import ToggleTab from "./components/atoms/form/toggle-tab";
 
 export { Button } from './components/atoms/button'
-export { Card, CardInner } from './components/atoms/card'
+export { Card, CardInner, CardDashboard } from './components/atoms/card'
 export {
   InputText,
   InputDate,
