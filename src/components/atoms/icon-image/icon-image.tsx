@@ -18,7 +18,11 @@ const IconImage: React.FC<Props> = (props) => {
       onClick={props.handleClick}
     >
       {props.src ? (
-        <img src={`data:image/png;base64,${props.src}`} alt="" />
+        <img
+          data-testid="atoms-ii-img"
+          src={`data:image/png;base64,${props.src}`}
+          alt=""
+        />
       ) : (
         <></>
       )}
