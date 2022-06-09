@@ -29,12 +29,14 @@ const HistoryList: React.FC<Props> = (props) => {
   }
 
   return (
-    <List>
+    <List data-testid="molecules-hl-list">
       {props.items ? (
         <>
           {props.items.map((item, i) => (
             <Item key={i}>
-              {item.is_newly && <ReadIcon />}
+              {item.is_newly && (
+                <ReadIcon data-testid="molecules-hl-read-icon" />
+              )}
               <Left>
                 {item.user_id ? (
                   <>
@@ -43,11 +45,17 @@ const HistoryList: React.FC<Props> = (props) => {
                     )}
                   </>
                 ) : (
-                  <Icon.LogoSymbol size={32} />
+                  <Icon.LogoSymbol
+                    data-testid="molecules-hl-logo-symbol"
+                    size={32}
+                  />
                 )}
               </Left>
               <Right>
-                <Content isRead={item.read_at}>
+                <Content
+                  data-testid="molecules-hl-content"
+                  isRead={item.read_at}
+                >
                   {item.type && (
                     <>
                       {/ProjectAssigned/.test(item.type) && (
@@ -61,6 +69,7 @@ const HistoryList: React.FC<Props> = (props) => {
                         <>
                           {item.user.name}さんが、「
                           <ContentLink
+                            data-testid="molecules-hl-content-link"
                             onClick={() => {
                               handleLinkClick(item.resource.id)
                             }}
@@ -74,6 +83,7 @@ const HistoryList: React.FC<Props> = (props) => {
                         <>
                           {item.user.name}さんが、あなたを「
                           <ContentLink
+                            data-testid="molecules-hl-content-link"
                             onClick={() => {
                               handleLinkClick(item.resource.id)
                             }}
@@ -90,10 +100,15 @@ const HistoryList: React.FC<Props> = (props) => {
                     <>
                       {item.user_id ? (
                         <>
-                          <HistoryName>{item.user.name}</HistoryName>さん
+                          <HistoryName data-testid="molecules-hl-history-name">
+                            {item.user.name}
+                          </HistoryName>
+                          さん
                         </>
                       ) : (
-                        <HistoryName>システム</HistoryName>
+                        <HistoryName data-testid="molecules-hl-history-name">
+                          システム
+                        </HistoryName>
                       )}
                       が、
                       {item.update_contents_front.map((data, i) => (
