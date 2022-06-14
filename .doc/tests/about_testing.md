@@ -28,4 +28,4 @@
 - eventのテスト
 - 条件や状態変化前後（domへのclass付け外し等）のテスト
 
-[戻る](../index.md)
+[戻る](../readme.md)

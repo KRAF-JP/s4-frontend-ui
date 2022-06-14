@@ -15,4 +15,4 @@ test('calls onClick prop when clicked', () => {
 })
 ```
 
-[戻る](../index.md)
+[戻る](../readme.md)
