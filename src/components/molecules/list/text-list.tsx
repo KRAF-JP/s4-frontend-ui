@@ -6,7 +6,11 @@ type Props = {
 }
 
 const TextList: React.FC<Props> = (props) => {
-  return <Text {...props}>{props.children}</Text>
+  return (
+    <Text data-testid="molecules-tl-text" {...props}>
+      {props.children}
+    </Text>
+  )
 }
 
 const Text = styled.li`

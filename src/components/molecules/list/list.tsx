@@ -7,7 +7,11 @@ type Props = {
 }
 
 const List: React.FC<Props> = (props) => {
-  return <Wrap className={props.className}>{props.children}</Wrap>
+  return (
+    <Wrap data-testid="molecules-l-wrap" className={props.className}>
+      {props.children}
+    </Wrap>
+  )
 }
 
 const Wrap = styled.ul``
