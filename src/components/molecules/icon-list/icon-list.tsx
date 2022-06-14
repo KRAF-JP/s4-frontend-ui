@@ -30,16 +30,17 @@ const getColors = (props: Props): string => {
 
 const IconList: React.FC<Props> = (props) => {
   return (
-    <Wrap {...props}>
+    <Wrap data-testid="molecules-il-wrap" {...props}>
       <LeftWrap>
         {props.icon}
-        <Text>{props.text}</Text>
+        <Text data-testid="molecules-il-text">{props.text}</Text>
       </LeftWrap>
       <RightWrap>
         {props.edit && (
           <IconButtonWrap>
             <IconButton>
               <Icon.Pen
+                data-testid="molecules-il-edit-button"
                 size={'16'}
                 color={Color.TEXT.GRAY}
                 onClick={props.handleClickEdit}
@@ -51,6 +52,7 @@ const IconList: React.FC<Props> = (props) => {
           <IconButtonWrap>
             <IconButton>
               <Icon.Trash
+                data-testid="molecules-il-delete-button"
                 size={'16'}
                 color={Color.TEXT.GRAY}
                 onClick={props.handleClickDelete}
