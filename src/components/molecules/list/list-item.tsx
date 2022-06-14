@@ -13,7 +13,11 @@ type Props = {
 
 const ListItem: React.FC<Props> = (props) => {
   return (
-    <Wrap {...props} onClick={props.handleClick}>
+    <Wrap
+      data-testid="molecules-li-wrap"
+      {...props}
+      onClick={props.handleClick}
+    >
       {props.children}
     </Wrap>
   )

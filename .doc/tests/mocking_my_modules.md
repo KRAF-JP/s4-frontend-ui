@@ -136,4 +136,4 @@ describe('rest - wrapping axios correctly', () => {
 
 ```
 
-[戻る](../index.md)
+[戻る](../readme.md)

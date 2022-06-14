@@ -33,4 +33,4 @@ test('should do a partial mock', () => {
 })
 ```
 
-[戻る](../index.md)
+[戻る](../readme.md)
