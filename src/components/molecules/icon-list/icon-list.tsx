@@ -95,7 +95,7 @@ const Text = styled.p`
   overflow-wrap: anywhere;
 `
 
-const IconButtonWrap = styled.p`
+const IconButtonWrap = styled.div`
   margin-left: 8px;
 `
 
