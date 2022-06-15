@@ -1,8 +1,6 @@
 import React from 'react'
-import { render, screen, cleanup } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { List, TextList, ListItem } from '../../../../components/molecules/list'
-
-afterEach(() => cleanup())
 
 describe('リストのレンダリング確認', () => {
   test('props.className に指定したクラスが付与される。', () => {

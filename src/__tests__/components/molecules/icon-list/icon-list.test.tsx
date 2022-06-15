@@ -1,9 +1,7 @@
 import React from 'react'
-import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { IconList } from '../../../../components/molecules/icon-list'
 import { default as Color } from '../../../../const/color'
-
-afterEach(() => cleanup())
 
 describe('アイコンリストの確認', () => {
   test('props.text=test の場合、textが test になる。', () => {

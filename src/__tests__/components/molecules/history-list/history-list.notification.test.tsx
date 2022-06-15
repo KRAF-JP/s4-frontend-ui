@@ -1,6 +1,6 @@
 import React from 'react'
 import HistoryList from '../../../../components/molecules/history-list'
-import { render, screen, cleanup, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import {
   issueAssignedNotification,
   projectAssignNotification,
@@ -20,7 +20,6 @@ const mockSetIsAlert = jest.fn()
 const mockRemoveHandler = jest.fn()
 
 afterEach(() => {
-  cleanup()
   mockPush.mockReset()
   mockSetIsAlert.mockReset()
   mockRemoveHandler.mockReset()
