@@ -75,14 +75,16 @@ const DashboardListItem: NextPage<Props> = (props) => {
       <Header>
         <InfoWrap>
           <LabelSeverity>
-            <UrgencyBar {...props} />
-            <LabelText {...props}>{props.score}</LabelText>
+            <UrgencyBar data-testid="molecules-dli-urgency-bar" {...props} />
+            <LabelText data-testid="molecules-dli-label-text" {...props}>
+              {props.score}
+            </LabelText>
           </LabelSeverity>
-          <DateText>
+          <DateText data-testid="molecules-dli-date-text">
             {moment(props.createdAt).format('YYYY/MM/DD HH:mm')}
           </DateText>
         </InfoWrap>
-        <StatusWrap>
+        <StatusWrap data-testid="molecules-dli-status-wrap">
           <IconWrap>
             <IconImage src={props.profileImage} size={24} />
           </IconWrap>
