@@ -46,7 +46,6 @@ const LoginForm: React.FC<Props> = (props) => {
     apiClient
       .get('/login/organization')
       .then((res) => {
-        console.log(res)
         setLoginOkta(res.data.okta_enabled)
       })
       .catch((error) => {
@@ -64,7 +63,11 @@ const LoginForm: React.FC<Props> = (props) => {
       <Title>ログイン</Title>
 
       <LoginButtonWrap>
-        <LoginButton onClick={handleLoginGoogle} isLogging={loginGoogleEnable}>
+        <LoginButton
+          data-testid="molecules-lf-ggl-button"
+          onClick={handleLoginGoogle}
+          isLogging={loginGoogleEnable}
+        >
           <LoginButtonLogo>
             <Icon.LogoGoogle size={18} />
           </LoginButtonLogo>
@@ -75,7 +78,11 @@ const LoginForm: React.FC<Props> = (props) => {
           </LoginButtonText>
         </LoginButton>
 
-        <LoginButton onClick={handleLoginMicrosoft} isLogging={loginMsEnable}>
+        <LoginButton
+          data-testid="molecules-lf-ms-button"
+          onClick={handleLoginMicrosoft}
+          isLogging={loginMsEnable}
+        >
           <LoginButtonLogo>
             <Icon.LogoMs size={19} />
           </LoginButtonLogo>
@@ -87,7 +94,11 @@ const LoginForm: React.FC<Props> = (props) => {
         </LoginButton>
 
         {loginOkta && (
-          <LoginButton onClick={handleLoginOkta} isLogging={loginOktaEnable}>
+          <LoginButton
+            data-testid="molecules-lf-okt-button"
+            onClick={handleLoginOkta}
+            isLogging={loginOktaEnable}
+          >
             <LoginButtonLogo>
               <Image src={'/logo_okta.png'} width={24} height={24} />
             </LoginButtonLogo>
