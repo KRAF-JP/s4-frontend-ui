@@ -1,5 +1,5 @@
 import React from 'react'
-import HistoryList from '../../../../components/molecules/history-list'
+import { HistoryList } from '../../../../index'
 import { render, screen } from '@testing-library/react'
 import {
   sysHistoryItem,

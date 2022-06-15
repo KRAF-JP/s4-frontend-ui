@@ -1,7 +1,6 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
-import { default as DashboardListItem } from '../../../../components/molecules/list/dashboard-list-item'
-import Color from '../../../../const/color'
+import { DashboardListItem, Color } from '../../../../index'
 
 const mockPush = jest.fn()
 jest.mock('next/router', () => ({
