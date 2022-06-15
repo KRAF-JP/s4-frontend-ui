@@ -140,11 +140,7 @@ const Content = styled.p`
 const LabelSeverity = styled.div`
   display: flex;
 `
-const LabelText = styled.span<Props>`
-  ${({ severityId }) =>
-    severityId === 5 || severityId === 4 || severityId === 3
-      ? `color: ${Color.TEXT.WHITE};`
-      : `color: ${Color.TEXT.GRAY};`}
+const LabelText = styled.span`
   margin-right: 16px;
   font-size: 18px;
   font-weight: bold;
