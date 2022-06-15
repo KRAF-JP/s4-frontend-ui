@@ -34,6 +34,7 @@ export { default as FormFieldMask } from './components/molecules/form-field-mask
 export { default as HistoryList } from './components/molecules/history-list'
 export { IconList } from './components/molecules/icon-list'
 export { List, ListItem, TextList } from './components/molecules/list'
+export { default as DashboardListItem } from './components/molecules/list/dashboard-list-item'
 export { default as LoginForm } from './components/molecules/login-form'
 export { default as PageHeader } from './components/molecules/page-header'
 export { default as PopupCard } from './components/molecules/popup-card'
