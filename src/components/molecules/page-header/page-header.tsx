@@ -10,8 +10,12 @@ type Props = {
 const PageHeader: React.FC<Props> = (props) => {
   return (
     <Wrap>
-      <Title>{props.title}</Title>
-      {props.description && <Description>{props.description}</Description>}
+      <Title data-testid="molecules-ph-title">{props.title}</Title>
+      {props.description && (
+        <Description data-testid="molecules-ph-description">
+          {props.description}
+        </Description>
+      )}
     </Wrap>
   )
 }
