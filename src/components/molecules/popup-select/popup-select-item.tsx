@@ -8,7 +8,14 @@ type Props = {
 }
 
 const PopSelectItem: React.FC<Props> = (props) => {
-  return <OptionItem onClick={props.handleClick}>{props.label}</OptionItem>
+  return (
+    <OptionItem
+      data-testid="molecules-psi-option-item"
+      onClick={props.handleClick}
+    >
+      {props.label}
+    </OptionItem>
+  )
 }
 
 const OptionItem = styled.div`

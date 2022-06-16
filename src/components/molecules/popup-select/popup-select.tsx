@@ -8,7 +8,11 @@ type Props = {
 }
 
 const PopupSelect: React.FC<Props> = (props) => {
-  return <Options isShow={props.isShow}>{props.children}</Options>
+  return (
+    <Options data-testid="molecules-ps-options" isShow={props.isShow}>
+      {props.children}
+    </Options>
+  )
 }
 
 const Options = styled.div<{ isShow: boolean }>`
