@@ -101,7 +101,6 @@ describe('モーダルのレンダリング確認', () => {
         handleClickOverlay={mockHandleClickOverlay}
       />
     )
-    screen.debug()
 
     fireEvent.click(screen.getByTestId('molecules-m-cancel-button'))
     expect(mockHandleClickCancel).toHaveBeenCalledTimes(1)
