@@ -39,8 +39,8 @@ export { default as LoginForm } from './components/molecules/login-form'
 export { default as PageHeader } from './components/molecules/page-header'
 export { default as PopupCard } from './components/molecules/popup-card'
 export {
-  default as PopupSelect,
-  PopSelectItem,
+  PopupSelect,
+  PopupSelectItem,
 } from './components/molecules/popup-select'
 export { default as ProfileImage } from './components/molecules/profile-image'
 export { default as SearchToggle } from './components/molecules/search-toggle'

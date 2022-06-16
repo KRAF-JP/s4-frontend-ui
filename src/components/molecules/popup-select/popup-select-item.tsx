@@ -7,7 +7,7 @@ type Props = {
   handleClick(e: React.MouseEvent<HTMLElement>): void
 }
 
-const PopSelectItem: React.FC<Props> = (props) => {
+const PopupSelectItem: React.FC<Props> = (props) => {
   return (
     <OptionItem
       data-testid="molecules-psi-option-item"
@@ -39,4 +39,4 @@ const OptionItem = styled.div`
   }
 `
 
-export default PopSelectItem
+export default PopupSelectItem
