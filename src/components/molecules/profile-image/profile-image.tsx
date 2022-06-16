@@ -14,17 +14,22 @@ const ProfileImage: React.FC<Props> = (props) => {
   return (
     <ProfileImageWrap>
       <ImageWrap
+        data-testid="molecules-pi-image-wrap"
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
         {props.src ? (
-          <img src={`data:image/png;base64,${props.src}`} alt="" />
+          <img
+            data-testid="molecules-pi-img"
+            src={`data:image/png;base64,${props.src}`}
+            alt=""
+          />
         ) : (
           <>No Image</>
         )}
 
         {props.handleClick && (
-          <HoverImage isHover={isHover}>
+          <HoverImage data-testid="molecules-pi-hover-image" isHover={isHover}>
             <Icon.Camera color={Color.COMPONENT.SURFACE} size={40} />
           </HoverImage>
         )}
