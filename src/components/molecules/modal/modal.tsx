@@ -24,11 +24,14 @@ const Modal: React.FC<Props> = (props) => {
   return (
     <>
       <Block isShow={props.isShow}>
-        {props.title && <Header>{props.title}</Header>}
+        {props.title && (
+          <Header data-testid="molecules-m-header">{props.title}</Header>
+        )}
         {props.children && <Content>{props.children}</Content>}
         {!props.noFooter && (
-          <Footer>
+          <Footer data-testid="molecules-m-footer">
             <Button
+              data-testid="molecules-m-cancel-button"
               type={'button'}
               label={'キャンセル'}
               buttonType={'secondary'}
@@ -37,6 +40,7 @@ const Modal: React.FC<Props> = (props) => {
             />
             {props.submit && (
               <Button
+                data-testid="molecules-m-submit-button"
                 type={'button'}
                 form={props.submit.form}
                 label={props.submit.label}
@@ -50,6 +54,7 @@ const Modal: React.FC<Props> = (props) => {
         )}
       </Block>
       <Overlay
+        data-testid="molecules-m-overlay"
         isShow={props.isShow}
         onClick={(e) => {
           props.handleClickOverlay(e)
