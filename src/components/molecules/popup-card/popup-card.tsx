@@ -14,13 +14,16 @@ type Props = {
 const PopupCard: React.FC<Props> = (props) => {
   return (
     <Wrap
+      data-testid="molecules-pc-wrap"
       className={props.className}
       isShow={props.isShow}
       width={props.width}
       ref={props.cardRef}
     >
-      {props.title && <Title>{props.title}</Title>}
-      <Contents>{props.children}</Contents>
+      {props.title && (
+        <Title data-testid="molecules-pc-title">{props.title}</Title>
+      )}
+      <Contents data-testid="molecules-pc-content">{props.children}</Contents>
     </Wrap>
   )
 }
