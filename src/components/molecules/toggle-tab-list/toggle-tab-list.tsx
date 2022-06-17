@@ -6,7 +6,7 @@ type Props = {
 }
 
 const ToggleTabList: React.FC<Props> = (props) => {
-  return <Wrap>{props.children}</Wrap>
+  return <Wrap data-testid="molecules-ttl-wrap">{props.children}</Wrap>
 }
 
 const Wrap = styled.div`
