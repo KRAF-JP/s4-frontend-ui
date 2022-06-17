@@ -32,13 +32,14 @@ const SearchCheckbox: React.FC<Props> = (props) => {
   return (
     <Wrap>
       <input
+        data-testid="atoms-sc-input"
         type="checkbox"
         name={props.name}
         value={props.value}
         checked={props.checked ?? props.checked}
         onChange={props.onChange && props.onChange}
       />
-      <Text onClick={props.handleClick}>
+      <Text data-testid="atoms-sc-text" onClick={props.handleClick}>
         {props.color && <UrgencyBar color={props.color} />}
         {props.icon && <IconWrap>{props.icon}</IconWrap>}
         {props.statusValue && (

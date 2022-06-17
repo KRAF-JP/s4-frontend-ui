@@ -22,7 +22,6 @@ const SearchToggle: React.FC<Props> = (props) => {
     <Wrap>
       <ButtonWrap>
         <SearchCheckbox
-          data-testid="molecules-st-search-checkbox"
           name={'toggle'}
           value={'toggle'}
           icon={
