@@ -18,7 +18,11 @@ const TabItem: React.FC<Props> = (props) => {
   }
 
   return (
-    <Wrap className={props.className} current={currentPath(props.link)}>
+    <Wrap
+      data-testid="molecules-ti-wrap"
+      className={props.className}
+      current={currentPath(props.link)}
+    >
       <Link href={props.link}>{props.name}</Link>
     </Wrap>
   )
