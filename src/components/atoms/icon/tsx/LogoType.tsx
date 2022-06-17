@@ -3,6 +3,7 @@ import { SVGProps } from 'react'
 
 const SvgLogoType = (props: SVGProps<SVGSVGElement>) => (
   <svg
+    data-testid="atoms-icon-svg-logo-type"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 83.827 59.814"
     {...props}

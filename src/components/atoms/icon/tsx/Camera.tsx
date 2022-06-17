@@ -2,7 +2,12 @@ import * as React from 'react'
 import { SVGProps } from 'react'
 
 const SvgCamera = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" {...props}>
+  <svg
+    data-testid="atoms-icon-svg-camera"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 40 40"
+    {...props}
+  >
     <g transform="translate(-173.392 -77.887)">
       <circle
         cx={6.412}

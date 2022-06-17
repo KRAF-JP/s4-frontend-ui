@@ -2,7 +2,12 @@ import * as React from 'react'
 import { SVGProps } from 'react'
 
 const SvgLogoGoogle = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" {...props}>
+  <svg
+    data-testid="atoms-icon-svg-logo-google"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 18 18"
+    {...props}
+  >
     <path
       d="M17.64 9.2a10.341 10.341 0 0 0-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.8 2.716v2.264h2.909A8.777 8.777 0 0 0 17.64 9.2Z"
       fill="#4285f4"

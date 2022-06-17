@@ -24,6 +24,7 @@ exports[`Statusのレンダリング確認 status=1 の場合、StatusBacklog �
     size="24"
   >
     <svg
+      data-testid="atoms-icon-svg-status-backlog"
       viewBox="0 0 40 40"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -67,6 +68,7 @@ exports[`Statusのレンダリング確認 status=2 の場合、StatusProgress �
     size="24"
   >
     <svg
+      data-testid="atoms-icon-svg-status-progress"
       viewBox="0 0 40 40"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -111,6 +113,7 @@ exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が
     size="24"
   >
     <svg
+      data-testid="atoms-icon-svg-status-close"
       viewBox="0 0 40 40"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -158,6 +161,7 @@ exports[`Statusのレンダリング確認 status=9 の場合、StatusDone が�
     size="24"
   >
     <svg
+      data-testid="atoms-icon-svg-status-done"
       viewBox="0 0 40 40"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -22,16 +22,27 @@ const SearchToggle: React.FC<Props> = (props) => {
     <Wrap>
       <ButtonWrap>
         <SearchCheckbox
+          data-testid="molecules-st-search-checkbox"
           name={'toggle'}
           value={'toggle'}
-          icon={isShow ? <Icon.ChevronUp /> : <Icon.ChevronDown />}
+          icon={
+            isShow ? (
+              <Icon.ChevronUp data-testid="molecules-st-icon-chevron-up" />
+            ) : (
+              <Icon.ChevronDown data-testid="molecules-st-icon-chevron-down" />
+            )
+          }
           checked={isShow}
           onChange={handleClick}
         >
           絞り込み検索
         </SearchCheckbox>
       </ButtonWrap>
-      <SearchForm isShow={isShow} height={props.height}>
+      <SearchForm
+        data-testid="molecules-st-search-form"
+        isShow={isShow}
+        height={props.height}
+      >
         {props.form}
       </SearchForm>
     </Wrap>
