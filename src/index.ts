@@ -49,7 +49,6 @@ export { default as ToggleTabList } from './components/molecules/toggle-tab-list
 export { default as Modal } from './components/molecules/modal'
 
 // components/utils
-//export { default as Auth } from './components/utils/auth'
 export { default as GlobalHead } from './components/utils/global-head'
 export { default as GlobalStyle } from './components/utils/global-style'
 export {
