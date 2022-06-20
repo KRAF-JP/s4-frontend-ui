@@ -8,7 +8,7 @@ type Props = {
   name?: string
   placeholder?: string
   minDate?: any
-  value?: any
+  value?: string | null
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
