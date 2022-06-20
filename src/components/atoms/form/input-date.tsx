@@ -32,7 +32,8 @@ const InputDate: React.FC<Props> = (props: any) => {
             minDate={props.minDate && new Date(props.minDate)}
             dateFormat={'yyyy/MM/dd'}
             locale={'ja'}
-            placeholderText={!props.placeholder && '0000/00/00'}
+            placeholderText={props.placeholder ?? '0000/00/00'}
+            value={props.value ?? undefined}
           />
         </DatePickerWrap>
       </InputWrap>
