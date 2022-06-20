@@ -18,7 +18,7 @@ const InputDate: React.FC<Props> = (props: any) => {
   registerLocale('ja', ja)
 
   return (
-    <Wrap>
+    <Wrap data-testid="atoms-f-input-date">
       <InputWrap>
         <DatePickerWrap>
           <DatePicker
