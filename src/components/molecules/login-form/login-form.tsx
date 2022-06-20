@@ -1,58 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Color from '../../../const/color'
 import { Icon } from '../../atoms/icon'
-import { apiClient } from '../../../hooks/api-client'
-import { useErrorHandle } from '../../../hooks/use-error-handle'
 
-type Props = {}
+type Props = {
+  loginGoogleEnable: boolean
+  loginMsEnable: boolean
+  loginOktaEnable: boolean
+  loginOkta: boolean
+  handleLoginGoogle(e: React.MouseEvent<HTMLElement>): void
+  handleLoginMicrosoft(e: React.MouseEvent<HTMLElement>): void
+  handleLoginOkta(e: React.MouseEvent<HTMLElement>): void
+}
 
 const LoginForm: React.FC<Props> = (props) => {
-  const [loginGoogleEnable, setLoginGoogleEnable] = useState(false)
-  const [loginMsEnable, setLoginMsEnable] = useState(false)
-  const [loginOktaEnable, setLoginOktaEnable] = useState(false)
-  const [loginOkta, setLoginOkta] = useState<boolean>(false)
-  const errorHandle = useErrorHandle()
-
-  const handleLoginGoogle = () => {
-    setLoginGoogleEnable(true)
-
-    setTimeout(() => {
-      setLoginGoogleEnable(false)
-    }, 2000)
-    window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/google`
-  }
-
-  const handleLoginMicrosoft = () => {
-    setLoginMsEnable(true)
-
-    setTimeout(() => {
-      setLoginMsEnable(false)
-    }, 2000)
-    window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/graph`
-  }
-
-  const handleLoginOkta = () => {
-    setLoginOktaEnable(true)
-
-    setTimeout(() => {
-      setLoginOktaEnable(false)
-    }, 2000)
-    window.location.href = `${process.env.NEXT_PUBLIC_APP_ROOT}/login/okta`
-  }
-
-  useEffect(() => {
-    apiClient
-      .get('/login/organization')
-      .then((res) => {
-        setLoginOkta(res.data.okta_enabled)
-      })
-      .catch((error) => {
-        errorHandle(error)
-      })
-  }, [])
-
   return (
     <Wrap>
       <IconWrap>
@@ -65,14 +27,14 @@ const LoginForm: React.FC<Props> = (props) => {
       <LoginButtonWrap>
         <LoginButton
           data-testid="molecules-lf-ggl-button"
-          onClick={handleLoginGoogle}
-          isLogging={loginGoogleEnable}
+          onClick={props.handleLoginGoogle}
+          isLogging={props.loginGoogleEnable}
         >
           <LoginButtonLogo>
             <Icon.LogoGoogle size={18} />
           </LoginButtonLogo>
           <LoginButtonText>
-            {loginGoogleEnable
+            {props.loginGoogleEnable
               ? 'ログインしています...'
               : 'Google アカウントでログイン'}
           </LoginButtonText>
@@ -80,30 +42,30 @@ const LoginForm: React.FC<Props> = (props) => {
 
         <LoginButton
           data-testid="molecules-lf-ms-button"
-          onClick={handleLoginMicrosoft}
-          isLogging={loginMsEnable}
+          onClick={props.handleLoginMicrosoft}
+          isLogging={props.loginMsEnable}
         >
           <LoginButtonLogo>
             <Icon.LogoMs size={19} />
           </LoginButtonLogo>
           <LoginButtonText>
-            {loginMsEnable
+            {props.loginMsEnable
               ? 'ログインしています...'
               : 'Microsoft アカウントでサインイン'}
           </LoginButtonText>
         </LoginButton>
 
-        {loginOkta && (
+        {props.loginOkta && (
           <LoginButton
             data-testid="molecules-lf-okt-button"
-            onClick={handleLoginOkta}
-            isLogging={loginOktaEnable}
+            onClick={props.handleLoginOkta}
+            isLogging={props.loginOktaEnable}
           >
             <LoginButtonLogo>
               <Image src={'/logo_okta.png'} width={24} height={24} />
             </LoginButtonLogo>
             <LoginButtonText>
-              {loginOktaEnable
+              {props.loginOktaEnable
                 ? 'ログインしています...'
                 : 'Okta アカウントでサインイン'}
             </LoginButtonText>
