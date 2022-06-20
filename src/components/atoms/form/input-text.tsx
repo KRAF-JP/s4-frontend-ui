@@ -24,23 +24,30 @@ type Props = {
 
 const InputText: React.FC<Props> = (props: any) => {
   return (
-    <Wrap size={props.size}>
-      <InputWrap>
-        {props.icon && <IconWrap>{props.icon}</IconWrap>}
+    <Wrap data-testid="atoms-f-input-text-wrap" size={props.size}>
+      <InputWrap data-testid="atoms-f-input-text-input-wrap">
+        {props.icon && (
+          <IconWrap data-testid="atoms-f-input-text-icon-wrap">
+            {props.icon}
+          </IconWrap>
+        )}
         <StyledInput
+          data-testid="atoms-f-input-text-styled-input"
           {...props}
           ref={props.ref}
           isInvalid={!!props.invalidMessage}
           disabled={props.disabled}
         />
         {props.invalidMessage && (
-          <IconErrorWrap>
+          <IconErrorWrap data-testid="atoms-f-input-text-icon-error-wrap">
             <Icon.Error color={Color.COMPONENT.DANGER} />
           </IconErrorWrap>
         )}
       </InputWrap>
       {props.invalidMessage && (
-        <InvalidMessage>{props.invalidMessage}</InvalidMessage>
+        <InvalidMessage data-testid="atoms-f-input-text-invalid-message">
+          {props.invalidMessage}
+        </InvalidMessage>
       )}
     </Wrap>
   )
