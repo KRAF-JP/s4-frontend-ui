@@ -7,7 +7,11 @@ type Props = {
 }
 
 const CardInner: React.FC<Props> = (props) => {
-  return <Wrap bgColor={props.bgColor}>{props.children}</Wrap>
+  return (
+    <Wrap data-testid="atoms-ci-wrap" bgColor={props.bgColor}>
+      {props.children}
+    </Wrap>
+  )
 }
 
 const Wrap = styled.div<{ bgColor?: string }>`
