@@ -9,8 +9,8 @@ export {
   RadioButton,
   ToggleButton,
   Select,
+  ToggleTab,
 } from './components/atoms/form'
-export { default as ToggleTab } from './components/atoms/form/toggle-tab'
 export { Icon } from './components/atoms/icon'
 export { IconButton } from './components/atoms/icon-button'
 export { IconImage } from './components/atoms/icon-image'
