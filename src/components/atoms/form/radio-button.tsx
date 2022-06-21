@@ -13,10 +13,18 @@ type Props = {
 
 const RadioButton: React.FC<Props> = (props) => {
   return (
-    <StyledRadioButton>
-      <Marker checked={props.checked} small={props.small} />
+    <StyledRadioButton data-testid="atoms-f-radio-label-name">
+      <Marker
+        data-testid="atoms-f-radio-marker"
+        checked={props.checked}
+        small={props.small}
+      />
       {props.labelName}
-      <InnerInput type={'radio'} {...props} />
+      <InnerInput
+        data-testid="atoms-f-radio-inner-input"
+        type={'radio'}
+        {...props}
+      />
     </StyledRadioButton>
   )
 }
