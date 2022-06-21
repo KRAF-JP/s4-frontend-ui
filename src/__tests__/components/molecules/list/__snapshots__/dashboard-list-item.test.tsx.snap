@@ -21,6 +21,7 @@ exports[`Statusのレンダリング確認 status=1 の場合、StatusBacklog �
   </div>
   <span
     class="sc-papXJ joGxUk"
+    data-testid="atoms-i-icon-wrap"
     size="24"
   >
     <svg
@@ -65,6 +66,7 @@ exports[`Statusのレンダリング確認 status=2 の場合、StatusProgress �
   </div>
   <span
     class="sc-papXJ joGxUk"
+    data-testid="atoms-i-icon-wrap"
     size="24"
   >
     <svg
@@ -110,6 +112,7 @@ exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が
   </div>
   <span
     class="sc-papXJ joGxUk"
+    data-testid="atoms-i-icon-wrap"
     size="24"
   >
     <svg
@@ -158,6 +161,7 @@ exports[`Statusのレンダリング確認 status=9 の場合、StatusDone が�
   </div>
   <span
     class="sc-papXJ joGxUk"
+    data-testid="atoms-i-icon-wrap"
     size="24"
   >
     <svg

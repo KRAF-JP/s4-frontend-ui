@@ -11,7 +11,7 @@ const IconWrap: React.FC<Props> = (props) => {
   const { glyph: Glyph, ...options } = props
 
   return (
-    <IconWrapper {...options}>
+    <IconWrapper data-testid="atoms-i-icon-wrap" {...options}>
       <Glyph />
     </IconWrapper>
   )

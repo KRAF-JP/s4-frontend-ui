@@ -27,6 +27,7 @@ exports[`form - InputTime のレンダリング確認 オプションなしで�
     <span
       class="sc-papXJ ZErXk"
       color="#92A2AF"
+      data-testid="atoms-i-icon-wrap"
       size="16"
     >
       <svg
