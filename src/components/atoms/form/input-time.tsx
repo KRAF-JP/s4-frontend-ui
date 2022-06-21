@@ -23,6 +23,7 @@ type Props = {
   onBlur?: (e: React.SyntheticEvent) => void
   onFocus?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onClick?(e: React.MouseEvent<HTMLElement>): void
+  position?: boolean
 }
 
 const InputTime: React.FC<Props> = (props) => {
@@ -66,6 +67,7 @@ const InputTime: React.FC<Props> = (props) => {
       <Options
         data-testid="atoms-f-input-time-options"
         isShow={onFocus}
+        position={!!props.position}
       >
         <label htmlFor={'option_time'}>
           {Time.map((opt, i) => (
