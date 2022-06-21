@@ -17,25 +17,17 @@ type Props = {
 const Checkbox: React.FC<Props> = (props) => {
   return (
     <StyledCheckbox data-testid="atoms-f-checkbox-label">
-      {props.small ? (
-        <Marker
-          data-testid="atoms-f-checkbox-marker"
-          checked={props.checked}
-          isInvalid={props.isInvalid}
-          small={props.small}
-        >
-          {props.checked && <Icon.Check color={Color.TEXT.WHITE} size={11} />}
-        </Marker>
-      ) : (
-        <Marker
-          data-testid="atoms-f-checkbox-marker"
-          checked={props.checked}
-          isInvalid={props.isInvalid}
-          small={props.small}
-        >
-          {props.checked && <Icon.Check color={Color.TEXT.WHITE} size={16} />}
-        </Marker>
-      )}
+      <Marker
+        data-testid="atoms-f-checkbox-marker"
+        checked={props.checked}
+        isInvalid={props.isInvalid}
+        small={props.small}
+      >
+        {props.checked && (
+          <Icon.Check color={Color.TEXT.WHITE} size={props.small ? 11 : 16} />
+        )}
+      </Marker>
+
       {props.labelName && (
         <Label data-testid="atoms-f-checkbox-label-name">
           {props.labelName}
