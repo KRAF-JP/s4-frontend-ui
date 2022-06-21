@@ -10,7 +10,11 @@ type Props = {
 
 const IconButton: React.FC<Props> = (props) => {
   return (
-    <Wrap focus={props.focus} onClick={props.handleClick}>
+    <Wrap
+      data-testid="atoms-ib-wrap"
+      focus={props.focus}
+      onClick={props.handleClick}
+    >
       {props.children}
     </Wrap>
   )
