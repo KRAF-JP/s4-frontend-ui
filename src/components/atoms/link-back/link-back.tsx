@@ -14,14 +14,15 @@ const LinkBack: React.FC<Props> = (props) => {
 
   return (
     <LinkBackWrap
+      data-testid="atoms-lb-wrap"
       onClick={() => {
         props.link ? router.push(props.link) : router.back()
       }}
     >
-      <LinkBackIcon>
+      <LinkBackIcon data-testid="atoms-lb-icon">
         <Icon.ChevronLeft size={14} color={Color.TEXT.GRAY} />
       </LinkBackIcon>
-      <LinkBackText>{props.label}</LinkBackText>
+      <LinkBackText data-testid="atoms-lb-test">{props.label}</LinkBackText>
     </LinkBackWrap>
   )
 }
