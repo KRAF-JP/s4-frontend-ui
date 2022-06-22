@@ -7,7 +7,7 @@ type Props = {
 }
 
 const Supplement: React.FC<Props> = (props) => {
-  return <Text>{props.text}</Text>
+  return <Text data-testid="atoms-sup-text">{props.text}</Text>
 }
 
 const Text = styled.p`

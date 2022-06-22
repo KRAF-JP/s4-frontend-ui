@@ -13,16 +13,18 @@ type Props = {
 
 const LinkButton: React.FC<Props> = (props) => {
   return (
-    <Wrap {...props}>
+    <Wrap data-testid="atoms-lb-wrap" {...props}>
       {props.href ? (
         <Link href={props.href}>
           <a target="_blank" rel="noreferrer noopener">
-            <IconWrapper>
-              <ButtonTitle>
+            <IconWrapper data-testid="atoms-lb-icon-wrapper">
+              <ButtonTitle data-testid="atoms-lb-button-title">
                 {props.title}
-                <DateWrap>
+                <DateWrap data-testid="atoms-lb-date-wrap">
                   <Icon.History size={11} />
-                  <DateText>{props.date}</DateText>
+                  <DateText data-testid="atoms-lb-date-text">
+                    {props.date}
+                  </DateText>
                 </DateWrap>
               </ButtonTitle>
               <Icon.ExternalLink />
@@ -30,10 +32,10 @@ const LinkButton: React.FC<Props> = (props) => {
           </a>
         </Link>
       ) : (
-        <IconWrapper>
-          <ButtonTitle>
+        <IconWrapper data-testid="atoms-lb-icon-wrapper">
+          <ButtonTitle data-testid="atoms-lb-button-title">
             {props.title}
-            <DateWrap>
+            <DateWrap data-testid="atoms-lb-date-wrap">
               <Icon.History size={11} />
             </DateWrap>
           </ButtonTitle>

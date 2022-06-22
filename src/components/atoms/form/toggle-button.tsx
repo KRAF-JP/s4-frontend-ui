@@ -14,12 +14,26 @@ type Props = {
 
 const ToggleButton: React.FC<Props> = (props) => {
   return (
-    <StyledToggleButton onClick={props.handleClick}>
-      <Marker checked={props.checked}>
-        <On checked={props.checked}>ON</On>
-        <Off checked={props.checked}>OFF</Off>
+    <StyledToggleButton
+      data-testid="atoms-f-toggle-button-label"
+      onClick={props.handleClick}
+    >
+      <Marker
+        data-testid="atoms-f-toggle-button-marker"
+        checked={props.checked}
+      >
+        <On data-testid="atoms-f-toggle-button-on" checked={props.checked}>
+          ON
+        </On>
+        <Off data-testid="atoms-f-toggle-button-off" checked={props.checked}>
+          OFF
+        </Off>
       </Marker>
-      <InnerInput type={'checkbox'} {...props} />
+      <InnerInput
+        data-testid="atoms-f-toggle-button-inner-input"
+        type={'checkbox'}
+        {...props}
+      />
     </StyledToggleButton>
   )
 }

@@ -10,9 +10,14 @@ type Props = {
 
 const ToggleTab: React.FC<Props> = (props) => {
   return (
-    <Wrap>
-      <input type="radio" {...props} checked={props.checked} />
-      <span>{props.label}</span>
+    <Wrap data-testid="atoms-f-toggle-tab-label">
+      <input
+        data-testid="atoms-f-toggle-tab-input"
+        type="radio"
+        {...props}
+        checked={props.checked}
+      />
+      <span data-testid="atoms-f-toggle-tab-span">{props.label}</span>
     </Wrap>
   )
 }

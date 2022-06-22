@@ -7,7 +7,11 @@ type Props = {
 }
 
 const SearchCheckboxGroup: React.FC<Props> = (props) => {
-  return <Wrap className={props.className}>{props.children}</Wrap>
+  return (
+    <Wrap data-testid="atoms-scg-wrap" className={props.className}>
+      {props.children}
+    </Wrap>
+  )
 }
 
 const Wrap = styled.div`

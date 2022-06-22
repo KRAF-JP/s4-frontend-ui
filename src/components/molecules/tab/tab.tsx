@@ -8,8 +8,8 @@ type Props = {
 
 const Tab: React.FC<Props> = (props) => {
   return (
-    <Wrap className={props.className}>
-      <TabList>{props.children}</TabList>
+    <Wrap data-testid="molecules-t-wrap" className={props.className}>
+      <TabList data-testid="molecules-t-tab-list">{props.children}</TabList>
     </Wrap>
   )
 }

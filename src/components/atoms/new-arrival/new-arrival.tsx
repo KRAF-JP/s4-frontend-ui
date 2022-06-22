@@ -10,7 +10,7 @@ type Props = {
 
 const NewArrival: React.FC<Props> = (props) => {
   return (
-    <Wrap omit={props.omit} small={props.small}>
+    <Wrap data-testid="atoms-na-wrap" omit={props.omit} small={props.small}>
       {!props.omit && props.number}
     </Wrap>
   )

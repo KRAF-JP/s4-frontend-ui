@@ -49,6 +49,7 @@ const Select: React.FC<Props> = (props) => {
 
   useEffect(() => {
     document.addEventListener('click', closeSelect)
+    return () => document.addEventListener('click', closeSelect)
   }, [])
 
   useEffect(() => {
@@ -56,24 +57,44 @@ const Select: React.FC<Props> = (props) => {
   }, [props.defaultData])
 
   return (
-    <Wrap className={props.className} disabled={props.disabled}>
+    <Wrap
+      data-testid="atoms-f-select-wrap"
+      className={props.className}
+      disabled={props.disabled}
+    >
       <SelectedItem
+        data-testid="atoms-f-select-selected-item"
         ref={selectedItemElement}
         focus={onFocus}
         onClick={handleFocus}
       >
         {selectedItem.image && (
-          <StyledIconImage src={selectedItem.image} size={24} />
+          <StyledIconImage
+            data-testid="atoms-f-select-selected-item-image"
+            src={selectedItem.image}
+            size={24}
+          />
         )}
-        {selectedItem.icon && <StyledIcon>{selectedItem.icon}</StyledIcon>}
-        <SelectedItemLabel>{selectedItem.label}</SelectedItemLabel>
-        <IconWrap>
+        {selectedItem.icon && (
+          <StyledIcon data-testid="atoms-f-select-selected-item-icon">
+            {selectedItem.icon}
+          </StyledIcon>
+        )}
+        <SelectedItemLabel data-testid="atoms-f-select-selected-item-label">
+          {selectedItem.label}
+        </SelectedItemLabel>
+        <IconWrap data-testid="atoms-f-select-selected-item-icon-wrap">
           <Icon.ChevronDown color={Color.TEXT.BLACK} size={12} />
         </IconWrap>
       </SelectedItem>
 
-      <Options ref={optionItemElement} isShow={onFocus} position={props.top}>
-        <label htmlFor={props.name}>
+      <Options
+        data-testid="atoms-f-select-options"
+        ref={optionItemElement}
+        isShow={onFocus}
+        position={props.top}
+      >
+        <label data-testid="atoms-f-select-options-label" htmlFor={props.name}>
           {props.data.map((opt, i) => (
             <OptionItem
               key={i}
@@ -81,6 +102,7 @@ const Select: React.FC<Props> = (props) => {
               icon={opt.image}
             >
               <input
+                data-testid={`atoms-f-select-options-input-${i}`}
                 type="radio"
                 name={props.name}
                 value={opt.value}
@@ -90,8 +112,18 @@ const Select: React.FC<Props> = (props) => {
                 }}
                 onChange={props.onChange}
               />
-              {opt.image && <StyledIconImage src={opt.image} size={24} />}
-              {opt.icon && <StyledIcon>{opt.icon}</StyledIcon>}
+              {opt.image && (
+                <StyledIconImage
+                  data-testid={`atoms-f-select-options-icon-image-${i}`}
+                  src={opt.image}
+                  size={24}
+                />
+              )}
+              {opt.icon && (
+                <StyledIcon data-testid={`atoms-f-select-options-icon-${i}`}>
+                  {opt.icon}
+                </StyledIcon>
+              )}
               {opt.label}
             </OptionItem>
           ))}

@@ -16,8 +16,8 @@ function IconSet(props) {
 
 const LabelIcon: React.FC<Props> = (props) => {
   return (
-    <Text>
-      <IconWrap>
+    <Text data-testid="atoms-l-label-icon-text">
+      <IconWrap data-testid="atoms-l-label-icon-wrap">
         <IconSet label={props.label} />
       </IconWrap>
       {props.label}

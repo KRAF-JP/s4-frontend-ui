@@ -2,7 +2,12 @@ import * as React from 'react'
 import { SVGProps } from 'react'
 
 const SvgSeverityLow = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" {...props}>
+  <svg
+    data-testid="atoms-icon-svg-severity-low"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 40 40"
+    {...props}
+  >
     <defs>
       <clipPath id="severity_low_svg__a">
         <path

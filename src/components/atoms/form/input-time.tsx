@@ -23,6 +23,7 @@ type Props = {
   onBlur?: (e: React.SyntheticEvent) => void
   onFocus?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onClick?(e: React.MouseEvent<HTMLElement>): void
+  position?: boolean
 }
 
 const InputTime: React.FC<Props> = (props) => {
@@ -47,7 +48,7 @@ const InputTime: React.FC<Props> = (props) => {
   }, [])
 
   return (
-    <Wrap ref={selectedItemElement}>
+    <Wrap data-testid="atoms-f-input-time-wrap" ref={selectedItemElement}>
       <StyledInputText
         name={props.name}
         type={props.type}
@@ -63,10 +64,18 @@ const InputTime: React.FC<Props> = (props) => {
         <Icon.Time size={16} color={Color.TEXT.GRAY} />
       </IconButton>
 
-      <Options isShow={onFocus} position={true}>
+      <Options
+        data-testid="atoms-f-input-time-options"
+        isShow={onFocus}
+        position={!!props.position}
+      >
         <label htmlFor={'option_time'}>
           {Time.map((opt, i) => (
-            <OptionItem key={i} checked={opt === props.selectedTime}>
+            <OptionItem
+              data-testid={`atoms-f-input-time-option-item-${i}`}
+              key={i}
+              checked={opt === props.selectedTime}
+            >
               <input
                 type="radio"
                 name={'option_time'}

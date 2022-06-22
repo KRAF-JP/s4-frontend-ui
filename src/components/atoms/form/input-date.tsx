@@ -8,7 +8,7 @@ type Props = {
   name?: string
   placeholder?: string
   minDate?: any
-  value?: any
+  value?: string | null
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -18,7 +18,7 @@ const InputDate: React.FC<Props> = (props: any) => {
   registerLocale('ja', ja)
 
   return (
-    <Wrap>
+    <Wrap data-testid="atoms-f-input-date">
       <InputWrap>
         <DatePickerWrap>
           <DatePicker
@@ -32,7 +32,8 @@ const InputDate: React.FC<Props> = (props: any) => {
             minDate={props.minDate && new Date(props.minDate)}
             dateFormat={'yyyy/MM/dd'}
             locale={'ja'}
-            placeholderText={!props.placeholder && '0000/00/00'}
+            placeholderText={props.placeholder ?? '0000/00/00'}
+            value={props.value ?? undefined}
           />
         </DatePickerWrap>
       </InputWrap>

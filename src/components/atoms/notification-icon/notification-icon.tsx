@@ -11,7 +11,12 @@ type Props = {
 
 const NotificationIcon: React.FC<Props> = (props) => {
   return (
-    <Wrap className={props.className} bgColor={props.bgColor} omit={props.omit}>
+    <Wrap
+      data-testid="atoms-ni-wrap"
+      className={props.className}
+      bgColor={props.bgColor}
+      omit={props.omit}
+    >
       {!props.omit && props.number}
     </Wrap>
   )

@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { Button } from '../../../../components/atoms/button'
-import Color from '../../../../const/color'
+import { Button, Color } from '../../../../index'
 
 test('require label text', () => {
   render(<Button label="label text" />)

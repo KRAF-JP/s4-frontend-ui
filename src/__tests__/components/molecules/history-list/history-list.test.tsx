@@ -1,6 +1,6 @@
 import React from 'react'
-import HistoryList from '../../../../components/molecules/history-list'
-import { render, screen, cleanup } from '@testing-library/react'
+import { HistoryList } from '../../../../index'
+import { render, screen } from '@testing-library/react'
 import {
   sysHistoryItem,
   userHistoryItem,
@@ -25,8 +25,6 @@ const falsyItems: Items[] = [
   { caseTitle: 'null', items: null, expected: '履歴はありません' },
   { caseTitle: 'undefined', items: undefined, expected: '履歴はありません' },
 ]
-
-afterEach(() => cleanup())
 
 describe.each(falsyItems)(
   '履歴リスト - props.itemsがfalsy（空の配列/null/undefined）の時',

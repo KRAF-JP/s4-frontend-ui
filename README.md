@@ -37,6 +37,8 @@
 - LoginForm
 - PageHeader
 - PopupCard
+- PopupSelect
+- PopupSelectItem
 - ProfileImage
 - SearchToggle
 - Tab

@@ -7,8 +7,15 @@ type Props = {
   handleClick(e: React.MouseEvent<HTMLElement>): void
 }
 
-const PopSelectItem: React.FC<Props> = (props) => {
-  return <OptionItem onClick={props.handleClick}>{props.label}</OptionItem>
+const PopupSelectItem: React.FC<Props> = (props) => {
+  return (
+    <OptionItem
+      data-testid="molecules-psi-option-item"
+      onClick={props.handleClick}
+    >
+      {props.label}
+    </OptionItem>
+  )
 }
 
 const OptionItem = styled.div`
@@ -32,4 +39,4 @@ const OptionItem = styled.div`
   }
 `
 
-export default PopSelectItem
+export default PopupSelectItem

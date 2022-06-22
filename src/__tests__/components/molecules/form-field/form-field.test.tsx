@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { default as FormField } from '../../../../components/molecules/form-field'
+import { FormField } from '../../../../index'
 
 test('no label text', () => {
   render(<FormField />)

@@ -12,8 +12,8 @@ type Props = {
 
 const Card: React.FC<Props> = (props) => {
   return (
-    <CardWrap {...props}>
-      {props.title && <Title>{props.title}</Title>}
+    <CardWrap data-testid="atoms-c-wrap" {...props}>
+      {props.title && <Title data-testid="atoms-c-title">{props.title}</Title>}
       {props.children}
     </CardWrap>
   )

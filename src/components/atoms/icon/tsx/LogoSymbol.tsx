@@ -2,7 +2,12 @@ import * as React from 'react'
 import { SVGProps } from 'react'
 
 const SvgLogoSymbol = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" {...props}>
+  <svg
+    data-testid="atoms-icon-svg-logo-symbol"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 60 60"
+    {...props}
+  >
     <g>
       <circle cx={7.959} cy={7.959} r={7.959} fill="#004b96" />
       <path
