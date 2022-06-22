@@ -3,7 +3,7 @@ import { SVGProps } from 'react'
 
 const SvgStatusClosed = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    data-testid="atoms-icon-svg-status-close"
+    data-testid="atoms-icon-svg-status-closed"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 40 40"
     {...props}

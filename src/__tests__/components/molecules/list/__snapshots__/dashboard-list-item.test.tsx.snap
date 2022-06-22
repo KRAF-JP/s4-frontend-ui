@@ -116,7 +116,7 @@ exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が
     size="24"
   >
     <svg
-      data-testid="atoms-icon-svg-status-close"
+      data-testid="atoms-icon-svg-status-closed"
       viewBox="0 0 40 40"
       xmlns="http://www.w3.org/2000/svg"
     >
