@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { GlobalHead } from '../../../../index'
+import { GlobalHead, GlobalStyle } from '../../../../index'
 
 jest.mock('next/head', () => {
   return {
@@ -13,7 +13,11 @@ jest.mock('next/head', () => {
 
 describe('GlobalHeadのレンダリング確認', () => {
   test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
-    const { getByTestId } = render(<GlobalHead />)
+    const { getByTestId } = render(
+      <GlobalHead>
+        <GlobalStyle />
+      </GlobalHead>
+    )
 
     expect(getByTestId('utils-gh-title').textContent).toBe('S4')
   })
