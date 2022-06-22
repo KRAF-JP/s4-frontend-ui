@@ -21,10 +21,11 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
+      - name: Test
+        run: yarn test --coverage --updateSnapshot
+
       - name: Build
         run: yarn build
 
-      - name: Test
-        run: yarn test --coverage --updateSnapshot
 
 
