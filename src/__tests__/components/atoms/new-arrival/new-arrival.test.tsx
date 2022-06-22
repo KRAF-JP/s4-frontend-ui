@@ -9,7 +9,7 @@ import { NewArrival } from '../../../../index'
  *   small?: boolean
  * }
  */
-describe('link-button のレンダリング確認', () => {
+describe('new-arrival のレンダリング確認', () => {
   test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
     const { getByTestId } = render(<NewArrival />)
 
