@@ -5,7 +5,7 @@ import LoadingJson from './icon/loading4.json'
 
 const LoadingIcon: React.FC = () => {
   return (
-    <Wrap>
+    <Wrap data-testid="atoms-li-wrap">
       <Lottie
         loop
         play
