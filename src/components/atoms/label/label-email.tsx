@@ -10,9 +10,14 @@ type Props = {
 
 const LabelEmail: React.FC<Props> = (props) => {
   return (
-    <Wrap>
-      <TextWrap>{props.label}</TextWrap>
-      <IconWrap onClick={props.handleClick}>
+    <Wrap data-testid="atoms-l-label-email-wrap">
+      <TextWrap data-testid="atoms-l-label-email-text-wrap">
+        {props.label}
+      </TextWrap>
+      <IconWrap
+        data-testid="atoms-l-label-email-icon-wrap"
+        onClick={props.handleClick}
+      >
         <Icon.CircleCross size={16} color={Color.TEXT.GRAY} />
       </IconWrap>
     </Wrap>

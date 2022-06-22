@@ -53,29 +53,58 @@ const getSeverityTextColor = (props: Props): string => {
 
 const LabelSeverity: React.FC<Props> = (props) => {
   return (
-    <Wrap>
-      <BarWrap>
+    <Wrap data-testid="atoms-l-label-severity-wrap">
+      <BarWrap data-testid="atoms-l-label-severity-bar-wrap">
         {props.small ? (
-          <UrgencyBar {...props} />
+          <UrgencyBar
+            data-testid="atoms-l-label-severity-urgency-bar"
+            {...props}
+          />
         ) : (
-          <UrgencyBar {...props}>
-            <LabelText severityId={props.severityId}>
+          <UrgencyBar
+            data-testid="atoms-l-label-severity-urgency-bar"
+            {...props}
+          >
+            <LabelText
+              data-testid="atoms-l-label-severity-label-text"
+              severityId={props.severityId}
+            >
               {props.severity}
             </LabelText>
           </UrgencyBar>
         )}
-        <ContentWrap {...props}>
+        <ContentWrap
+          data-testid="atoms-l-label-severity-content-wrap"
+          {...props}
+        >
           {props.small ? (
             <>
-              <Score small={props.small}>{props.score}</Score>
-              {!props.short && <SeverityText>{props.severity}</SeverityText>}
+              <Score
+                data-testid="atoms-l-label-severity-score"
+                small={props.small}
+              >
+                {props.score}
+              </Score>
+              {!props.short && (
+                <SeverityText data-testid="atoms-l-label-severity-severity-text">
+                  {props.severity}
+                </SeverityText>
+              )}
             </>
           ) : (
             <>
-              <SeverityText>
-                <Version>CVSS</Version>v{props.version}
+              <SeverityText data-testid="atoms-l-label-severity-severity-text">
+                <Version data-testid="atoms-l-label-severity-version">
+                  CVSS
+                </Version>
+                v{props.version}
               </SeverityText>
-              <Score small={props.small}>{props.score}</Score>
+              <Score
+                data-testid="atoms-l-label-severity-score"
+                small={props.small}
+              >
+                {props.score}
+              </Score>
             </>
           )}
         </ContentWrap>
