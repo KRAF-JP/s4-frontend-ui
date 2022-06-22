@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`form - Checkbox のレンダリング確認 SelectItemにimageとiconをセットした場合、レンダリングされる。 1`] = `
+exports[`form - Select のレンダリング確認 SelectItemにimageとiconをセットした場合、レンダリングされる。 1`] = `
 <input
   data-testid="atoms-f-select-options-input-0"
   type="radio"
@@ -8,7 +8,7 @@ exports[`form - Checkbox のレンダリング確認 SelectItemにimageとicon�
 />
 `;
 
-exports[`form - Checkbox のレンダリング確認 SelectItemにimageとiconをセットした場合、レンダリングされる。 2`] = `
+exports[`form - Select のレンダリング確認 SelectItemにimageとiconをセットした場合、レンダリングされる。 2`] = `
 <input
   data-testid="atoms-f-select-options-input-1"
   type="radio"
@@ -16,7 +16,7 @@ exports[`form - Checkbox のレンダリング確認 SelectItemにimageとicon�
 />
 `;
 
-exports[`form - Checkbox のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
+exports[`form - Select のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
   class="sc-jIZahH cQBDCM"
   data-testid="atoms-f-select-wrap"

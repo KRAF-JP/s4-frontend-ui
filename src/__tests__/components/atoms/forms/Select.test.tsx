@@ -49,7 +49,7 @@ const testDataWithIcon: DataType[] = [
 
 const mockHandleClick = jest.fn()
 
-describe('form - Checkbox のレンダリング確認', () => {
+describe('form - Select のレンダリング確認', () => {
   test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
     const { getByTestId } = render(
       <Select
