@@ -6,7 +6,7 @@ type Props = {
 }
 
 const UnorderedList: React.FC<Props> = (props) => {
-  return <Text>{props.children}</Text>
+  return <Text data-testid="atoms-ul-text">{props.children}</Text>
 }
 
 const Text = styled.li`
