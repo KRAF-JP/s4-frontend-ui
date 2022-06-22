@@ -1,6 +1,11 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { SearchCheckbox, Color, Icon } from '../../../../index'
+import {
+  SearchCheckboxGroup,
+  SearchCheckbox,
+  Color,
+  Icon,
+} from '../../../../index'
 
 /**
  * type Props = {
@@ -17,9 +22,12 @@ import { SearchCheckbox, Color, Icon } from '../../../../index'
  */
 describe('SearchCheckbox のレンダリング確認', () => {
   test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
-    const { getByTestId } = render(<SearchCheckbox value={1} name="test" />)
-
-    expect(getByTestId('atoms-sc-wrap')).toMatchSnapshot()
+    const { getByTestId } = render(
+      <SearchCheckboxGroup>
+        <SearchCheckbox value={1} name="test" />
+      </SearchCheckboxGroup>
+    )
+    expect(getByTestId('atoms-scg-wrap')).toMatchSnapshot()
     expect(getByTestId('atoms-sc-input')).toHaveAttribute('name', 'test')
     expect(getByTestId('atoms-sc-input')).toHaveAttribute('value', '1')
   })
