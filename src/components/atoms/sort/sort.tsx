@@ -12,12 +12,18 @@ type Props = {
 
 const Sort: React.FC<Props> = (props) => {
   return (
-    <SortWrap sort={props.sort} onClick={props.handleClick}>
-      <ButtonWrap>
+    <SortWrap
+      data-testid="atoms-s-wrap"
+      sort={props.sort}
+      onClick={props.handleClick}
+    >
+      <ButtonWrap data-testid="atoms-s-button-wrap">
         <Icon.SortAsc size={8} color={Color.COMPONENT.FORM_BORDER} />
         <Icon.SortDesc size={8} color={Color.COMPONENT.FORM_BORDER} />
       </ButtonWrap>
-      {props.children && <Label>{props.children}</Label>}
+      {props.children && (
+        <Label data-testid="atoms-s-label">{props.children}</Label>
+      )}
     </SortWrap>
   )
 }
