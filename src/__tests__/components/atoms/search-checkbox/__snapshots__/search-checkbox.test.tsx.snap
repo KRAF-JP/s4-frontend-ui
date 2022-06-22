@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchCheckbox のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
+<label
+  class="sc-dwLEzm fNugXs"
+  data-testid="atoms-sc-wrap"
+>
+  <input
+    data-testid="atoms-sc-input"
+    name="test"
+    type="checkbox"
+    value="1"
+  />
+  <span
+    class="sc-TRNrF fcYSJz"
+    data-testid="atoms-sc-text"
+  />
+</label>
+`;
