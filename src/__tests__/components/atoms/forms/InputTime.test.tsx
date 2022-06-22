@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { InputTime, Color } from '../../../../index'
+import { InputTime, Color, Time } from '../../../../index'
 
 describe('form - InputTime のレンダリング確認', () => {
   test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
@@ -26,7 +26,7 @@ describe('form - InputTime のレンダリング確認', () => {
   })
 
   test('props.selectedTimeを設定した場合、該当アイテムの背景色を変更してレンダリングされる。', () => {
-    render(<InputTime selectedTime="00:00" />)
+    render(<InputTime selectedTime={Time[0]} />)
 
     expect(screen.getByTestId('atoms-f-input-time-option-item-0')).toHaveStyle(
       `background: ${Color.COMPONENT.WHITE_HOVER}`
