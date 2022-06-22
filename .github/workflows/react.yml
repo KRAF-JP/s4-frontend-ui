@@ -22,7 +22,33 @@ jobs:
         run: yarn install
 
       - name: Test
-        run: yarn test --coverage --updateSnapshot
+        run: yarn test --updateSnapshot --collect-coverage --verbose | \
+          tee | \
+          sed -E "s/"$'\E'"\[([0-9]{1,2}(;[0-9]{1,2})*)?m//g" | \
+          grep "Coverage summary" -A4 | \
+          tail -n 4 > coverage/coverage-summary.log
+          status=("${PIPESTATUS[@]}")
+          if [ ${status[0]} -ne 0 ]; then
+          echo "jest faild."
+          exit 1;
+          fi
+
+      - name: Read coverage summary
+        id: coverage-summary
+        uses: juliangruber/read-file-action@v1.0.0
+        with:
+          path: coverage/coverage-summary.log
+
+      - name: Coverage summary comment
+        uses: marocchino/sticky-pull-request-comment@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          header: coverage-summary
+          message: |
+            ## Coverage summary
+            ${{ steps.coverage-summary.outputs.content }}
+            ## Coverage report
+            ${{ steps.coverage-report-urls.outputs.content }}
 
       - name: Build
         run: yarn build
