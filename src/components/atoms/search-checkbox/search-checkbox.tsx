@@ -30,7 +30,7 @@ const statusIcon = (value) => {
 
 const SearchCheckbox: React.FC<Props> = (props) => {
   return (
-    <Wrap>
+    <Wrap data-testid="atoms-sc-wrap">
       <input
         data-testid="atoms-sc-input"
         type="checkbox"
@@ -40,10 +40,16 @@ const SearchCheckbox: React.FC<Props> = (props) => {
         onChange={props.onChange && props.onChange}
       />
       <Text data-testid="atoms-sc-text" onClick={props.handleClick}>
-        {props.color && <UrgencyBar color={props.color} />}
-        {props.icon && <IconWrap>{props.icon}</IconWrap>}
+        {props.color && (
+          <UrgencyBar data-testid="atoms-sc-urgency-bar" color={props.color} />
+        )}
+        {props.icon && (
+          <IconWrap data-testid="atoms-sc-icon-wrap">{props.icon}</IconWrap>
+        )}
         {props.statusValue && (
-          <IconWrap>{statusIcon(props.statusValue)}</IconWrap>
+          <IconWrap data-testid="atoms-sc-icon-wrap">
+            {statusIcon(props.statusValue)}
+          </IconWrap>
         )}
         {props.children}
       </Text>
