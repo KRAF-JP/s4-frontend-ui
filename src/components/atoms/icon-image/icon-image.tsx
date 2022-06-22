@@ -13,6 +13,7 @@ type Props = {
 const IconImage: React.FC<Props> = (props) => {
   return (
     <Wrap
+      data-testid="atoms-ii-wrap"
       className={props.className}
       size={props.size}
       onClick={props.handleClick}

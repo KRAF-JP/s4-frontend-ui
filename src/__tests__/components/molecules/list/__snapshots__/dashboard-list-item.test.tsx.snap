@@ -10,6 +10,7 @@ exports[`Statusのレンダリング確認 status=1 の場合、StatusBacklog �
   >
     <div
       class="sc-ikZpkk fsjIhy"
+      data-testid="atoms-ii-wrap"
       size="24"
     >
       <img
@@ -55,6 +56,7 @@ exports[`Statusのレンダリング確認 status=2 の場合、StatusProgress �
   >
     <div
       class="sc-ikZpkk fsjIhy"
+      data-testid="atoms-ii-wrap"
       size="24"
     >
       <img
@@ -101,6 +103,7 @@ exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が
   >
     <div
       class="sc-ikZpkk fsjIhy"
+      data-testid="atoms-ii-wrap"
       size="24"
     >
       <img
@@ -150,6 +153,7 @@ exports[`Statusのレンダリング確認 status=9 の場合、StatusDone が�
   >
     <div
       class="sc-ikZpkk fsjIhy"
+      data-testid="atoms-ii-wrap"
       size="24"
     >
       <img
@@ -192,6 +196,7 @@ exports[`Statusのレンダリング確認 status=100 の場合、表示され�
   >
     <div
       class="sc-ikZpkk fsjIhy"
+      data-testid="atoms-ii-wrap"
       size="24"
     >
       <img
