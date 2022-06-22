@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`form - Checkbox のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
+exports[`form - ToggleButton のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <label
   class="sc-iIPllB gQpSmt"
   data-testid="atoms-f-toggle-button-label"
