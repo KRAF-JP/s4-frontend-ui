@@ -60,6 +60,9 @@ describe('form - Select のレンダリング確認', () => {
     )
 
     expect(getByTestId('atoms-f-select-wrap')).toMatchSnapshot()
+    expect(screen.getByTestId('atoms-f-select-options')).toHaveStyle(
+      'top: 50px;'
+    )
   })
 
   test('disabledを設定した場合、selectがdisableになる。', () => {
@@ -118,5 +121,17 @@ describe('form - Select のレンダリング確認', () => {
 
     expect(getByTestId('atoms-f-select-options-input-0')).toMatchSnapshot()
     expect(getByTestId('atoms-f-select-options-input-1')).toMatchSnapshot()
+  })
+
+  test('props.topを設定した場合、設定値でレンダリングされる。', () => {
+    const { getByTestId } = render(
+      <Select
+        defaultData={defaultData}
+        data={testDataWithIcon}
+        handleClick={mockHandleClick}
+        top={true}
+      />
+    )
+    expect(getByTestId('atoms-f-select-options')).toHaveStyle('bottom: 50px;')
   })
 })
