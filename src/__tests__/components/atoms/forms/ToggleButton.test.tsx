@@ -13,7 +13,7 @@ import { ToggleButton, Color, Icon } from '../../../../index'
  *   handleClick?(e: React.MouseEvent<HTMLElement>): void
  * }
  */
-describe('form - Checkbox のレンダリング確認', () => {
+describe('form - ToggleButton のレンダリング確認', () => {
   test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
     const { getByTestId } = render(<ToggleButton />)
 
