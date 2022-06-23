@@ -1,33 +1,41 @@
-name: ci
-
+name: ui ci
 on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    types: [opened, synchronize]
+    paths:
+      - '**.ts'
+      - '**.tsx'
 
 jobs:
-  build:
+  frontend_build:
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: read
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Install Node
         uses: actions/setup-node@v1
         with:
+          always-auth: true
           node-version: 16.15.1
 
-      - name: Install Dependencies
+      - name: Install packages
         run: yarn install
 
       - name: Test
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
+          package-manager: yarn
+          skip-step: install
           GITHUB_TOKEN: ${{ secrets.DEVELOPER_PAT_30_DAYS }}
+          base-coverage-file: ./report.json
 
       - name: Build
         run: yarn build
-
-
-
