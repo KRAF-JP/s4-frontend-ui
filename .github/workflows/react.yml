@@ -22,7 +22,9 @@ jobs:
         run: yarn install
 
       - name: Test
-        run: yarn test --coverage --updateSnapshot
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.DEVELOPER_PAT_30_DAYS }}
 
       - name: Build
         run: yarn build
