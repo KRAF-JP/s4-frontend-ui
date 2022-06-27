@@ -63,9 +63,7 @@
 
 
 ### const
-- AuthorityName
 - Color
-- Role
 - Time
 
 ## SSHキー生成及び公開鍵の登録

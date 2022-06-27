@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { InputTime, Color, Time } from '../../../../index'
 
 describe('form - InputTime のレンダリング確認', () => {
-  test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
+  test('オプションなしで設定した場合、初期値でレンダリングされる。', async () => {
     render(<InputTime />)
 
     expect(screen.getByTestId('atoms-f-input-time-wrap')).toMatchSnapshot()
@@ -18,9 +18,17 @@ describe('form - InputTime のレンダリング確認', () => {
 
     fireEvent.click(screen.getByTestId('atoms-ib-wrap'))
     fireEvent.focus(screen.getByTestId('atoms-f-input-text-styled-input'))
-    waitFor(() =>
+
+    await waitFor(() =>
       expect(screen.getByTestId('atoms-f-input-time-options')).toHaveStyle(
         'display: flex;'
+      )
+    )
+
+    fireEvent.click(screen.getByTestId('atoms-f-input-time-option-item-0'))
+    await waitFor(() =>
+      expect(screen.getByTestId('atoms-f-input-time-options')).toHaveStyle(
+        'display: none;'
       )
     )
   })
@@ -51,15 +59,4 @@ describe('form - InputTime のレンダリング確認', () => {
       'bottom: 50px;'
     )
   })
-  /*後回し
-  test('focus テスト', () => {
-    render(<InputTime selectedTime="00:00" />)
-
-    expect(screen.getByTestId('atoms-f-input-time-options')).toHaveStyle(
-      'display: none;'
-    )
-
-    fireEvent.click(screen.getByTestId('atoms-ib-wrap'))
-    fireEvent.click(screen.getByTestId('atoms-f-input-time-option-item-1'))
-  })*/
 })

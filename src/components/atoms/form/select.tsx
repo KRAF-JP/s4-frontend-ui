@@ -49,7 +49,7 @@ const Select: React.FC<Props> = (props) => {
 
   useEffect(() => {
     document.addEventListener('click', closeSelect)
-    return () => document.addEventListener('click', closeSelect)
+    return () => document.removeEventListener('click', closeSelect)
   }, [])
 
   useEffect(() => {
