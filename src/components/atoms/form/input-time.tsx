@@ -45,6 +45,9 @@ const InputTime: React.FC<Props> = (props) => {
       if (selectedItemElement.current.contains(e.target)) return
       setOnFocus(false)
     }
+
+    return () =>
+      document.removeEventListener('click', documentClickHandler.current)
   }, [])
 
   return (
