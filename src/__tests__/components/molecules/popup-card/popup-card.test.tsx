@@ -5,7 +5,19 @@ import { PopupCard } from '../../../../index'
 const Dummy = () => <span>dummy</span>
 const Ref = jest.fn()
 
+afterEach(() => Ref.mockReset())
+
 describe('ポップアップカードのレンダリング確認', () => {
+  test('オプションなしで設定した場合、初期値でレンダリングされる。', () => {
+    render(
+      <PopupCard isShow={true} cardRef={Ref}>
+        <Dummy />
+      </PopupCard>
+    )
+    expect(screen.getByTestId('molecules-pc-wrap')).toMatchSnapshot()
+    expect(screen.getByTestId('molecules-pc-wrap')).toHaveStyle('width: 320px;')
+  })
+
   test('propsに設定した値でレンダリングされる。', () => {
     render(
       <PopupCard
