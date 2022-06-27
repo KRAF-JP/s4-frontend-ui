@@ -67,7 +67,5 @@ export {
 } from './components/utils/varidator'
 
 // const
-export { default as AuthorityName } from './const/authority-name'
 export { default as Color } from './const/color'
-export { default as Role } from './const/role'
 export { Time } from './const/time'
