@@ -41,11 +41,10 @@ const Wrap = styled.div<{
   width: ${({ size }) => (size ? `${size}px` : '36px')};
   height: ${({ size }) => (size ? `${size}px` : '36px')};
   border-radius: ${({ size }) => (size ? `${size / 2}px` : '18px')};
-  background: ${Color.COMPONENT.FORM_BORDER};
   transition: opacity 0.2s ease-out;
   overflow: hidden;
-  ${({ onClick }) => onClick && `cursor: pointer;`}
 
+  ${({ onClick }) => onClick && `cursor: pointer;`}
   img {
     width: ${({ size }) => (size ? `${size}px` : '36px')};
     height: ${({ size }) => (size ? `${size}px` : '36px')};

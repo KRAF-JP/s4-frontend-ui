@@ -18,6 +18,7 @@ exports[`form - InputDate のレンダリング確認 propsで値を渡した場
           class="react-datepicker__input-container"
         >
           <input
+            autocomplete="off"
             class=""
             name="test date-picker"
             placeholder="Please select a date"
@@ -49,6 +50,7 @@ exports[`form - InputDate のレンダリング確認 オプションなしで�
           class="react-datepicker__input-container"
         >
           <input
+            autocomplete="off"
             class=""
             placeholder="0000/00/00"
             type="text"

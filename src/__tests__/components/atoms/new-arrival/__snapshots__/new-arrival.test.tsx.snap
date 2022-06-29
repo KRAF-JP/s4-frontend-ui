@@ -2,7 +2,7 @@
 
 exports[`new-arrival のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-GVOUr bPuHtl"
+  class="sc-fXynhf kuDxhT"
   data-testid="atoms-na-wrap"
 />
 `;

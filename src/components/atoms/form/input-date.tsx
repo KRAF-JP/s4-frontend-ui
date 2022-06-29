@@ -34,6 +34,7 @@ const InputDate: React.FC<Props> = (props: any) => {
             locale={'ja'}
             placeholderText={props.placeholder ?? '0000/00/00'}
             value={props.value ?? undefined}
+            autoComplete={'off'}
           />
         </DatePickerWrap>
       </InputWrap>

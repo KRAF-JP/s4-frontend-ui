@@ -98,27 +98,30 @@ const HistoryList: React.FC<Props> = (props) => {
 
                   {item.update_contents && (
                     <>
-                      {item.user_id ? (
-                        <>
-                          <HistoryName data-testid="molecules-hl-history-name">
-                            {item.user.name}
-                          </HistoryName>
-                          さん
-                        </>
-                      ) : (
-                        <HistoryName data-testid="molecules-hl-history-name">
-                          システム
-                        </HistoryName>
-                      )}
-                      が、
-                      {item.update_contents_front.map((data, i) => (
-                        <span key={i}>
-                          {i >= 1 && '、'}
-                          {data.property}を「
-                          {data.new_value}」に
+                      {item.update_contents.message ? (
+                        <span data-testid="molecules-hl-span" key={i}>
+                          {item.update_contents.message}
                         </span>
-                      ))}
-                      変更しました。
+                      ) : (
+                        <>
+                          {item.user_id && (
+                            <>
+                              <HistoryName data-testid="molecules-hl-history-name">
+                                {item.user.name}
+                              </HistoryName>
+                              さんが、
+                            </>
+                          )}
+                          {item.update_contents_front.map((data, i) => (
+                            <span key={i}>
+                              {i >= 1 && '、'}
+                              {data.property}を「
+                              {data.new_value}」に
+                            </span>
+                          ))}
+                          変更しました。
+                        </>
+                      )}
                     </>
                   )}
                 </Content>
