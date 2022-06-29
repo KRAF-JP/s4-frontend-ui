@@ -1,7 +1,6 @@
 {
   "name": "s4-frontend-ui",
-  "version": "0.9.4",
-  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "rm -rf lib esm && yarn build:lib && yarn build:esm",
@@ -93,5 +92,21 @@
     "lib"
   ],
   "main": "lib/index.js",
-  "module": "esm/index.js"
+  "module": "esm/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:KRAF-JP/s4-frontend-ui.git"
+  },
+  "keywords": [
+    "s4",
+    "ui",
+    "react",
+    "nextjs"
+  ],
+  "author": "developer.kraf(https://github.com/developer-KRAF)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KRAF-JP/s4-frontend-ui/issues"
+  },
+  "homepage": "https://s-4.jp/"
 }
