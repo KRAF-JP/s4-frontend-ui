@@ -24,6 +24,7 @@
 - SearchCheckboxGroup
 - Sort
 - Supplement
+- Tooltip
 - UnorderedList
 
 ### components/molecules
