@@ -2,7 +2,7 @@
 
 exports[`notification-icon のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-fXynhf dgqBUv"
+  class="sc-dwLEzm dLXUZB"
   data-testid="atoms-ni-wrap"
 >
   10

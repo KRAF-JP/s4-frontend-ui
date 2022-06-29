@@ -2,14 +2,14 @@
 
 exports[`Statusのレンダリング確認 status=1 の場合、StatusBacklog が表示される。 1`] = `
 <div
-  class="sc-fWIMVQ hLaPed"
+  class="sc-eEOqmf idfnKK"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-ESujJ gTZyyA"
+    class="sc-fmRtwQ bNxDtM"
   >
     <div
-      class="sc-ikZpkk fsjIhy"
+      class="sc-ikZpkk cnDQvm"
       data-testid="atoms-ii-wrap"
       size="24"
     >
@@ -48,14 +48,14 @@ exports[`Statusのレンダリング確認 status=1 の場合、StatusBacklog �
 
 exports[`Statusのレンダリング確認 status=2 の場合、StatusProgress が表示される。 1`] = `
 <div
-  class="sc-fWIMVQ hLaPed"
+  class="sc-eEOqmf idfnKK"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-ESujJ gTZyyA"
+    class="sc-fmRtwQ bNxDtM"
   >
     <div
-      class="sc-ikZpkk fsjIhy"
+      class="sc-ikZpkk cnDQvm"
       data-testid="atoms-ii-wrap"
       size="24"
     >
@@ -95,14 +95,14 @@ exports[`Statusのレンダリング確認 status=2 の場合、StatusProgress �
 
 exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が表示されれる。 1`] = `
 <div
-  class="sc-fWIMVQ hLaPed"
+  class="sc-eEOqmf idfnKK"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-ESujJ gTZyyA"
+    class="sc-fmRtwQ bNxDtM"
   >
     <div
-      class="sc-ikZpkk fsjIhy"
+      class="sc-ikZpkk cnDQvm"
       data-testid="atoms-ii-wrap"
       size="24"
     >
@@ -145,14 +145,14 @@ exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が
 
 exports[`Statusのレンダリング確認 status=9 の場合、StatusDone が表示される。 1`] = `
 <div
-  class="sc-fWIMVQ hLaPed"
+  class="sc-eEOqmf idfnKK"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-ESujJ gTZyyA"
+    class="sc-fmRtwQ bNxDtM"
   >
     <div
-      class="sc-ikZpkk fsjIhy"
+      class="sc-ikZpkk cnDQvm"
       data-testid="atoms-ii-wrap"
       size="24"
     >
@@ -188,14 +188,14 @@ exports[`Statusのレンダリング確認 status=9 の場合、StatusDone が�
 
 exports[`Statusのレンダリング確認 status=100 の場合、表示されない。 1`] = `
 <div
-  class="sc-fWIMVQ hLaPed"
+  class="sc-eEOqmf idfnKK"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-ESujJ gTZyyA"
+    class="sc-fmRtwQ bNxDtM"
   >
     <div
-      class="sc-ikZpkk fsjIhy"
+      class="sc-ikZpkk cnDQvm"
       data-testid="atoms-ii-wrap"
       size="24"
     >
