@@ -77,15 +77,33 @@ const IconWrapper = styled.div`
 const DateWrap = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 4px;
+  margin-top: 6px;
   font-weight: normal;
+
   > span {
     display: inherit;
+    line-height: 1;
   }
 `
 const DateText = styled.span`
   margin-left: 4px;
   font-size: 12px;
+`
+const ScrollWrap = styled.div<Props>`
+  display: flex;
+  align-items: center;
+  width: 148px;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid ${Color.COMPONENT.BORDER};
+  border-radius: 8px;
+  background-color: ${Color.TEXT.WHITE};
+  cursor: pointer;
+  transition: background 0.2s linear;
+
+  ${ButtonTitle} {
+    color: ${Color.TEXT.BLACK};
+  }
 `
 
 export default LinkButton
