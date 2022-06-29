@@ -2,11 +2,11 @@
 
 exports[`Sort のレンダリング確認 childを設定した場合、設定値でレンダリングされる。 1`] = `
 <div
-  class="sc-hlnMnd aZxqA"
+  class="sc-eKBdFk fMIAeI"
   data-testid="atoms-s-wrap"
 >
   <div
-    class="sc-eKBdFk ibwCJk"
+    class="sc-bUbCnL cTptFB"
     data-testid="atoms-s-button-wrap"
   >
     <span
@@ -51,7 +51,7 @@ exports[`Sort のレンダリング確認 childを設定した場合、設定値
     </span>
   </div>
   <div
-    class="sc-bUbCnL bYdHFL"
+    class="sc-kIKDeO jlEPhw"
     data-testid="atoms-s-label"
   >
     テスト
@@ -61,11 +61,11 @@ exports[`Sort のレンダリング確認 childを設定した場合、設定値
 
 exports[`Sort のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-hlnMnd aZxqA"
+  class="sc-eKBdFk fMIAeI"
   data-testid="atoms-s-wrap"
 >
   <div
-    class="sc-eKBdFk ibwCJk"
+    class="sc-bUbCnL cTptFB"
     data-testid="atoms-s-button-wrap"
   >
     <span

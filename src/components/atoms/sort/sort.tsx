@@ -34,6 +34,7 @@ const SortWrap = styled.div<{ sort: number }>`
   border-radius: 16px;
   user-select: none;
   cursor: pointer;
+  white-space: nowrap;
   ${({ sort }) =>
     sort &&
     `
