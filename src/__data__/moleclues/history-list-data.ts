@@ -4,14 +4,22 @@ export const sysHistoryItem = {
   model_id: 1,
   user_id: null,
   update_contents: [
-    { property: 'status', old_value: 1, value: 2 },
-    { property: 'status', old_value: 1, value: 2 },
+    {
+      message: 'アップデートメッセージ',
+    },
+    {
+      message: 'アップデートメッセージ',
+    },
   ],
   created_at: '2022-05-30 10:40:18',
   updated_at: '2022-05-30 10:40:18',
   update_contents_front: [
-    { property: '対応状態', old_value: '未対応', new_value: '対応中' },
-    { property: '対応状態', old_value: '未対応', new_value: '対応中' },
+    {
+      message: 'アップデートメッセージ',
+    },
+    {
+      message: 'アップデートメッセージ',
+    },
   ],
   user: null,
 }

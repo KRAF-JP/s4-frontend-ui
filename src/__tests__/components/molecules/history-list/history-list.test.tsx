@@ -40,12 +40,12 @@ describe.each(falsyItems)(
 )
 
 describe('履歴リスト - Issue 履歴', () => {
-  test('システム履歴の場合、アイコンがlogo-symbolになり、表示名が「システム」になる。', () => {
+  test('システム履歴の場合、アイコンがlogo-symbolになり、表示名が非表示になる。', () => {
     render(<HistoryList items={[sysHistoryItem]} />)
     expect(screen.getByTestId('molecules-hl-logo-symbol')).toBeInTheDocument()
-    expect(screen.getByTestId('molecules-hl-history-name').textContent).toBe(
-      'システム'
-    )
+    expect(
+      screen.queryByTestId('molecules-hl-history-name')
+    ).not.toBeInTheDocument()
   })
   test('ユーザ履歴の場合、アイコン表示がユーザアイコンになり、表示名が「ユーザ名」になる。', () => {
     render(<HistoryList items={[userHistoryItem]} />)
@@ -61,9 +61,6 @@ describe('履歴リスト - Issue 履歴', () => {
     render(<HistoryList items={[sysHistoryItem, userHistoryItem]} />)
     expect(
       screen.queryAllByTestId('molecules-hl-history-name')[0].textContent
-    ).toBe('システム')
-    expect(
-      screen.queryAllByTestId('molecules-hl-history-name')[1].textContent
     ).toBe('テスト太郎')
   })
 })
