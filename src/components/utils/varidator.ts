@@ -95,6 +95,17 @@ export const time = (value: any) => {
     : '正しい時間を入力してください'
 }
 
+export const notOnlySpace = (value: any) => {
+  value = value || ''
+  if (value === '') {
+    return undefined
+  }
+
+  return value.match(/^( |　)+$/)
+    ? 'スペース文字のみでは、入力できません'
+    : undefined
+}
+
 export const alphabeticAndNumericAndSymbolic = (value: any) => {
   value = value || ''
   if (value === '') return undefined
