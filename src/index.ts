@@ -65,6 +65,7 @@ export {
   time,
   alphabeticAndNumericAndSymbolic,
   password,
+  notOnlySpace,
 } from './components/utils/varidator'
 
 // const
