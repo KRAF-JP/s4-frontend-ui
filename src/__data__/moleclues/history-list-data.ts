@@ -3,24 +3,14 @@ export const sysHistoryItem = {
   model_name: 'issues',
   model_id: 1,
   user_id: null,
-  update_contents: [
-    {
-      message: 'アップデートメッセージ',
-    },
-    {
-      message: 'アップデートメッセージ',
-    },
-  ],
+  update_contents: {
+    message: 'アップデートメッセージ',
+  },
   created_at: '2022-05-30 10:40:18',
   updated_at: '2022-05-30 10:40:18',
-  update_contents_front: [
-    {
-      message: 'アップデートメッセージ',
-    },
-    {
-      message: 'アップデートメッセージ',
-    },
-  ],
+  update_contents_front: {
+    message: 'アップデートメッセージ',
+  },
   user: null,
 }
 

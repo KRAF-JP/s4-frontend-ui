@@ -43,6 +43,7 @@ const InputTime: React.FC<Props> = (props) => {
   useEffect(() => {
     documentClickHandler.current = (e) => {
       if (selectedItemElement.current.contains(e.target)) return
+      /* istanbul ignore next */
       setOnFocus(false)
     }
 
