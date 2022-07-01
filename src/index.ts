@@ -26,7 +26,7 @@ export {
 } from './components/atoms/search-checkbox'
 export { Sort } from './components/atoms/sort'
 export { Supplement } from './components/atoms/supplement'
-export { Tooltip } from './components/atoms/tool-tip'
+export { Tooltip } from './components/atoms/tooltip'
 export { UnorderedList } from './components/atoms/unordered-list'
 
 // components/molecules

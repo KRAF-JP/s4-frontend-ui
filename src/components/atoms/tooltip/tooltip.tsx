@@ -9,7 +9,7 @@ type Props = {
 
 const Tooltip: React.FC<Props> = (props) => {
   return (
-    <Wrap>
+    <Wrap data-testid="atoms-tt-wrap">
       {props.children}
       <Content>{props.content}</Content>
     </Wrap>
