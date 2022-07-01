@@ -33,7 +33,7 @@ const HistoryList: React.FC<Props> = (props) => {
       {props.items ? (
         <>
           {props.items.map((item, i) => (
-            <Item key={i}>
+            <Item data-testid="molecules-hl-item" key={i}>
               {item.is_newly && (
                 <ReadIcon data-testid="molecules-hl-read-icon" />
               )}

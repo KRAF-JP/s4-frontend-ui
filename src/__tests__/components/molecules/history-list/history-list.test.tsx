@@ -46,6 +46,9 @@ describe('履歴リスト - Issue 履歴', () => {
     expect(
       screen.queryByTestId('molecules-hl-history-name')
     ).not.toBeInTheDocument()
+    expect(screen.queryByTestId('molecules-hl-span').textContent).toBe(
+      'アップデートメッセージ'
+    )
   })
   test('ユーザ履歴の場合、アイコン表示がユーザアイコンになり、表示名が「ユーザ名」になる。', () => {
     render(<HistoryList items={[userHistoryItem]} />)
@@ -59,8 +62,14 @@ describe('履歴リスト - Issue 履歴', () => {
   })
   test('システム・ユーザ混在履歴の場合、それぞれ配列の昇順で表示する。', () => {
     render(<HistoryList items={[sysHistoryItem, userHistoryItem]} />)
-    expect(
-      screen.queryAllByTestId('molecules-hl-history-name')[0].textContent
-    ).toBe('テスト太郎')
+    expect(screen.queryByTestId('molecules-hl-span').textContent).toBe(
+      'アップデートメッセージ'
+    )
+    expect(screen.queryAllByTestId('molecules-hl-item')[0].textContent).toBe(
+      'アップデートメッセージ2022/05/30 10:40:18'
+    )
+    expect(screen.queryAllByTestId('molecules-hl-item')[1].textContent).toBe(
+      'テスト太郎さんが、対応状態を「対応中」に、対応状態を「対応中」に変更しました。2022/05/30 10:40:18'
+    )
   })
 })
