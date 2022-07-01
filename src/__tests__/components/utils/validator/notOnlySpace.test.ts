@@ -2,6 +2,7 @@ import { composeValidators, notOnlySpace } from '../../../../index'
 
 const falsyValues: string[] = [' ', '　', '  ', '　　', ' 　 ']
 const truthyValues: string[] = [
+  '',
   '0',
   'a',
   'a123',
