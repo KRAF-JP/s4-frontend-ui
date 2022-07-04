@@ -61,6 +61,9 @@
 - email
 - url
 - time
+- notOnlySpace
+- alphabeticAndNumericAndSymbolic
+- password
 
 
 ### const
