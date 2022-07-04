@@ -10,6 +10,7 @@ export default {
     nextRouter: {
       path: '/path',
       asPath: '/',
+      pathname: '/',
     },
   },
 } as Meta
