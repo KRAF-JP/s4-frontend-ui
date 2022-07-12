@@ -12,6 +12,11 @@ type Props = {
   handleLoginGoogle(e: React.MouseEvent<HTMLElement>): void
   handleLoginMicrosoft(e: React.MouseEvent<HTMLElement>): void
   handleLoginOkta(e: React.MouseEvent<HTMLElement>): void
+  loginWithLabelGoogle: string
+  loginWithLabelMicrosoft: string
+  loginWithLabelOkta: string
+  submittingText: string
+  loginTitle: string
 }
 
 const LoginForm: React.FC<Props> = (props) => {
@@ -22,7 +27,7 @@ const LoginForm: React.FC<Props> = (props) => {
         <Icon.LogoType size={70} />
       </IconWrap>
 
-      <Title>ログイン</Title>
+      <Title>{props.loginTitle}</Title>
 
       <LoginButtonWrap>
         <LoginButton
@@ -35,8 +40,8 @@ const LoginForm: React.FC<Props> = (props) => {
           </LoginButtonLogo>
           <LoginButtonText>
             {props.loginGoogleEnable
-              ? 'ログインしています...'
-              : 'Google アカウントでログイン'}
+              ? props.submittingText
+              : props.loginWithLabelGoogle}
           </LoginButtonText>
         </LoginButton>
 
@@ -50,8 +55,8 @@ const LoginForm: React.FC<Props> = (props) => {
           </LoginButtonLogo>
           <LoginButtonText>
             {props.loginMsEnable
-              ? 'ログインしています...'
-              : 'Microsoft アカウントでサインイン'}
+              ? props.submittingText
+              : props.loginWithLabelMicrosoft}
           </LoginButtonText>
         </LoginButton>
 
@@ -66,8 +71,8 @@ const LoginForm: React.FC<Props> = (props) => {
             </LoginButtonLogo>
             <LoginButtonText>
               {props.loginOktaEnable
-                ? 'ログインしています...'
-                : 'Okta アカウントでサインイン'}
+                ? props.submittingText
+                : props.loginWithLabelOkta}
             </LoginButtonText>
           </LoginButton>
         )}

@@ -13,6 +13,11 @@ describe('ログインフォームのレンダリング確認', () => {
         handleLoginGoogle={() => console.log('handleLoginGoogle')}
         handleLoginMicrosoft={() => console.log('handleLoginMicrosoft')}
         handleLoginOkta={() => console.log('handleLoginOkta')}
+        loginTitle="ログイン"
+        loginWithLabelGoogle="Google アカウントでログイン"
+        loginWithLabelMicrosoft="Microsoft アカウントでサインイン"
+        loginWithLabelOkta="Okta アカウントでサインイン"
+        submittingText="ログインしています..."
       />
     )
 
@@ -34,6 +39,11 @@ describe('ログインフォームのレンダリング確認', () => {
         handleLoginGoogle={() => console.log('handleLoginGoogle')}
         handleLoginMicrosoft={() => console.log('handleLoginMicrosoft')}
         handleLoginOkta={() => console.log('handleLoginOkta')}
+        loginTitle="ログイン"
+        loginWithLabelGoogle="Google アカウントでログイン"
+        loginWithLabelMicrosoft="Microsoft アカウントでサインイン"
+        loginWithLabelOkta="Okta アカウントでサインイン"
+        submittingText="ログインしています..."
       />
     )
 
@@ -64,6 +74,11 @@ describe('ログインボタン押下時の挙動チェック', () => {
         handleLoginGoogle={() => console.log('handleLoginGoogle')}
         handleLoginMicrosoft={() => console.log('handleLoginMicrosoft')}
         handleLoginOkta={() => console.log('handleLoginOkta')}
+        loginTitle="ログイン"
+        loginWithLabelGoogle="Google アカウントでログイン"
+        loginWithLabelMicrosoft="Microsoft アカウントでサインイン"
+        loginWithLabelOkta="Okta アカウントでサインイン"
+        submittingText="ログインしています..."
       />
     )
     expect(screen.getByTestId('molecules-lf-ggl-button')).toHaveTextContent(
