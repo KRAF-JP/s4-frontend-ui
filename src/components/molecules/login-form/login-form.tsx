@@ -27,7 +27,7 @@ const LoginForm: React.FC<Props> = (props) => {
         <Icon.LogoType size={70} />
       </IconWrap>
 
-      <Title>{props.loginTitle}</Title>
+      <Title data-testid="molecules-lf-title">{props.loginTitle}</Title>
 
       <LoginButtonWrap>
         <LoginButton
