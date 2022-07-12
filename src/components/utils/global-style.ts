@@ -11,6 +11,15 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Noto Sans JP", sans-serif;
   }
 
+  *::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: ${Color.TEXT.GRAY};
+  }
+
   /* TODO: custom globalstyle eg. font-family */
   body {
     overscroll-behavior-y: none;
@@ -19,13 +28,13 @@ const GlobalStyle = createGlobalStyle`
     color: ${Color.TEXT.BLACK};
     overflow: hidden;
   }
-  
+
   p {
     font-size: 16px;
   }
 
   ul, li {
-    list-style-type: none; 
+    list-style-type: none;
   }
 
   img {
@@ -44,29 +53,29 @@ const GlobalStyle = createGlobalStyle`
     color: ${Color.TEXT.LINK};
     text-decoration: none;
   }
-  
+
   h1 {
     font-size: 28px;
   }
-  
+
   h2 {
     font-size: 24px;
   }
-  
+
   h3 {
     font-size: 20px;
   }
-  
+
   h4 {
     font-size: 18px;
   }
-  
+
   h5 {
     font-size: 16px;
   }
-  
+
   #nprogress {
-    z-index: 1000!important;
+    z-index: 1000 !important;
     background: #000;
   }
 `

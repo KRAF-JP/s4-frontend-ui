@@ -196,7 +196,7 @@ const Options = styled.div<{ isShow: boolean; position: boolean }>`
   position: absolute;
   left: 0;
   width: 240px;
-  max-height: 200px;
+  max-height: 250px;
   padding: 8px;
   border-radius: 8px;
   background: ${Color.COMPONENT.SURFACE};
