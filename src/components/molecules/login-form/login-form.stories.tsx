@@ -18,6 +18,11 @@ storiesOf('Components/Molecules/LoginForm', module).add('LoginForm', () => (
           handleLoginGoogle={() => console.log('handleLoginGoogle')}
           handleLoginMicrosoft={() => console.log('handleLoginMicrosoft')}
           handleLoginOkta={() => console.log('handleLoginOkta')}
+          loginTitle="ログイン"
+          loginWithLabelGoogle="Google アカウントでログイン"
+          loginWithLabelMicrosoft="Microsoft アカウントでサインイン"
+          loginWithLabelOkta="Okta アカウントでサインイン"
+          submittingText="ログインしています..."
         />
       </Field>
     </FieldGroup>
