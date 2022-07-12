@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.14",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "next": "12.1.0",
     "nextjs-progressbar": "^0.0.14",
     "polished": "^4.1.3",
