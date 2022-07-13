@@ -30,4 +30,12 @@ describe('link-button のレンダリング確認', () => {
       )
     )
   })
+
+  test('props.handleClick設定した場合、設定値でレンダリングされる。', () => {
+    const { getByTestId } = render(
+      <LinkButton title="test" handleClick={jest.fn()} />
+    )
+
+    expect(getByTestId('atoms-lb-icon-wrapper')).toMatchSnapshot()
+  })
 })

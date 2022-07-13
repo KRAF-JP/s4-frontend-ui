@@ -9,14 +9,46 @@ type Props = {
   title: string
   date?: string
   disabled?: boolean
+  handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
 
 const LinkButton: React.FC<Props> = (props) => {
   return (
-    <Wrap data-testid="atoms-lb-wrap" {...props}>
-      {props.href ? (
-        <Link href={props.href}>
-          <a target="_blank" rel="noreferrer noopener">
+    <>
+      {props.handleClick ? (
+        <ScrollWrap {...props} onClick={props.handleClick}>
+          <IconWrapper data-testid="atoms-lb-icon-wrapper">
+            <ButtonTitle data-testid="atoms-lb-button-title">
+              {props.title}
+              <DateWrap data-testid="atoms-lb-date-wrap">
+                <Icon.History size={11} color={Color.TEXT.BLACK} />
+                <DateText data-testid="atoms-lb-date-text">
+                  {props.date}
+                </DateText>
+              </DateWrap>
+            </ButtonTitle>
+          </IconWrapper>
+        </ScrollWrap>
+      ) : (
+        <Wrap data-testid="atoms-lb-wrap" {...props}>
+          {props.href ? (
+            <Link href={props.href}>
+              <a target="_blank" rel="noreferrer noopener">
+                <IconWrapper data-testid="atoms-lb-icon-wrapper">
+                  <ButtonTitle data-testid="atoms-lb-button-title">
+                    {props.title}
+                    <DateWrap data-testid="atoms-lb-date-wrap">
+                      <Icon.History size={11} />
+                      <DateText data-testid="atoms-lb-date-text">
+                        {props.date}
+                      </DateText>
+                    </DateWrap>
+                  </ButtonTitle>
+                  <Icon.ExternalLink />
+                </IconWrapper>
+              </a>
+            </Link>
+          ) : (
             <IconWrapper data-testid="atoms-lb-icon-wrapper">
               <ButtonTitle data-testid="atoms-lb-button-title">
                 {props.title}
@@ -29,20 +61,10 @@ const LinkButton: React.FC<Props> = (props) => {
               </ButtonTitle>
               <Icon.ExternalLink />
             </IconWrapper>
-          </a>
-        </Link>
-      ) : (
-        <IconWrapper data-testid="atoms-lb-icon-wrapper">
-          <ButtonTitle data-testid="atoms-lb-button-title">
-            {props.title}
-            <DateWrap data-testid="atoms-lb-date-wrap">
-              <Icon.History size={11} />
-            </DateWrap>
-          </ButtonTitle>
-          <Icon.ExternalLink />
-        </IconWrapper>
+          )}
+        </Wrap>
       )}
-    </Wrap>
+    </>
   )
 }
 
