@@ -12,7 +12,7 @@ type Props = {
   vulnerabilityId: number
   severityId: number
   score: string
-  createdAt: string
+  detectedAt: string
   profileImage: string
   title: string
   status: number
@@ -81,7 +81,7 @@ const DashboardListItem: NextPage<Props> = (props) => {
             </LabelText>
           </LabelSeverity>
           <DateText data-testid="molecules-dli-date-text">
-            {moment(props.createdAt).format('YYYY/MM/DD HH:mm')}
+            {moment(props.detectedAt).format('YYYY/MM/DD HH:mm')}
           </DateText>
         </InfoWrap>
         <StatusWrap data-testid="molecules-dli-status-wrap">
