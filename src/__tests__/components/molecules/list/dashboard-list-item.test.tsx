@@ -47,7 +47,7 @@ describe('ダッシュボードリストアイテムのレンダリング確認'
         vulnerabilityId={100}
         severityId={101}
         score="score"
-        createdAt="2022-06-15 09:00:00"
+        detectedAt="2022-06-15 09:00:00"
         profileImage="test"
         title="title"
         status={1}
