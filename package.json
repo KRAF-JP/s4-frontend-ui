@@ -8,12 +8,14 @@
     "build:storybook": "build-storybook",
     "lint": "next lint",
     "start": "next start -p 8080",
-    "start:storybook": "start-storybook -s ./public -p 6006",
+    "start:storybook": "start-storybook -p 6006",
     "build:lib": "tsc -p tsconfig.build.json",
     "build:esm": "tsc -p tsconfig.esm.build.json",
     "icon": "npx @svgr/cli -d src/components/atoms/icon/tsx src/components/atoms/icon/images",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "predeploy": "yarn build:storybook",
+    "deploy": "gh-pages -d storybook-static"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.14",
@@ -57,6 +59,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^4.0.0",
     "jest": "^28.1.0",
     "jest-canvas-mock": "^2.4.0",
     "jest-environment-jsdom": "^28.1.1",
@@ -96,5 +99,5 @@
   "bugs": {
     "url": "https://github.com/KRAF-JP/s4-frontend-ui/issues"
   },
-  "homepage": "https://s-4.jp/"
+  "homepage": "https://KRAF-JP.github.io/s4-frontend-ui"
 }
