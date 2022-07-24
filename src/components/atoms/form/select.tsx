@@ -124,7 +124,9 @@ const Select: React.FC<Props> = (props) => {
                   {opt.icon}
                 </StyledIcon>
               )}
-              {opt.label}
+              <TextWrap data-testid={`atoms-f-select-options-icon-image-${i}`}>
+                {opt.label}
+              </TextWrap>
             </OptionItem>
           ))}
         </label>
@@ -178,6 +180,7 @@ const SelectedItemLabel = styled.div`
   display: flex;
   align-items: center;
   margin-right: 24px;
+  width: 140px;
   height: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -251,6 +254,11 @@ const StyledIcon = styled.div`
   display: flex;
   align-items: center;
   margin-right: 8px;
+`
+const TextWrap = styled.div`
+  width: 175px;
+  margin: auto;
+  word-wrap: break-word;
 `
 
 export default Select
