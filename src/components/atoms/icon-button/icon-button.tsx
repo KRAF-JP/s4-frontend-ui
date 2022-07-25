@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Color from '../../../const/color'
 
 type Props = {
+  noShrink?: boolean
   focus?: boolean
   children: React.ReactNode
   handleClick?(e: React.MouseEvent<HTMLElement>): void
@@ -12,6 +13,7 @@ const IconButton: React.FC<Props> = (props) => {
   return (
     <Wrap
       data-testid="atoms-ib-wrap"
+      noShrink={props.noShrink}
       focus={props.focus}
       onClick={props.handleClick}
     >
@@ -20,8 +22,12 @@ const IconButton: React.FC<Props> = (props) => {
   )
 }
 
-const Wrap = styled.div<{ focus?: boolean }>`
+const Wrap = styled.div<{
+  noShrink?: boolean
+  focus?: boolean
+}>`
   display: flex;
+  flex-shrink: ${({ noShrink }) => (noShrink ? 0 : 'inherit')};
   justify-content: center;
   align-items: center;
   width: 40px;
