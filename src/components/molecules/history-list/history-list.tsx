@@ -125,7 +125,7 @@ const HistoryList: React.FC<Props> = (props) => {
                     </>
                   )}
                 </Content>
-                <Date>{item.created_at.replaceAll('-', '/')}</Date>
+                <Date>{item.created_at}</Date>
               </Right>
             </Item>
           ))}

@@ -6,7 +6,7 @@ export const sysHistoryItem = {
   update_contents: {
     message: 'アップデートメッセージ',
   },
-  created_at: '2022-05-30 10:40:18',
+  created_at: '2022/05/30 10:40:18',
   updated_at: '2022-05-30 10:40:18',
   update_contents_front: {
     message: 'アップデートメッセージ',
@@ -23,7 +23,7 @@ export const userHistoryItem = {
     { property: 'status', old_value: 1, value: 2 },
     { property: 'status', old_value: 1, value: 2 },
   ],
-  created_at: '2022-05-30 10:40:18',
+  created_at: '2022/05/30 10:40:18',
   updated_at: '2022-05-30 10:40:18',
   update_contents_front: [
     { property: '対応状態', old_value: '未対応', new_value: '対応中' },
