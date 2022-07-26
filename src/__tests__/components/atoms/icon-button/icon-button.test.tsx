@@ -4,7 +4,6 @@ import { IconButton, Color } from '../../../../index'
 
 /**
  * type Props = {
- *   noShrink?: boolean
  *   focus?: boolean
  *   children: React.ReactNode
  *   handleClick?(e: React.MouseEvent<HTMLElement>): void
@@ -32,15 +31,5 @@ describe('IconButtonのレンダリング確認', () => {
     expect(getByTestId('atoms-ib-wrap')).toHaveStyle(
       `background-color: ${Color.PRIMARY._500};`
     )
-  })
-
-  test('props.noShrink=trueに設定した時、設定値でレンダリングされる。', () => {
-    const { getByTestId } = render(
-      <IconButton noShrink={true}>
-        <Dummy />
-      </IconButton>
-    )
-
-    expect(getByTestId('atoms-ib-wrap')).toHaveStyle(`flex-shrink: 0;`)
   })
 })

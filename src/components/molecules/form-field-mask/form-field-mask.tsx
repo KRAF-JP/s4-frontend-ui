@@ -20,7 +20,7 @@ const FormFieldMask: React.FC<Props> = (props) => {
         margin={props.margin}
       >
         {props.value && <Text>{props.value}</Text>}
-        <IconButton noShrink handleClick={props.handleClick}>
+        <IconButton handleClick={props.handleClick}>
           <Icon.Pen />
         </IconButton>
       </Mask>
