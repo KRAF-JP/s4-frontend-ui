@@ -22,6 +22,7 @@ const IconButton: React.FC<Props> = (props) => {
 
 const Wrap = styled.div<{ focus?: boolean }>`
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   width: 40px;
