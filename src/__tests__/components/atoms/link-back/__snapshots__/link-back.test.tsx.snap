@@ -2,11 +2,11 @@
 
 exports[`link-back のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-jfmDQi hxvdek"
+  class="sc-eKszNL nnjOc"
   data-testid="atoms-lb-wrap"
 >
   <div
-    class="sc-eKszNL cazjBx"
+    class="sc-olbas dCaWPH"
     data-testid="atoms-lb-icon"
   >
     <span
@@ -31,7 +31,7 @@ exports[`link-back のレンダリング確認 オプションなしで設定し
     </span>
   </div>
   <div
-    class="sc-olbas ilobtt"
+    class="sc-hiMGwR fkedgA"
     data-testid="atoms-lb-test"
   >
     test

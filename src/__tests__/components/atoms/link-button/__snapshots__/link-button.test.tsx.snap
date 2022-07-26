@@ -2,16 +2,16 @@
 
 exports[`link-button のレンダリング確認 props.handleClick設定した場合、設定値でレンダリングされる。 1`] = `
 <div
-  class="sc-lbOyJj jRlDvz"
+  class="sc-gFGZVQ bGdXuU"
   data-testid="atoms-lb-icon-wrapper"
 >
   <div
-    class="sc-ehmTmK klyjBe"
+    class="sc-lbOyJj hNMqcY"
     data-testid="atoms-lb-button-title"
   >
     test
     <div
-      class="sc-gFGZVQ gYvzBH"
+      class="sc-ckMVTt eyDyOf"
       data-testid="atoms-lb-date-wrap"
     >
       <span
@@ -38,7 +38,7 @@ exports[`link-button のレンダリング確認 props.handleClick設定した�
         </svg>
       </span>
       <span
-        class="sc-ckMVTt iqKdLY"
+        class="sc-fbPSWO hXOTvw"
         data-testid="atoms-lb-date-text"
       />
     </div>
@@ -48,21 +48,21 @@ exports[`link-button のレンダリング確認 props.handleClick設定した�
 
 exports[`link-button のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-hiMGwR gaphct"
+  class="sc-ehmTmK hPaqzJ"
   data-testid="atoms-lb-wrap"
   title="test"
 >
   <div
-    class="sc-lbOyJj jRlDvz"
+    class="sc-gFGZVQ bGdXuU"
     data-testid="atoms-lb-icon-wrapper"
   >
     <div
-      class="sc-ehmTmK klyjBe"
+      class="sc-lbOyJj hNMqcY"
       data-testid="atoms-lb-button-title"
     >
       test
       <div
-        class="sc-gFGZVQ gYvzBH"
+        class="sc-ckMVTt eyDyOf"
         data-testid="atoms-lb-date-wrap"
       >
         <span
@@ -88,7 +88,7 @@ exports[`link-button のレンダリング確認 オプションなしで設定�
           </svg>
         </span>
         <span
-          class="sc-ckMVTt iqKdLY"
+          class="sc-fbPSWO hXOTvw"
           data-testid="atoms-lb-date-text"
         />
       </div>

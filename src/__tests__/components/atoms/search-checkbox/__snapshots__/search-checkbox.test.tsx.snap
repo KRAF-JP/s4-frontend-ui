@@ -2,11 +2,11 @@
 
 exports[`SearchCheckbox のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-hlnMnd hOBmUK"
+  class="sc-eKBdFk hmJgIm"
   data-testid="atoms-scg-wrap"
 >
   <label
-    class="sc-TRNrF fhrVlR"
+    class="sc-jIAOiI fmyylQ"
     data-testid="atoms-sc-wrap"
   >
     <input
@@ -16,7 +16,7 @@ exports[`SearchCheckbox のレンダリング確認 オプションなしで設�
       value="1"
     />
     <span
-      class="sc-jIAOiI sxBly"
+      class="sc-ZyCDH hIqzpP"
       data-testid="atoms-sc-text"
     />
   </label>

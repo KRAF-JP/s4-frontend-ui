@@ -2,11 +2,11 @@
 
 exports[`Statusのレンダリング確認 status=1 の場合、StatusBacklog が表示される。 1`] = `
 <div
-  class="sc-eEOqmf idfnKK"
+  class="sc-fmRtwQ hpjlik"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-fmRtwQ bNxDtM"
+    class="sc-lkwKjF dZZohc"
   >
     <div
       class="sc-ikZpkk cnDQvm"
@@ -48,11 +48,11 @@ exports[`Statusのレンダリング確認 status=1 の場合、StatusBacklog �
 
 exports[`Statusのレンダリング確認 status=2 の場合、StatusProgress が表示される。 1`] = `
 <div
-  class="sc-eEOqmf idfnKK"
+  class="sc-fmRtwQ hpjlik"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-fmRtwQ bNxDtM"
+    class="sc-lkwKjF dZZohc"
   >
     <div
       class="sc-ikZpkk cnDQvm"
@@ -95,11 +95,11 @@ exports[`Statusのレンダリング確認 status=2 の場合、StatusProgress �
 
 exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が表示されれる。 1`] = `
 <div
-  class="sc-eEOqmf idfnKK"
+  class="sc-fmRtwQ hpjlik"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-fmRtwQ bNxDtM"
+    class="sc-lkwKjF dZZohc"
   >
     <div
       class="sc-ikZpkk cnDQvm"
@@ -145,11 +145,11 @@ exports[`Statusのレンダリング確認 status=3 の場合、StatusClosed が
 
 exports[`Statusのレンダリング確認 status=9 の場合、StatusDone が表示される。 1`] = `
 <div
-  class="sc-eEOqmf idfnKK"
+  class="sc-fmRtwQ hpjlik"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-fmRtwQ bNxDtM"
+    class="sc-lkwKjF dZZohc"
   >
     <div
       class="sc-ikZpkk cnDQvm"
@@ -188,11 +188,11 @@ exports[`Statusのレンダリング確認 status=9 の場合、StatusDone が�
 
 exports[`Statusのレンダリング確認 status=100 の場合、表示されない。 1`] = `
 <div
-  class="sc-eEOqmf idfnKK"
+  class="sc-fmRtwQ hpjlik"
   data-testid="molecules-dli-status-wrap"
 >
   <div
-    class="sc-fmRtwQ bNxDtM"
+    class="sc-lkwKjF dZZohc"
   >
     <div
       class="sc-ikZpkk cnDQvm"
