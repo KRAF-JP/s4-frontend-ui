@@ -74,7 +74,7 @@ exports[`form - Select のレンダリング確認 オプションなしで設�
         />
         <div
           class="sc-iAvgwm bcoBjA"
-          data-testid="atoms-f-select-options-icon-image-0"
+          data-testid="atoms-f-select-options-text-wrap-image-0"
         >
           test label
         </div>
@@ -89,7 +89,7 @@ exports[`form - Select のレンダリング確認 オプションなしで設�
         />
         <div
           class="sc-iAvgwm bcoBjA"
-          data-testid="atoms-f-select-options-icon-image-1"
+          data-testid="atoms-f-select-options-text-wrap-image-1"
         >
           test label 1
         </div>
