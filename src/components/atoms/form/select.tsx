@@ -124,9 +124,7 @@ const Select: React.FC<Props> = (props) => {
                   {opt.icon}
                 </StyledIcon>
               )}
-              <TextWrap
-                data-testid={`atoms-f-select-options-text-wrap-image-${i}`}
-              >
+              <TextWrap data-testid={`atoms-f-select-options-text-wrap-${i}`}>
                 {opt.label}
               </TextWrap>
             </OptionItem>
