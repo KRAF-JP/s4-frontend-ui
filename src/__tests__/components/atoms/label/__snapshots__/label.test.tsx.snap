@@ -2,17 +2,17 @@
 
 exports[`label - LabelEmail のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-gSAPjG bmQaFT"
+  class="sc-lbxAil cZMthh"
   data-testid="atoms-l-label-email-wrap"
 >
   <div
-    class="sc-lbxAil dtACXe"
+    class="sc-iNWwEs eyQrRp"
     data-testid="atoms-l-label-email-text-wrap"
   >
     test
   </div>
   <div
-    class="sc-iNWwEs hEkzoU"
+    class="sc-jfmDQi foLnOQ"
     data-testid="atoms-l-label-email-icon-wrap"
   >
     <span
@@ -41,11 +41,11 @@ exports[`label - LabelEmail のレンダリング確認 オプションなしで
 
 exports[`label - LabelIcon のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-efBctP cCrRKe"
+  class="sc-cTQhss fIxAuC"
   data-testid="atoms-l-label-icon-text"
 >
   <div
-    class="sc-cTQhss cZZQMF"
+    class="sc-jOrMOR ddwLxI"
     data-testid="atoms-l-label-icon-wrap"
   >
     <span
@@ -77,34 +77,34 @@ exports[`label - LabelIcon のレンダリング確認 オプションなしで�
 
 exports[`label - LabelSeverity のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-jOrMOR"
+  class="sc-dPyBCJ"
   data-testid="atoms-l-label-severity-wrap"
 >
   <div
-    class="sc-dPyBCJ hEmGOx"
+    class="sc-bBXxYQ bfrJJn"
     data-testid="atoms-l-label-severity-bar-wrap"
   >
     <div
-      class="sc-jgbSNz ldNBfF"
+      class="sc-gSAPjG bEeAWZ"
       data-testid="atoms-l-label-severity-urgency-bar"
     >
       <span
-        class="sc-hTtwUo cEOkrG"
+        class="sc-jgbSNz cnviBD"
         data-testid="atoms-l-label-severity-label-text"
       >
         緊急
       </span>
     </div>
     <div
-      class="sc-bBXxYQ hmNJmU"
+      class="sc-cOFTSb cshTAr"
       data-testid="atoms-l-label-severity-content-wrap"
     >
       <div
-        class="sc-BeQoi bkpZWM"
+        class="sc-kgUAyh cMYWVd"
         data-testid="atoms-l-label-severity-severity-text"
       >
         <span
-          class="sc-kgUAyh kKlJEZ"
+          class="sc-hTtwUo eHAjex"
           data-testid="atoms-l-label-severity-version"
         >
           CVSS
@@ -112,7 +112,7 @@ exports[`label - LabelSeverity のレンダリング確認 オプションなし
         v
       </div>
       <div
-        class="sc-cOFTSb bHylGh"
+        class="sc-BeQoi grDrhS"
         data-testid="atoms-l-label-severity-score"
       >
         10

@@ -26,7 +26,7 @@ exports[`form - Select のレンダリング確認 オプションなしで設�
     data-testid="atoms-f-select-selected-item"
   >
     <div
-      class="sc-gXmSlM VZHDo"
+      class="sc-gXmSlM icBQmI"
       data-testid="atoms-f-select-selected-item-label"
     >
       test label
@@ -72,7 +72,12 @@ exports[`form - Select のレンダリング確認 オプションなしで設�
           type="radio"
           value="test value"
         />
-        test label
+        <div
+          class="sc-iAvgwm bcoBjA"
+          data-testid="atoms-f-select-options-text-wrap-0"
+        >
+          test label
+        </div>
       </label>
       <label
         class="sc-jdAMXn jknONv"
@@ -82,7 +87,12 @@ exports[`form - Select のレンダリング確認 オプションなしで設�
           type="radio"
           value="test value 1"
         />
-        test label 1
+        <div
+          class="sc-iAvgwm bcoBjA"
+          data-testid="atoms-f-select-options-text-wrap-1"
+        >
+          test label 1
+        </div>
       </label>
     </label>
   </div>

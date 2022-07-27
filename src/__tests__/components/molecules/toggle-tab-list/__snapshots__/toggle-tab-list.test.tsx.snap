@@ -2,7 +2,7 @@
 
 exports[`トグルタブリストのレンダリング確認 propsに設定した値でレンダリングされる。 1`] = `
 <div
-  class="sc-fxvKuh jTSUdX"
+  class="sc-iWajrY gKIHjj"
   data-testid="molecules-ttl-wrap"
 >
   <span>

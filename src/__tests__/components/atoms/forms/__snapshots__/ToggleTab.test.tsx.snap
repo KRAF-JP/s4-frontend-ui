@@ -2,7 +2,7 @@
 
 exports[`form - ToggleTab のレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <label
-  class="sc-iAvgwm cYAxyv"
+  class="sc-efBctP eqbWMO"
   data-testid="atoms-f-toggle-tab-label"
 >
   <input
