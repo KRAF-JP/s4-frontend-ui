@@ -4,7 +4,7 @@ const truthyValues = ['', 'check@example.com']
 
 interface Datum {
   caseTitle: string
-  expected: any
+  expected: string
   value: string
 }
 
