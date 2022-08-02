@@ -27,8 +27,7 @@ const data: Datum[] = [
   {
     caseTitle: '入力が255文字以上',
     expected: 'メールアドレスは255文字以下で指定してください',
-    value:
-      'check@exampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexampleexamplexampleexampleexampleexampleexampleexamplexampleexampleexampleexampleexampleexamplexampleexampleexampleexampleexampleexamplexampleexampleexampleexampleexampleexample.com',
+    value: `${'a'.repeat(255)}.com`, // 255文字
   },
   {
     caseTitle: '入力が連続ドット',
@@ -53,8 +52,7 @@ const data: Datum[] = [
   {
     caseTitle: '@前部分が65文字以上',
     expected: 'メールアドレスに正しい形式を指定してください',
-    value:
-      'checkcheckcheckcheckcheckcheckcheckcheckcheckcheckcheckcheckcheckcheck@example',
+    value: `${'a'.repeat(65)}@example`, // 65文字
   },
 ]
 
