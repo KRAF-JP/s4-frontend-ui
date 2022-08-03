@@ -1,6 +1,6 @@
 {
   "name": "s4-frontend-ui",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "scripts": {
     "dev": "next dev",
     "build": "rm -rf lib esm && yarn build:lib && yarn build:esm",
