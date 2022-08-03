@@ -21,7 +21,7 @@ const data: Datum[] = [
   },
   {
     caseTitle: '入力が先頭半角スペース',
-    expected: 'メールアドレスは半角で入力してください',
+    expected: 'メールアドレスに正しい形式を指定してください',
     value: ' check@example',
   },
   {

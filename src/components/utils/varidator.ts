@@ -65,7 +65,7 @@ export const email = (value: any) => {
     return undefined
   }
 
-  if (!value.match(/^[!-~]+$/i)) {
+  if (!value.match(/^[\s!-~]+$/i)) {
     return 'メールアドレスは半角で入力してください'
   } else if (!value.match(/^.{1,255}$/)) {
     return 'メールアドレスは255文字以下で指定してください'
