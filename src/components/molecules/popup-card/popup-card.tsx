@@ -42,6 +42,7 @@ const Wrap = styled.div<{ isShow: boolean; width?: number }>`
   opacity: 0;
   transition: opacity 0.2s, visibility 0.2s;
   z-index: 10;
+  overflow: scroll;
 
   ${({ isShow }) =>
     isShow &&
