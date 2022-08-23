@@ -2,7 +2,7 @@
 
 exports[`Tooltipのレンダリング確認 propsに設定した値でレンダリングされる。 1`] = `
 <span
-  class="sc-jTYCaT iKtWoH"
+  class="sc-jTYCaT oXIUP"
   data-testid="atoms-tt-wrap"
 >
   <span

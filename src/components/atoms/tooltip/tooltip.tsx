@@ -39,6 +39,7 @@ const Content = styled.span`
 const Wrap = styled.span`
   position: relative;
   cursor: pointer;
+  font-size: 11px;
   &:hover ${Content} {
     opacity: 1;
     visibility: visible;
