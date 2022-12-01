@@ -18,6 +18,7 @@ jest.mock('next/router', () => ({
 
 const mockSetIsAlert = jest.fn()
 const mockRemoveHandler = jest.fn()
+const mockHandleClick = jest.fn()
 
 afterEach(() => {
   mockPush.mockReset()
@@ -30,23 +31,23 @@ describe('通知リスト - 個別表示確認', () => {
     render(<HistoryList items={[projectAssignNotification]} />)
     expect(screen.getByTestId('molecules-hl-read-icon')).toBeInTheDocument()
     expect(screen.getByTestId('molecules-hl-content').textContent).toBe(
-      'プロジェクト 管理者さんが、あなたを「テストプロジェクト」に追加しました。'
+      'プロジェクト 管理者history.you.toテストプロジェクトhistory.added'
     )
   })
 
   test('イシューステータス通知の場合、対応イシューのステータスが通知される。', () => {
-    render(<HistoryList items={[issueStatusUpdateNotification]} />)
+    render(<HistoryList items={[issueStatusUpdateNotification]} handleClick={mockHandleClick} />)
     expect(screen.getByTestId('molecules-hl-read-icon')).toBeInTheDocument()
     expect(screen.getByTestId('molecules-hl-content').textContent).toBe(
-      'プロジェクト 管理者さんが、「CVE-2020-5329」を未対応に変更しました'
+      'プロジェクト 管理者vulnerability.detail.responsible.person.nameCVE-2020-5329」を未対応に変更しました。'
     )
   })
 
   test('イシューアサイン通知の場合、対応イシューへのアサインが通知される。', () => {
-    render(<HistoryList items={[issueAssignedNotification]} />)
+    render(<HistoryList items={[issueAssignedNotification]} handleClick={mockHandleClick} />)
     expect(screen.getByTestId('molecules-hl-read-icon')).toBeInTheDocument()
     expect(screen.getByTestId('molecules-hl-content').textContent).toBe(
-      'プロジェクト 管理者さんが、あなたを「CVE-2020-9349」の担当者に設定しました'
+      'プロジェクト 管理者 history.you.toCVE-2020-9349history.responsible.for'
     )
   })
 })
@@ -63,13 +64,13 @@ describe('通知リスト - 一覧表示確認', () => {
       />
     )
     expect(screen.queryAllByTestId('molecules-hl-content')[0].textContent).toBe(
-      'プロジェクト 管理者さんが、あなたを「テストプロジェクト」に追加しました。'
+      'プロジェクト 管理者history.you.toテストプロジェクトhistory.added'
     )
     expect(screen.queryAllByTestId('molecules-hl-content')[1].textContent).toBe(
-      'プロジェクト 管理者さんが、「CVE-2020-5329」を未対応に変更しました'
+      'プロジェクト 管理者vulnerability.detail.responsible.person.nameCVE-2020-5329」を未対応に変更しました。'
     )
     expect(screen.queryAllByTestId('molecules-hl-content')[2].textContent).toBe(
-      'プロジェクト 管理者さんが、あなたを「CVE-2020-9349」の担当者に設定しました'
+      'プロジェクト 管理者 history.you.toCVE-2020-9349history.responsible.for'
     )
   })
 })
@@ -81,12 +82,13 @@ describe('通知リスト - handleLinkClick', () => {
         items={[issueStatusUpdateNotification]}
         setIsAlert={mockSetIsAlert}
         removeHandler={mockRemoveHandler}
+        handleClick={mockHandleClick}
       />
     )
     fireEvent.click(screen.getByTestId('molecules-hl-content-link'))
 
     expect(screen.getByTestId('molecules-hl-content').textContent).toBe(
-      'プロジェクト 管理者さんが、「CVE-2020-5329」を未対応に変更しました'
+      'プロジェクト 管理者vulnerability.detail.responsible.person.nameCVE-2020-5329」を未対応に変更しました。'
     )
     expect(mockPush).toBeCalledTimes(1)
     expect(mockPush).toBeCalledWith({
@@ -105,12 +107,13 @@ describe('通知リスト - handleLinkClick', () => {
         items={[issueAssignedNotification]}
         setIsAlert={mockSetIsAlert}
         removeHandler={mockRemoveHandler}
+        handleClick={mockHandleClick}
       />
     )
     fireEvent.click(screen.getByTestId('molecules-hl-content-link'))
 
     expect(screen.getByTestId('molecules-hl-content').textContent).toBe(
-      'プロジェクト 管理者さんが、あなたを「CVE-2020-9349」の担当者に設定しました'
+      'プロジェクト 管理者 history.you.toCVE-2020-9349history.responsible.for'
     )
     expect(mockPush).toBeCalledTimes(1)
     expect(mockPush).toBeCalledWith({

@@ -5,15 +5,18 @@ import { IconImage } from '../../atoms/icon-image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Icon } from '../../atoms/icon'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   items?: any[]
   setIsAlert?: any
   removeHandler?: any
+  handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
 
 const HistoryList: React.FC<Props> = (props) => {
   const router = useRouter()
+  const { t } = useTranslation()
 
   const handleLinkClick = (id) => {
     const linkId = Number(id)
@@ -30,11 +33,11 @@ const HistoryList: React.FC<Props> = (props) => {
 
   return (
     <List data-testid="molecules-hl-list">
-      {props.items ? (
+      {props.items.length ? (
         <>
           {props.items.map((item, i) => (
             <Item data-testid="molecules-hl-item" key={i}>
-              {item.is_newly && (
+              {item.read_at === null && (
                 <ReadIcon data-testid="molecules-hl-read-icon" />
               )}
               <Left>
@@ -60,37 +63,48 @@ const HistoryList: React.FC<Props> = (props) => {
                     <>
                       {/ProjectAssigned/.test(item.type) && (
                         <>
-                          {item.user.name}さんが、あなたを「
-                          <Link href={'/assets'}>{item.resource.name}</Link>
-                          」に追加しました。
+                          {item.user.name}
+                          {t('history.you.to')}
+                          <ContentLink
+                            data-testid="molecules-hl-content-link"
+                            onClick={() => {
+                              props.handleClick(item.id)
+                            }}
+                          >
+                            <Link href={'/assets'}>{item.resource.name}</Link>
+                          </ContentLink>
+                          {t('history.added')}
                         </>
                       )}
                       {/IssueStatusUpdated/.test(item.type) && (
                         <>
-                          {item.user.name}さんが、「
+                          {item.user.name}
+                          {t('vulnerability.detail.responsible.person.name')}
                           <ContentLink
                             data-testid="molecules-hl-content-link"
                             onClick={() => {
                               handleLinkClick(item.resource.id)
+                              props.handleClick(item.id)
                             }}
                           >
                             {item.resource.vuln_id}
                           </ContentLink>
-                          」を{item.resource.status_name}に変更しました
+                          」を{item.resource.status_name}に変更しました。
                         </>
                       )}
                       {/IssueAssigned/.test(item.type) && (
                         <>
-                          {item.user.name}さんが、あなたを「
+                          {item.user.name} {t('history.you.to')}
                           <ContentLink
                             data-testid="molecules-hl-content-link"
                             onClick={() => {
                               handleLinkClick(item.resource.id)
+                              props.handleClick(item.id)
                             }}
                           >
                             {item.resource.vuln_id}
                           </ContentLink>
-                          」の担当者に設定しました
+                          {t('history.responsible.for')}
                         </>
                       )}
                     </>
@@ -109,17 +123,22 @@ const HistoryList: React.FC<Props> = (props) => {
                               <HistoryName data-testid="molecules-hl-history-name">
                                 {item.user.name}
                               </HistoryName>
-                              さんが、
+                              {t(
+                                'vulnerability.detail.responsible.person.name'
+                              )}
                             </>
                           )}
                           {item.update_contents_front.map((data, i) => (
                             <span key={i}>
                               {i >= 1 && '、'}
                               {data.property}を「
-                              {data.new_value}」に
+                              {data.new_value}
+                              {t(
+                                'vulnerability.detail.responsible.person.bracket.end'
+                              )}
                             </span>
                           ))}
-                          変更しました。
+                          {t('vulnerability.detail.changed')}
                         </>
                       )}
                     </>
@@ -144,6 +163,7 @@ const Item = styled.li`
   position: relative;
   padding: 8px 0;
   border-radius: 16px;
+  margin-left: 8px;
 
   &:not(:last-child) {
     margin-bottom: 8px;
