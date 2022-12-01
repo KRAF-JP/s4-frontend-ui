@@ -42,7 +42,6 @@ const Wrap = styled.div<{ isShow: boolean; width?: number }>`
   opacity: 0;
   transition: opacity 0.2s, visibility 0.2s;
   z-index: 10;
-  overflow: scroll;
 
   ${({ isShow }) =>
     isShow &&
@@ -61,12 +60,9 @@ const Title = styled.h3`
 const Contents = styled.div`
   position: sticky;
   max-height: calc(100vh - 192px);
+  min-height: 38px;
   -ms-overflow-style: none;
-  overflow: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  overflow-x: scroll;
 `
 
 export default PopupCard

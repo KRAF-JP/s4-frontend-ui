@@ -2,11 +2,11 @@
 
 exports[`ポップアップカードのレンダリング確認 オプションなしで設定した場合、初期値でレンダリングされる。 1`] = `
 <div
-  class="sc-kTvvXX kbzdem"
+  class="sc-kTvvXX eyciwE"
   data-testid="molecules-pc-wrap"
 >
   <div
-    class="sc-jtcaXd eQQKuv"
+    class="sc-jtcaXd cMFOoZ"
     data-testid="molecules-pc-content"
   >
     <span>
