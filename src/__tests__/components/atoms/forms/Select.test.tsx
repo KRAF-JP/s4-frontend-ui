@@ -134,4 +134,18 @@ describe('form - Select のレンダリング確認', () => {
     )
     expect(getByTestId('atoms-f-select-options')).toHaveStyle('bottom: 50px;')
   })
+
+  test('props.widthを設定した場合、設定値でレンダリングされる。', () => {
+    const { getByTestId } = render(
+      <Select
+        defaultData={defaultData}
+        data={testDataWithIcon}
+        handleClick={mockHandleClick}
+        width={100}
+      />
+    )
+    expect(getByTestId('atoms-f-select-selected-item')).toHaveStyle(
+      'width: 100px'
+    )
+  })
 })
