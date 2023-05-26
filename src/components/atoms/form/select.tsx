@@ -7,15 +7,21 @@ import { IconImage } from '../icon-image'
 type Props = {
   name?: string
   defaultData: {
-    value: string
+    value: string | number
     label: string
     image?: string
     icon?: React.ReactNode
   }
-  data?: any[]
+  data?: {
+    value: string | number
+    label: string
+    image?: string
+    icon?: React.ReactNode
+  }[]
   top?: boolean
   className?: string
   disabled?: boolean
+  width?: number
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
@@ -67,6 +73,7 @@ const Select: React.FC<Props> = (props) => {
         ref={selectedItemElement}
         focus={onFocus}
         onClick={handleFocus}
+        width={props.width}
       >
         {selectedItem.image && (
           <StyledIconImage
@@ -159,11 +166,11 @@ const Wrap = styled.div<{ disabled?: boolean }>`
     pointer-events: none;
   `}
 `
-const SelectedItem = styled.div<{ focus: boolean }>`
+const SelectedItem = styled.div<{ focus: boolean; width?: number }>`
   display: flex;
   align-items: center;
   position: relative;
-  width: 240px;
+  width: ${({ width }) => (width ? `${width}px` : '240px')};
   height: 40px;
   padding: ${({ focus }) => (focus ? `0 15px` : `0 16px`)};
   border: ${({ focus }) =>
@@ -180,7 +187,7 @@ const SelectedItemLabel = styled.div`
   display: flex;
   align-items: center;
   margin-right: 24px;
-  width: 140px;
+  width: 100%;
   height: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -217,7 +224,6 @@ const Options = styled.div<{ isShow: boolean; position: boolean }>`
       : `
     top: 50px;
   `}
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -248,6 +254,7 @@ const OptionItem = styled.label<{ checked: boolean; icon: string }>`
   }
 `
 const StyledIconImage = styled(IconImage)`
+  min-width: 24px;
   margin-right: 8px;
 `
 const StyledIcon = styled.div`

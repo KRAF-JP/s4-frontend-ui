@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 type Props = {
   href?: string
+  className?: string
   title: string
   date?: string
   disabled?: boolean

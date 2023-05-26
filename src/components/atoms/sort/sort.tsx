@@ -7,6 +7,7 @@ type Props = {
   children?: string
   focus?: boolean
   sort?: number
+  className?: string
   handleClick?(e: React.MouseEvent<HTMLElement>): void
 }
 
@@ -16,6 +17,7 @@ const Sort: React.FC<Props> = (props) => {
       data-testid="atoms-s-wrap"
       sort={props.sort}
       onClick={props.handleClick}
+      className={props.className}
     >
       <ButtonWrap data-testid="atoms-s-button-wrap">
         <Icon.SortAsc size={8} color={Color.COMPONENT.FORM_BORDER} />
@@ -46,13 +48,13 @@ const SortWrap = styled.div<{ sort: number }>`
   ${({ sort }) =>
     sort == 1
       ? `
-      > div > span:nth-child(1) > svg {
+      > div > span:nth-child(2) > svg {
        fill: ${Color.TEXT.LINK};
       }
   `
       : sort == 2
       ? `
-      > div > span:nth-child(2) > svg {
+      > div > span:nth-child(1) > svg {
         fill: ${Color.TEXT.LINK};
       }
       `

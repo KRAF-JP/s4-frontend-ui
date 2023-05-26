@@ -1,10 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import {
-  LabelIcon,
-  LabelSeverity,
-  LabelEmail,
-} from '../label'
+import { LabelIcon, LabelSeverity, LabelEmail } from '../label'
 import GlobalStyle from '../../utils/global-style'
 import Color from '../../../const/color'
 import styled from 'styled-components'

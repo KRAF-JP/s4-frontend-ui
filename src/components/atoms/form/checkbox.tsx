@@ -7,16 +7,20 @@ type Props = {
   checked?: boolean
   onChange?: (e: React.SyntheticEvent) => void
   id?: string
-  value?: string
+  value?: string | number
   name?: string
   labelName: string
   isInvalid?: boolean
   small?: boolean
+  disabled?: boolean
 }
 
 const Checkbox: React.FC<Props> = (props) => {
   return (
-    <StyledCheckbox data-testid="atoms-f-checkbox-label">
+    <StyledCheckbox
+      data-testid="atoms-f-checkbox-label"
+      disabled={props.disabled}
+    >
       <Marker
         data-testid="atoms-f-checkbox-marker"
         checked={props.checked}
@@ -42,11 +46,19 @@ const Checkbox: React.FC<Props> = (props) => {
   )
 }
 
-const StyledCheckbox = styled.label`
+const StyledCheckbox = styled.label<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   font-size: 14px;
   cursor: pointer;
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+    cursor: auto;
+    opacity: 0.5;
+    pointer-events: none;
+  `}
 `
 const Marker = styled.div<{
   checked?: boolean

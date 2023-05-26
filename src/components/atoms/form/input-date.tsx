@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Color from '../../../const/color'
 import DatePicker, { registerLocale } from 'react-datepicker'
-import ja from 'date-fns/locale/ja'
+import { ja, enUS } from 'date-fns/locale'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   name?: string
@@ -14,8 +15,18 @@ type Props = {
 
 const InputDate: React.FC<Props> = (props: any) => {
   const [selectedDate, setSelectedDate] = useState(null)
+  const { t } = useTranslation()
 
   registerLocale('ja', ja)
+  registerLocale('en-us', enUS)
+
+  useEffect(() => {
+    if (props.value) {
+      setSelectedDate(new Date(props.value))
+      return
+    }
+    setSelectedDate(null)
+  }, [props.value])
 
   return (
     <Wrap data-testid="atoms-f-input-date">
@@ -31,9 +42,9 @@ const InputDate: React.FC<Props> = (props: any) => {
             }}
             minDate={props.minDate && new Date(props.minDate)}
             dateFormat={'yyyy/MM/dd'}
-            locale={'ja'}
+            locale={t('calender')}
             placeholderText={props.placeholder ?? '0000/00/00'}
-            value={props.value ?? undefined}
+            value={new Date(props.value) ?? undefined}
             autoComplete={'off'}
           />
         </DatePickerWrap>
@@ -55,6 +66,7 @@ const DatePickerWrap = styled.div`
   .react-datepicker-popper {
     z-index: 9999 !important;
   }
+
   > .react-datepicker-wrapper > .react-datepicker__input-container {
     width: 112px;
 
@@ -77,6 +89,10 @@ const DatePickerWrap = styled.div`
     border: none;
     border-radius: 8px;
     box-shadow: ${Color.ELEVATION.L};
+  }
+
+  .react-datepicker__month-container {
+    min-height: 310px;
   }
 
   .react-datepicker__header {

@@ -79,12 +79,14 @@ const LabelSeverity: React.FC<Props> = (props) => {
         >
           {props.small ? (
             <>
-              <Score
-                data-testid="atoms-l-label-severity-score"
-                small={props.small}
-              >
-                {props.score}
-              </Score>
+              {props.score && (
+                <Score
+                  data-testid="atoms-l-label-severity-score"
+                  small={props.small}
+                >
+                  {props.score}
+                </Score>
+              )}
               {!props.short && (
                 <SeverityText data-testid="atoms-l-label-severity-severity-text">
                   {props.severity}
@@ -93,18 +95,22 @@ const LabelSeverity: React.FC<Props> = (props) => {
             </>
           ) : (
             <>
-              <SeverityText data-testid="atoms-l-label-severity-severity-text">
-                <Version data-testid="atoms-l-label-severity-version">
-                  CVSS
-                </Version>
-                v{props.version}
-              </SeverityText>
-              <Score
-                data-testid="atoms-l-label-severity-score"
-                small={props.small}
-              >
-                {props.score}
-              </Score>
+              {props.score && (
+                <>
+                  <SeverityText data-testid="atoms-l-label-severity-severity-text">
+                    <Version data-testid="atoms-l-label-severity-version">
+                      CVSS
+                    </Version>
+                    v{props.version}
+                  </SeverityText>
+                  <Score
+                    data-testid="atoms-l-label-severity-score"
+                    small={props.small}
+                  >
+                    {props.score}
+                  </Score>
+                </>
+              )}
             </>
           )}
         </ContentWrap>
@@ -150,7 +156,7 @@ const LabelText = styled.span<{ severityId?: number }>`
 `
 const UrgencyBar = styled.div`
   ${getBackgroundColor};
-  width: ${({ small }) => (small ? '8px' : '68px')};
+  width: ${({ small }) => (small ? '8px' : '100%')};
   height: ${({ small }) => (small ? '48px' : '68px')};
   margin: 0 ${({ small }) => (small ? '8px' : '16px')} 0 0;
   border-radius: ${({ small }) => (small ? '14px' : '8px')};

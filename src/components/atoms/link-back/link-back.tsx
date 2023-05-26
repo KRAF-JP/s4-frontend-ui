@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 type Props = {
   label: string
   link?: string
+  query?: object
 }
 
 const LinkBack: React.FC<Props> = (props) => {
@@ -16,7 +17,11 @@ const LinkBack: React.FC<Props> = (props) => {
     <LinkBackWrap
       data-testid="atoms-lb-wrap"
       onClick={() => {
-        props.link ? router.push(props.link) : router.back()
+        props.link
+          ? props.query
+            ? router.push({ pathname: props.link, query: { ...props.query } })
+            : router.push(props.link)
+          : router.back()
       }}
     >
       <LinkBackIcon data-testid="atoms-lb-icon">

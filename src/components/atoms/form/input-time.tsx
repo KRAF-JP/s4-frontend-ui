@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Color from '../../../const/color'
 import { Icon } from '../icon'

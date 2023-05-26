@@ -2,10 +2,7 @@ import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import Color from '../../../const/color'
 import { Icon } from '../icon'
-import {
-  SearchCheckbox,
-  SearchCheckboxGroup,
-} from '../search-checkbox/index'
+import { SearchCheckbox, SearchCheckboxGroup } from '../search-checkbox/index'
 import GlobalStyle from '../../utils/global-style'
 
 export default {

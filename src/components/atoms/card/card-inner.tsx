@@ -4,11 +4,12 @@ import Color from '../../../const/color'
 
 type Props = {
   bgColor?: string
+  id?: string
 }
 
 const CardInner: React.FC<Props> = (props) => {
   return (
-    <Wrap data-testid="atoms-ci-wrap" bgColor={props.bgColor}>
+    <Wrap data-testid="atoms-ci-wrap" id={props.id} bgColor={props.bgColor}>
       {props.children}
     </Wrap>
   )

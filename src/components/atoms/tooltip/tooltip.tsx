@@ -4,6 +4,7 @@ import React from 'react'
 
 type Props = {
   content: string
+  className?: string
   children?: React.ReactNode
 }
 
@@ -11,7 +12,7 @@ const Tooltip: React.FC<Props> = (props) => {
   return (
     <Wrap data-testid="atoms-tt-wrap">
       {props.children}
-      <Content>{props.content}</Content>
+      <Content className={props.className}>{props.content}</Content>
     </Wrap>
   )
 }
