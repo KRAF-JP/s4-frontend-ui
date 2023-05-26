@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { NextPage } from 'next'
-import { Color } from 's4-frontend-ui'
+import { Color } from '../../../const/color'
 import React from 'react'
 
 type Props = {
