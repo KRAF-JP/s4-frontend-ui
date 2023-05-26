@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { NextPage } from 'next'
-import { Color } from '../../../const/color'
+import Color from '../../../const/color'
 import React from 'react'
 
 type Props = {
