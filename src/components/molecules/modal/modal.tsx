@@ -15,6 +15,7 @@ type Props = {
   setIsShow?: any
   children?: React.ReactNode
   noFooter?: boolean
+  label?: string
   handleClickCancel?(e: React.MouseEvent<HTMLElement>): void
   handleClickSubmit?(e: React.MouseEvent<HTMLElement>): void
   handleClickOverlay?(e: React.MouseEvent<HTMLElement>): void
@@ -33,7 +34,7 @@ const Modal: React.FC<Props> = (props) => {
             <Button
               data-testid="molecules-m-cancel-button"
               type={'button'}
-              label={'キャンセル'}
+              label={props.label}
               buttonType={'secondary'}
               handleClick={props.handleClickCancel}
               small={true}
@@ -58,7 +59,6 @@ const Modal: React.FC<Props> = (props) => {
         isShow={props.isShow}
         onClick={(e) => {
           props.handleClickOverlay(e)
-          props.setIsShow(false)
         }}
       />
     </>
@@ -81,8 +81,8 @@ const Overlay = styled.div<{ isShow: boolean }>`
   transition: opacity 0.3s, visibility 0.3s;
 
   ${({ isShow }) =>
-    isShow &&
-    `
+  isShow &&
+  `
     visibility: visible;
     opacity: 1;
   `}
@@ -103,8 +103,8 @@ const Block = styled.div<{ isShow: boolean }>`
   transition: opacity 0.3s, visibility 0.3s;
 
   ${({ isShow }) =>
-    isShow &&
-    `
+  isShow &&
+  `
     visibility: visible;
     opacity: 1;
   `};
@@ -127,6 +127,7 @@ const Footer = styled.div`
   justify-content: end;
   padding-top: 24px;
   flex-wrap: wrap;
+
   button {
     &:not(:first-child) {
       margin-left: 8px;
