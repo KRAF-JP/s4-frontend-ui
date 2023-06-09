@@ -110,7 +110,7 @@ const DateWrap = styled.div`
 `
 const DateText = styled.span`
   margin-left: 4px;
-  font-size: 12px;
+  font-size: 11px;
 `
 const ScrollWrap = styled.div<Props>`
   display: flex;
