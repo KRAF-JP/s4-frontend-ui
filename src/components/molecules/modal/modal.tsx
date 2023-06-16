@@ -34,7 +34,7 @@ const Modal: React.FC<Props> = (props) => {
             <Button
               data-testid="molecules-m-cancel-button"
               type={'button'}
-              label={props.label}
+              label={props.label ?? '閉じる'}
               buttonType={'secondary'}
               handleClick={props.handleClickCancel}
               small={true}
