@@ -22,11 +22,11 @@ exports[`form - Select のレンダリング確認 オプションなしで設�
   data-testid="atoms-f-select-wrap"
 >
   <div
-    class="sc-himrzO dYECtE"
+    class="sc-himrzO bGFdjr"
     data-testid="atoms-f-select-selected-item"
   >
     <div
-      class="sc-gXmSlM icBQmI"
+      class="sc-gXmSlM lbJDsJ"
       data-testid="atoms-f-select-selected-item-label"
     >
       test label
