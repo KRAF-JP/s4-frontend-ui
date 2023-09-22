@@ -6,21 +6,38 @@ type Props = {
   content: string
   className?: string
   children?: React.ReactNode
+  nl2br?: boolean
 }
 
 const Tooltip: React.FC<Props> = (props) => {
+  const nl2br = (content) => {
+    if (!content) return
+    return content.split('\n').map((item, i) => {
+      return (
+        <React.Fragment key={i}>
+          {item}
+          <br />
+        </React.Fragment>
+      )
+    })
+  }
+
   return (
     <Wrap data-testid="atoms-tt-wrap">
-      {props.children}
-      <Content className={props.className}>{props.content}</Content>
+      <>
+        {props.children}
+        <Content className={props.className} content={props.content}>
+          {props.nl2br ? nl2br(props.content) : props.content}
+        </Content>
+      </>
     </Wrap>
   )
 }
 
 export default Tooltip
 
-const Content = styled.span`
-  display: inline-block;
+const Content = styled.span<{ content?: string }>`
+  display: ${({ content }) => (content ? 'inline-block' : 'none')};
   position: absolute;
   bottom: -35px;
   left: 38%;
